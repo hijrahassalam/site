@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research — Hijrah Assalam · Explainable AI for Healthcare</title>
+  <meta name="description" content="Research by Hijrah Assalam — Explainable AI for healthcare. Three-class COVID-19 detection using CNN with honest Grad-CAM analysis revealing shortcut learning.">
+  <meta name="keywords" content="Explainable AI, Medical AI, COVID-19 Detection, Grad-CAM, Healthcare AI, CNN, TensorFlow">
+  <link rel="canonical" href="https://hijrahassalam.com/research.html">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hijrahassalam.com/research.html">
+  <meta property="og:title" content="Research — Hijrah Assalam · Explainable AI for Healthcare">
+  <meta property="og:description" content="Three-class COVID-19 detection using CNN with honest Grad-CAM analysis revealing shortcut learning.">
+  <meta property="og:image" content="https://hijrahassalam.com/assets/images/og-image.png">
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://hijrahassalam.com/research.html">
+  <meta property="twitter:title" content="Research — Hijrah Assalam · Explainable AI for Healthcare">
+  <meta property="twitter:description" content="Three-class COVID-19 detection using CNN with honest Grad-CAM analysis revealing shortcut learning.">
+  <meta property="twitter:image" content="https://hijrahassalam.com/assets/images/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="apple-touch-icon" href="/assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#020617">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="tailwind-config.js"></script>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer data-domain="hijrahassalam.com" src="https://plausible.io/js/script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": "Three-Class COVID-19 Detection from Chest X-Ray Using Explainable CNN with Grad-CAM Visualization",
+    "author": { "@type": "Person", "name": "Hijrah Assalam" },
+    "description": "Explainable AI for medical imaging with honest Grad-CAM analysis revealing shortcut learning patterns.",
+    "url": "https://hijrahassalam.com/research.html",
+    "about": ["COVID-19 Detection", "Grad-CAM", "Explainable AI", "Medical Imaging"]
+  }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-200 font-sans antialiased bg-grid relative">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <nav id="main-nav" class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-transparent">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="/" class="text-brand-400 font-bold text-lg tracking-tight font-mono">&larr; hijrahassalam</a>
+      <div class="flex items-center gap-4">
+        <span class="text-slate-500 text-sm font-mono hidden sm:inline">/research</span>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-28 pb-16 px-6 relative z-10">
+    <div class="max-w-5xl mx-auto">
+      <!-- Hero -->
+      <section class="mb-20">
+        <div class="reveal mb-4">
+          <span class="text-brand-400 text-xs font-mono uppercase tracking-widest">Explainable AI for Healthcare</span>
+        </div>
+        <h1 class="reveal reveal-delay-1 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white mb-2 tracking-tight leading-tight">
+          Three-Class COVID-19 Detection
+        </h1>
+        <p class="reveal reveal-delay-1 text-lg text-slate-500 font-mono mb-6">
+          Using CNN with Honest Grad-CAM Analysis
+        </p>
+        <p class="reveal reveal-delay-2 text-lg text-slate-400 max-w-2xl leading-relaxed">
+          I investigate explainable AI for medical imaging — building CNNs and using Grad-CAM not as decoration,
+          but as a diagnostic instrument to uncover what models actually learn.
+        </p>
+      </section>
+
+      <!-- Summary for Recruiters -->
+      <section class="mb-20">
+        <div class="reveal mb-10">
+          <span class="section-label">Summary</span>
+          <h2 class="text-3xl font-bold text-white">What This Research Shows</h2>
+        </div>
+        <div class="reveal glass rounded-xl p-8">
+          <div class="grid sm:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-white font-semibold mb-3">Key Results</h3>
+              <ul class="space-y-2 text-sm text-slate-400">
+                <li class="flex items-start gap-2"><span class="text-brand-400 mt-1">&rarr;</span><span><span class="text-white font-semibold">95.27% test accuracy</span> on 6,788 images</span></li>
+                <li class="flex items-start gap-2"><span class="text-brand-400 mt-1">&rarr;</span><span><span class="text-white font-semibold">0.95 macro F1</span> across 3 classes</span></li>
+                <li class="flex items-start gap-2"><span class="text-brand-400 mt-1">&rarr;</span><span>Lightweight model: <span class="text-white font-semibold">456K params</span> (1.74 MB)</span></li>
+                <li class="flex items-start gap-2"><span class="text-brand-400 mt-1">&rarr;</span><span>COVID-19 false negative rate: <span class="text-white font-semibold">1.8%</span></span></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-white font-semibold mb-3">Why It Matters</h3>
+              <ul class="space-y-2 text-sm text-slate-400">
+                <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">&rarr;</span><span>Three-class classification (not just binary) — more clinically realistic</span></li>
+                <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">&rarr;</span><span>Built on benchmark dataset: <span class="text-white font-medium">33,958 images</span> with standardized splits</span></li>
+                <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">&rarr;</span><span>Honest interpretability: Grad-CAM used to <span class="text-white font-medium">discover limitations</span>, not just visualize</span></li>
+                <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">&rarr;</span><span>Deployable via TensorFlow.js — lightweight enough for browser inference</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Key Finding -->
+      <section class="mb-20">
+        <div class="reveal mb-10">
+          <span class="section-label">Key Finding</span>
+        </div>
+        <div class="reveal glass rounded-xl p-8 border-amber-500/20 bg-amber-500/5">
+          <h2 class="text-xl font-bold text-white mb-4 flex items-center gap-3">
+            <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Evidence of Shortcut Learning
+          </h2>
+          <p class="text-slate-400 leading-relaxed mb-4">
+            Grad-CAM revealed <span class="text-amber-300 font-medium">extra-pulmonary activation</span> in some COVID-19 samples —
+            attention appearing outside the lung region. This indicates the model may be using
+            dataset artifacts rather than clinical features.
+          </p>
+          <p class="text-sm text-slate-500">
+            Referenced by DeGrave, Janizek &amp; Lee (2021) in <em>Nature Machine Intelligence</em>.
+            Rather than hiding this limitation, I treat it as a core contribution — honest interpretability as a diagnostic tool.
+          </p>
+        </div>
+      </section>
+
+      <!-- Metrics -->
+      <section class="mb-20">
+        <div class="reveal mb-8">
+          <span class="section-label">Results</span>
+          <h2 class="text-3xl font-bold text-white">Performance</h2>
+        </div>
+        <div class="reveal grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div class="glass rounded-xl p-5 text-center">
+            <p class="text-2xl sm:text-3xl font-bold text-brand-400">95.27%</p>
+            <p class="text-xs text-slate-500 mt-1">Test Accuracy</p>
+          </div>
+          <div class="glass rounded-xl p-5 text-center">
+            <p class="text-2xl sm:text-3xl font-bold text-brand-400">0.95</p>
+            <p class="text-xs text-slate-500 mt-1">Macro F1</p>
+          </div>
+          <div class="glass rounded-xl p-5 text-center">
+            <p class="text-2xl sm:text-3xl font-bold text-brand-400">456K</p>
+            <p class="text-xs text-slate-500 mt-1">Model Params</p>
+          </div>
+          <div class="glass rounded-xl p-5 text-center">
+            <p class="text-2xl sm:text-3xl font-bold text-brand-400">1.8%</p>
+            <p class="text-xs text-slate-500 mt-1">COVID False Neg</p>
+          </div>
+        </div>
+
+        <div class="reveal glass rounded-xl p-6">
+          <h3 class="text-brand-300 font-semibold mb-4">Per-Class Performance</h3>
+          <div class="grid sm:grid-cols-3 gap-4">
+            <div class="text-center">
+              <p class="text-lg font-bold text-white">COVID-19</p>
+              <p class="text-sm text-slate-400">F1: 0.99 &middot; P: 0.99 &middot; R: 0.98</p>
+            </div>
+            <div class="text-center">
+              <p class="text-lg font-bold text-white">Non-COVID</p>
+              <p class="text-sm text-slate-400">F1: 0.94 &middot; P: 0.92 &middot; R: 0.95</p>
+            </div>
+            <div class="text-center">
+              <p class="text-lg font-bold text-white">Normal</p>
+              <p class="text-sm text-slate-400">F1: 0.93 &middot; P: 0.94 &middot; R: 0.92</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contributions -->
+      <section class="mb-20">
+        <div class="reveal mb-8">
+          <span class="section-label">Contribution</span>
+          <h2 class="text-3xl font-bold text-white">Why This Paper Matters</h2>
+        </div>
+        <div class="reveal space-y-4">
+          <div class="glass rounded-xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="text-brand-400 font-bold text-xl w-8">01</span>
+              <div>
+                <h3 class="text-white font-semibold mb-2">Three-Class, Not Binary</h3>
+                <p class="text-sm text-slate-400">Most COVID-19 papers only do binary classification. This paper classifies COVID-19, Non-COVID pneumonia, and Normal — a more clinically realistic scenario.</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass rounded-xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="text-brand-400 font-bold text-xl w-8">02</span>
+              <div>
+                <h3 class="text-white font-semibold mb-2">Benchmark-Scale Dataset</h3>
+                <p class="text-sm text-slate-400">Built on COVID-QU-Ex with standardized train/val/test split: 33,958 chest X-ray images. Train: 21,753 &middot; Val: 5,417 &middot; Test: 6,788.</p>
+              </div>
+            </div>
+          </div>
+          <div class="glass rounded-xl p-6">
+            <div class="flex items-start gap-4">
+              <span class="text-brand-400 font-bold text-xl w-8">03</span>
+              <div>
+                <h3 class="text-white font-semibold mb-2">Honest Interpretability</h3>
+                <p class="text-sm text-slate-400">Grad-CAM as diagnostic tool, not decoration. This paper treats explainability as a way to discover model limitations — specifically, evidence of shortcut learning via extra-pulmonary activation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Repository -->
+      <section class="mb-12">
+        <div class="reveal">
+          <span class="section-label">Code</span>
+        </div>
+        <div class="reveal glass rounded-xl p-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div>
+              <h3 class="text-white font-semibold text-lg mb-2">covid-cxr-gradcam</h3>
+              <p class="text-sm text-slate-400">Full implementation: model, training scripts, Grad-CAM analysis, figures, and classification report.</p>
+            </div>
+            <a href="https://github.com/hijrahassalam/covid-cxr-gradcam" target="_blank" rel="noopener" class="btn-primary">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="py-8 px-6 border-t border-slate-800/50">
+    <div class="max-w-5xl mx-auto text-center">
+      <a href="/" class="text-slate-600 hover:text-brand-400 transition text-sm">&larr; back to home</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
