@@ -7,7 +7,7 @@
   'use strict';
 
   // ─── Theme Toggle ───
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeToggles = document.querySelectorAll('.theme-toggle');
   const storedTheme = localStorage.getItem('theme');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -17,14 +17,14 @@
     document.documentElement.setAttribute('data-theme', 'light');
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
+  themeToggles.forEach(btn => {
+    btn.addEventListener('click', () => {
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     });
-  }
+  });
 
   // ─── Mobile Menu ───
   const menuBtn = document.getElementById('mobile-menu-btn');
