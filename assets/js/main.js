@@ -6,26 +6,6 @@
 (function() {
   'use strict';
 
-  // ─── Theme Toggle ───
-  const themeToggles = document.querySelectorAll('.theme-toggle');
-  const storedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (storedTheme) {
-    document.documentElement.setAttribute('data-theme', storedTheme);
-  } else if (!prefersDark) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  }
-
-  themeToggles.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-    });
-  });
-
   // ─── Mobile Menu ───
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
