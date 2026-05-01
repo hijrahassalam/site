@@ -151,5 +151,29 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+
+  <style>
+    html[data-theme="light"] body,
+    html[data-theme="light"] .bg-slate-950\/80,
+    html[data-theme="light"] .bg-slate-950\/95 {
+      background-color: var(--bg-primary) !important;
+      color: var(--text-secondary) !important;
+    }
+    html[data-theme="light"] .text-white { color: var(--text-primary) !important; }
+    html[data-theme="light"] .text-slate-200,
+    html[data-theme="light"] .text-slate-300 { color: var(--text-secondary) !important; }
+    html[data-theme="light"] .text-slate-400,
+    html[data-theme="light"] .text-slate-500 { color: var(--text-muted) !important; }
+    html[data-theme="light"] .text-slate-600 { color: var(--text-muted) !important; }
+    html[data-theme="light"] .border-slate-800\/50,
+    html[data-theme="light"] .border-slate-800,
+    html[data-theme="light"] .border-slate-700 { border-color: var(--border-default) !important; }
+    html[data-theme="light"] .bg-slate-800\/50 { background-color: rgba(226, 232, 240, 0.6) !important; }
+    html[data-theme="light"] h1,
+    html[data-theme="light"] h2,
+    html[data-theme="light"] h3 { color: var(--text-primary) !important; }
+    html[data-theme="light"] .text-brand-400,
+    html[data-theme="light"] .text-brand-300 { color: var(--accent) !important; }
+  </style>
 </body>
 </html>
