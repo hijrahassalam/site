@@ -57,12 +57,16 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  color: var(--text-secondary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
 }
 
 /* Typography */
@@ -522,3 +526,19 @@ textarea.form-input {
   .orb { display: none; }
   .profile-container { width: 160px; height: 160px; }
 }
+
+/* Theme-specific overrides for Tailwind utility classes */
+[data-theme="light"] .bg-slate-950\/80 { background-color: rgba(255, 255, 255, 0.8) !important; }
+[data-theme="light"] .border-slate-800\/50 { border-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .border-slate-800 { border-color: rgba(15, 23, 42, 0.08) !important; }
+[data-theme="light"] .bg-slate-800\/50 { background-color: rgba(226, 232, 240, 0.6) !important; }
+[data-theme="light"] .bg-slate-950\/95 { background-color: rgba(255, 255, 255, 0.95) !important; }
+[data-theme="light"] .text-white { color: #0f172a !important; }
+[data-theme="light"] .text-slate-200 { color: #334155 !important; }
+[data-theme="light"] .text-slate-300 { color: #475569 !important; }
+[data-theme="light"] .text-slate-400 { color: #64748b !important; }
+[data-theme="light"] .text-slate-500 { color: #94a3b8 !important; }
+[data-theme="light"] .text-slate-600 { color: #cbd5e1 !important; }
+[data-theme="light"] .text-slate-700 { color: #e2e8f0 !important; }
+[data-theme="light"] .border-slate-700 { border-color: #e2e8f0 !important; }
+[data-theme="light"] .border-slate-800\/50 { border-color: rgba(226, 232, 240, 0.5) !important; }
