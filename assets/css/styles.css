@@ -21,6 +21,8 @@
   --warning: #fbbf24;
   --danger: #f87171;
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Plus Jakarta Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-accent: 'Fraunces', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   color-scheme: dark;
 }
@@ -48,17 +50,15 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
   color: var(--text-primary);
-}
-
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.02em;
 }
 
-.font-mono { font-family: var(--font-mono); }
+.font-display { font-family: var(--font-display); }
+.font-accent { font-family: var(--font-accent); font-style: italic; }
 
 /* Background Pattern */
 .bg-grid {
@@ -183,10 +183,11 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.5rem;
   padding: 0.875rem 1.75rem;
   font-size: 0.9375rem;
+  font-family: var(--font-display);
   font-weight: 600;
   color: var(--bg-primary);
   background: linear-gradient(135deg, var(--accent), var(--accent-dim));
-  border-radius: 0.625rem;
+  border-radius: 100px;
   border: none;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -218,11 +219,12 @@ h1, h2, h3, h4, h5, h6 {
   gap: 0.5rem;
   padding: 0.875rem 1.75rem;
   font-size: 0.9375rem;
+  font-family: var(--font-display);
   font-weight: 600;
   color: var(--text-primary);
   background: transparent;
-  border: 1px solid var(--border-default);
-  border-radius: 0.625rem;
+  border: 1.5px solid var(--border-default);
+  border-radius: 100px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;
@@ -429,6 +431,18 @@ textarea.form-input {
 ::selection {
   background: rgba(56, 189, 248, 0.2);
   color: var(--text-primary);
+}
+
+/* Alternating Section Backgrounds */
+.section-alt {
+  background: var(--bg-secondary);
+}
+
+/* Accent Font */
+.accent-text {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
 }
 
 /* Print */
