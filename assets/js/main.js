@@ -148,4 +148,36 @@
     });
   });
 
+  // ─── Terminal Carousel ───
+  const terminalSlides = document.querySelectorAll('.terminal-slide');
+  const terminalDots = document.querySelectorAll('.terminal-dot');
+  const terminalCounter = document.querySelector('.terminal-counter');
+  let currentSlide = 0;
+
+  function showTerminalSlide(index) {
+    terminalSlides.forEach(s => s.classList.remove('active'));
+    terminalDots.forEach(d => d.classList.remove('active'));
+    terminalSlides[index]?.classList.add('active');
+    terminalDots[index]?.classList.add('active');
+    if (terminalCounter) {
+      terminalCounter.textContent = (index + 1) + '/' + terminalSlides.length;
+    }
+    currentSlide = index;
+  }
+
+  if (terminalSlides.length > 0) {
+    // Auto-rotate every 5 seconds
+    setInterval(() => {
+      showTerminalSlide((currentSlide + 1) % terminalSlides.length);
+    }, 5000);
+
+    // Click dots
+    terminalDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slide = parseInt(dot.getAttribute('data-slide'));
+        showTerminalSlide(slide);
+      });
+    });
+  }
+
 })();

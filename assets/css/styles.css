@@ -445,6 +445,44 @@ textarea.form-input {
   font-weight: 400;
 }
 
+/* Terminal Carousel */
+.terminal-carousel {
+  position: relative;
+  overflow: hidden;
+}
+.terminal-slide {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.terminal-slide.active {
+  display: block;
+  opacity: 1;
+  animation: terminal-fade-in 0.5s ease;
+}
+@keyframes terminal-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.3);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.terminal-dot.active {
+  background: var(--accent);
+  width: 24px;
+  border-radius: 4px;
+}
+.terminal-dot:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
 /* Print */
 @media print {
   .no-print { display: none !important; }
