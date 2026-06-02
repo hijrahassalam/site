@@ -451,13 +451,18 @@ textarea.form-input {
   overflow: hidden;
 }
 .terminal-slide {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.5s ease;
 }
 .terminal-slide.active {
-  display: block;
+  position: relative;
   opacity: 1;
+  pointer-events: auto;
   animation: terminal-fade-in 0.5s ease;
 }
 @keyframes terminal-fade-in {
