@@ -517,4 +517,22 @@ textarea.form-input {
 @media (max-width: 640px) {
   .orb { display: none; }
   .profile-container { width: 160px; height: 160px; }
+
+  /* Terminal mobile fix - prevent horizontal overflow */
+  .terminal-carousel {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .terminal-slide .p-5 {
+    padding: 1rem;
+  }
+  .terminal-slide .font-mono {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .terminal-slide .font-mono p {
+    white-space: normal;
+  }
 }
