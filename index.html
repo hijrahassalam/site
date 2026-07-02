@@ -576,9 +576,19 @@
       <!-- Hero: Build With AI Solo 2026 -->
       <div class="reveal glass rounded-xl overflow-hidden mb-8">
         <div class="grid md:grid-cols-5">
-          <!-- Photo -->
+          <!-- Photo Carousel -->
           <div class="md:col-span-2 relative">
-            <img src="assets/images/build-with-ai-solo-2026.webp" alt="Hijrah Assalam speaking at Build With AI Solo 2026" class="w-full h-full object-cover min-h-[280px]" loading="lazy">
+            <div class="photo-carousel" style="min-height:280px;">
+              <img src="assets/images/build-with-ai-solo-2026-1.webp" alt="Hijrah Assalam presenting BundaGizi at Build With AI Solo 2026" class="photo-slide active w-full h-full object-cover min-h-[280px]" loading="eager">
+              <img src="assets/images/build-with-ai-solo-2026-2.webp" alt="Hijrah Assalam speaking at Build With AI workshop" class="photo-slide w-full h-full object-cover min-h-[280px]" loading="lazy">
+              <img src="assets/images/build-with-ai-solo-2026-3.webp" alt="Hijrah Assalam presenting at Build With AI Solo" class="photo-slide w-full h-full object-cover min-h-[280px]" loading="lazy">
+            </div>
+            <!-- Dots -->
+            <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+              <button class="photo-dot active" data-slide="0" aria-label="Photo 1"></button>
+              <button class="photo-dot" data-slide="1" aria-label="Photo 2"></button>
+              <button class="photo-dot" data-slide="2" aria-label="Photo 3"></button>
+            </div>
           </div>
           <!-- Content -->
           <div class="md:col-span-3 p-8">

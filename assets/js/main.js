@@ -180,4 +180,29 @@
     });
   }
 
+  // ─── Photo Carousel ───
+  const photoSlides = document.querySelectorAll('.photo-slide');
+  const photoDots = document.querySelectorAll('.photo-dot');
+  let currentPhoto = 0;
+
+  function showPhotoSlide(index) {
+    photoSlides.forEach(s => s.classList.remove('active'));
+    photoDots.forEach(d => d.classList.remove('active'));
+    photoSlides[index]?.classList.add('active');
+    photoDots[index]?.classList.add('active');
+    currentPhoto = index;
+  }
+
+  if (photoSlides.length > 0) {
+    setInterval(() => {
+      showPhotoSlide((currentPhoto + 1) % photoSlides.length);
+    }, 4000);
+
+    photoDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        showPhotoSlide(parseInt(dot.getAttribute('data-slide')));
+      });
+    });
+  }
+
 })();
