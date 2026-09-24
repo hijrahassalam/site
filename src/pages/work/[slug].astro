@@ -1,9 +1,11 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PixelBadge from '../../components/PixelBadge.astro';
+import PixelLabel from '../../components/PixelLabel.astro';
+import ProductVisual from '../../components/ProductVisual.astro';
 import ProjectPreview from '../../components/ProjectPreview.astro';
+import MetricBlock from '../../components/MetricBlock.astro';
 import PixelButton from '../../components/PixelButton.astro';
 import { accents, statusLabels } from '../../lib/accent';
 
@@ -15,20 +17,22 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { project } = Astro.props;
-const { Content } = await render(project);
-
 const data = project.data;
 const a = accents[data.accent];
 const statusLabel = statusLabels[data.statusKind] ?? data.status;
-
-const categoryLabel =
-  data.category === 'current'
-    ? 'Current build'
-    : data.category === 'production'
-      ? 'Production system'
-      : 'Tooling';
-
 const external = (data.links ?? []).find((link) => link.href.startsWith('http'));
+const supportedVisual: Record<string, 'asistendiet' | 'bidiktender' | 'uns'> = {
+  asistendiet: 'asistendiet',
+  bidiktender: 'bidiktender',
+  'penugasan-uns': 'uns',
+};
+const visual = supportedVisual[project.id];
+
+const facts = [
+  { label: 'Role', value: data.role },
+  ...(data.scale ? [{ label: 'Scale', value: data.scale }] : []),
+  ...(data.period ? [{ label: 'Period', value: data.period }] : []),
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -42,122 +46,88 @@ const jsonLd = {
 ---
 
 <BaseLayout title={`${data.title} — Hijrah Assalam`} description={data.positioning} jsonLd={jsonLd}>
-  <article class="mx-auto max-w-5xl px-4 pt-10 sm:px-6 sm:pt-14">
-    <!-- Breadcrumb -->
-    <nav class="hud-label flex items-center gap-2 text-ink-3" aria-label="Breadcrumb">
-      <a href="/work" class="hover:text-cyan-400">Work</a>
+  <article class="mx-auto max-w-6xl px-4 pt-10 sm:px-6 sm:pt-14">
+    <nav class="hud-label flex min-h-6 items-center gap-2 text-ink-3" aria-label="Breadcrumb">
+      <a href="/work" class="inline-flex min-h-6 items-center px-1 hover:text-cyan-400">Work</a>
       <span aria-hidden="true">/</span>
       <span class="text-ink-2">{data.title}</span>
     </nav>
 
-    <!-- Header -->
-    <header class="reveal mt-8">
-      <p class:list={['eyebrow', a.text]}>{categoryLabel}</p>
-      <h1 class="mt-4 text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
-        {data.title}
-      </h1>
-      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">{data.positioning}</p>
-
-      <div class="mt-6 flex flex-wrap items-center gap-2">
-        <PixelBadge label={statusLabel} accent={data.accent} pulse />
-        <PixelBadge label={data.role} accent="cyan" />
-        {data.scale && <PixelBadge label={data.scale} accent="mint" />}
-        {data.period && <span class="hud-label text-ink-3">{data.period}</span>}
+    <header class="mt-7 grid gap-7 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <div>
+        <PixelLabel label={statusLabel} accent={data.accent} cursor />
+        <h1 class="mt-4 text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+          {data.title}
+        </h1>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink-2">{data.positioning}</p>
       </div>
 
-      {external && (
-        <div class="mt-7">
-          <PixelButton href={external.href}>{external.label}</PixelButton>
-        </div>
-      )}
+      <dl class="grid grid-cols-2 gap-4 border-y border-ink/10 py-4 sm:grid-cols-3">
+        {facts.map((fact) => (
+          <div>
+            <dt class="hud-label text-ink-3">{fact.label}</dt>
+            <dd class:list={['mt-1.5 text-sm font-medium', a.text]}>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
     </header>
 
-    <!-- Visual: real workflow (§26–§28) -->
-    {
-      data.flow && data.flow.length > 0 && (
-        <section class="reveal mt-10">
-          <p class="hud-label mb-3">{data.flowLabel ?? 'Flow'}</p>
+    <!-- Product first: schematic where no genuine screenshot is available. -->
+    <section class="mt-10">
+      <PixelLabel label={data.flowLabel ?? 'Product visual'} accent={data.accent} />
+      <div class="mt-4 bg-bg-base/35 p-4 sm:p-7">
+        {visual ? (
+          <ProductVisual variant={visual} />
+        ) : data.flow && data.flow.length > 0 ? (
           <ProjectPreview
             flow={data.flow}
             accent={data.accent}
             direction="horizontal"
-            caption={`${data.title} — workflow summary`}
+            caption={`${data.title} — factual workflow diagram`}
           />
-        </section>
-      )
-    }
+        ) : null}
+      </div>
+      <p class="coord mt-3">Schematic workflow — not a fabricated product screenshot</p>
+    </section>
 
-    <!-- Metrics -->
-    {
-      data.metrics && data.metrics.length > 0 && (
-        <section class="reveal mt-10">
-          <dl class="grid grid-cols-2 gap-4 border-y border-ink/10 py-6 sm:grid-cols-3">
-            {data.metrics.map((metric) => (
-              <div>
-                <dd class:list={['hud-value text-lg', a.text]}>{metric.value}</dd>
-                <dt class="hud-label mt-1.5 text-ink-3">{metric.label}</dt>
-              </div>
-            ))}
-          </dl>
-        </section>
-      )
-    }
+    {data.metrics && data.metrics.length > 0 && (
+      <section class="mt-10">
+        <dl class="grid grid-cols-2 gap-5 border-y border-ink/10 py-6 sm:grid-cols-3">
+          {data.metrics.map((metric) => (
+            <MetricBlock value={metric.value} label={metric.label} accent={data.accent} size="md" />
+          ))}
+        </dl>
+      </section>
+    )}
 
-    <div class="mt-12 grid gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
-      <!-- Body -->
-      <div class="reveal">
-        <div
-          class="max-w-none text-[0.9375rem] leading-relaxed text-ink-2 [&>p+p]:mt-5 [&>p:first-child]:text-ink"
-        >
-          <Content />
-        </div>
-
-        {
-          data.highlights && data.highlights.length > 0 && (
-            <section class="mt-10">
-              <h2 class="hud-label">What it does</h2>
-              <ul class="mt-4 space-y-3">
-                {data.highlights.map((highlight) => (
-                  <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink-2">
-                    <span class:list={['mt-[8px] h-1.5 w-1.5 flex-none', a.bg]} aria-hidden="true" />
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+    <section class="mt-12 grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14">
+      <div>
+        <PixelLabel label="What it does" accent={data.accent} />
+        <ul class="mt-5 space-y-3">
+          {(data.highlights ?? []).slice(0, 4).map((highlight) => (
+            <li class="flex gap-3 text-[0.9375rem] leading-relaxed text-ink-2">
+              <span class:list={['mt-[8px] h-1.5 w-1.5 flex-none', a.bg]} aria-hidden="true" />
+              <span>{highlight}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <!-- Sidebar: stack berkelompok (§42) -->
-      <aside class="reveal h-fit">
-        <div class="panel p-5">
-          <h2 class="hud-label">Capabilities</h2>
-          <dl class="mt-4 space-y-4">
-            {
-              (data.stack ?? []).map((group) => (
-                <div>
-                  <dt class="hud-label text-ink-3">{group.label}</dt>
-                  <dd class="hud-value mt-1.5 text-ink-2">{group.items}</dd>
-                </div>
-              ))
-            }
-          </dl>
-        </div>
-
-        <div class="panel mt-4 p-5">
-          <h2 class="hud-label">Status</h2>
-          <p class="mt-3 flex items-center gap-2 text-sm text-ink-2">
-            <span class:list={['dot', a.dot]} aria-hidden="true"></span>
-            {data.status}
-          </p>
-          <p class="hud-label mt-3 text-ink-3">Role · {data.role}</p>
-        </div>
+      <aside class="border-l-2 border-ink/10 pl-5">
+        <PixelLabel label="Capability loadout" accent="cyan" />
+        <dl class="mt-5 divide-y divide-ink/10">
+          {(data.stack ?? []).map((group) => (
+            <div class="py-3 first:pt-0">
+              <dt class="hud-label text-ink-3">{group.label}</dt>
+              <dd class="mt-1.5 text-sm text-ink-2">{group.items}</dd>
+            </div>
+          ))}
+        </dl>
       </aside>
-    </div>
+    </section>
 
-    <!-- Footer nav -->
-    <div class="reveal mt-14 flex flex-wrap items-center gap-3 border-t border-ink/10 pt-8">
+    <div class="mt-12 flex flex-wrap items-center gap-3 border-t border-ink/10 py-8">
+      {external && <PixelButton href={external.href}>{external.label}</PixelButton>}
       <PixelButton href="/work" variant="ghost">All work</PixelButton>
       <PixelButton href="/contact" variant="ghost">Get in touch</PixelButton>
     </div>

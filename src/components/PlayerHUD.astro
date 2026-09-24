@@ -1,0 +1,42 @@
+---
+interface Cell {
+  label: string;
+  value: string;
+  accent?: 'cyan' | 'mint' | 'violet' | 'amber';
+}
+
+interface Props {
+  cells: Cell[];
+  title?: string;
+  class?: string;
+}
+
+const { cells, title = 'Status', class: className = '' } = Astro.props;
+
+const color: Record<string, string> = {
+  cyan: 'text-cyan-400',
+  mint: 'text-mint-400',
+  violet: 'text-violet-400',
+  amber: 'text-amber-400',
+};
+---
+
+<div class:list={['panel overflow-hidden', className]}>
+  <div class="flex items-center gap-2 border-b border-ink/10 bg-bg-base/50 px-4 py-2">
+    <span class="dot dot-live" aria-hidden="true"></span>
+    <span class="hud-label text-ink-2">{title}</span>
+  </div>
+
+  <dl class="grid grid-cols-2 divide-ink/10 sm:grid-cols-3 lg:grid-cols-6 lg:divide-x">
+    {
+      cells.map((cell) => (
+        <div class="border-b border-ink/10 px-4 py-3 lg:border-b-0">
+          <dt class="hud-label text-ink-3">{cell.label}</dt>
+          <dd class:list={['mt-1.5 text-sm font-medium', color[cell.accent ?? 'cyan']]}>
+            {cell.value}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</div>

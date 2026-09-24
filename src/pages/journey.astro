@@ -1,98 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import JourneyMap from '../components/JourneyMap.astro';
+import PixelLabel from '../components/PixelLabel.astro';
 import PixelButton from '../components/PixelButton.astro';
-import PixelBadge from '../components/PixelBadge.astro';
+import JourneyWorldMap from '../components/JourneyWorldMap.astro';
 
-const chapters = [
-  {
-    region: 'Region 01 — Foundation',
-    accent: 'cyan' as const,
-    eyebrow: 'Engineering',
-    nodes: [
-      {
-        year: '2021',
-        title: 'Software engineering',
-        note: 'Building and shipping web systems end to end — where the habit of finishing things started.',
-        state: 'done' as const,
-      },
-      {
-        title: 'Full-stack development',
-        note: 'Backend, frontend, and deployment handled in one loop. Ownership from schema to screen.',
-        state: 'done' as const,
-      },
-      {
-        title: 'Learn Quran — 4M+ users',
-        note: 'First experience operating a service used by millions across four platforms.',
-        state: 'done' as const,
-      },
-    ],
-  },
-  {
-    region: 'Region 02 — Enterprise',
-    accent: 'mint' as const,
-    eyebrow: 'Production',
-    nodes: [
-      {
-        title: 'Penugasan UNS',
-        note: 'Institutional workflow at 3,500+ staff and 900+ units: approvals, e-signature, geolocation, payment.',
-        state: 'done' as const,
-      },
-      {
-        title: 'Integration discipline',
-        note: 'Third-party systems assumed to fail, approval flows made idempotent, audit trails treated as mandatory.',
-        state: 'done' as const,
-      },
-    ],
-  },
-  {
-    region: 'Region 03 — AI products',
-    accent: 'mint' as const,
-    eyebrow: 'Products',
-    nodes: [
-      {
-        title: 'BundaGizi',
-        note: 'WhatsApp AI nutrition assistant with a 1,146-item Indonesian food knowledge base, run in production.',
-        state: 'done' as const,
-      },
-      {
-        year: '2026',
-        title: 'AsistenDiet & BidikTender',
-        note: 'Two products in parallel: consumer AI for nutrition goals, enterprise AI for tender readiness.',
-        state: 'current' as const,
-      },
-    ],
-  },
-  {
-    region: 'Region 04 — Research',
-    accent: 'violet' as const,
-    eyebrow: 'Research',
-    nodes: [
-      {
-        title: 'Explainable AI for medical imaging',
-        note: 'CNN with honest Grad-CAM analysis — surfacing shortcut learning instead of hiding it.',
-        state: 'current' as const,
-      },
-      {
-        title: 'Biomedical AI',
-        note: 'The direction I am committing to: models that are accurate and accountable.',
-        state: 'current' as const,
-      },
-    ],
-  },
-  {
-    region: 'Next region',
-    accent: 'amber' as const,
-    eyebrow: 'Next',
-    nodes: [
-      {
-        title: 'Graduate study',
-        note: 'Preparing graduate research in biomedical AI, targeting Japan.',
-        state: 'next' as const,
-      },
-    ],
-  },
+const nodes = [
+  { title: 'Software engineering', year: '2021+', note: 'Building and shipping web systems end to end.', state: 'done' as const, x: 70, y: 470 },
+  { title: 'Full-stack systems', note: 'Backend, frontend, and deployment in one loop.', state: 'done' as const, x: 210, y: 385 },
+  { title: 'Learn Quran · 4M+', note: 'Operating a product at multi-platform scale.', state: 'done' as const, x: 325, y: 460 },
+  { title: 'Enterprise systems', note: 'Penugasan UNS: 3,500+ staff and 900+ units.', state: 'done' as const, x: 450, y: 348 },
+  { title: 'Production AI', note: 'BundaGizi: WhatsApp AI with 1,146 foods.', state: 'done' as const, x: 570, y: 405 },
+  { title: 'Applied AI', year: '2026', note: 'AsistenDiet and BidikTender, in parallel.', state: 'current' as const, x: 690, y: 270 },
+  { title: 'Biomedical AI', note: 'Interpretability for medical imaging.', state: 'current' as const, x: 815, y: 160 },
+  { title: 'Next region', year: 'Graduate study', note: 'Preparing graduate research in biomedical AI.', state: 'next' as const, x: 930, y: 70 },
+];
+
+const regions = [
+  { code: '01', title: 'Foundation', fact: 'Software → full-stack ownership', accent: 'text-cyan-400' },
+  { code: '02', title: 'Enterprise', fact: 'Scale, failure modes, auditability', accent: 'text-cyan-400' },
+  { code: '03', title: 'AI products', fact: 'Ship under real user constraints', accent: 'text-mint-400' },
+  { code: '04', title: 'Research', fact: 'Accuracy plus accountability', accent: 'text-violet-400' },
 ];
 
 const jsonLd = {
@@ -100,64 +27,52 @@ const jsonLd = {
   '@type': 'ProfilePage',
   name: 'Journey — Hijrah Assalam',
   url: 'https://www.hijrahassalam.com/journey',
-  description:
-    'Career progression from software engineering through enterprise systems and AI products to biomedical AI research.',
+  description: 'Career progression from software engineering through enterprise systems and AI products to biomedical AI research.',
 };
 ---
 
 <BaseLayout
   title="Journey — Hijrah Assalam"
-  description="From software engineering to enterprise systems to AI products — and the research direction that comes next."
+  description="A visual career route from software engineering to AI products and biomedical AI research."
   jsonLd={jsonLd}
 >
-  <section class="mx-auto max-w-6xl px-4 pb-4 pt-12 sm:px-6 sm:pt-16">
-    <div class="reveal">
-      <p class="eyebrow text-amber-400">Journey</p>
-      <h1 class="mt-4 max-w-3xl text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
-        An evolving career adventure, not a static CV
-      </h1>
-      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">
-        Each region taught something the previous one could not. Enterprise systems taught me to
-        build for failure. AI products taught me to ship under real user constraints. Research is
-        where both have to hold up at once.
-      </p>
-      <div class="mt-6 flex flex-wrap gap-2">
-        <PixelBadge label="Engineering" accent="cyan" />
-        <PixelBadge label="Products" accent="mint" />
-        <PixelBadge label="Research" accent="violet" />
-        <PixelBadge label="Journey" accent="amber" />
-      </div>
-    </div>
+  <section class="mx-auto max-w-6xl px-4 pb-6 pt-12 sm:px-6 sm:pt-16">
+    <PixelLabel label="World map" accent="amber" cursor />
+    <h1 class="mt-4 max-w-3xl text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+      Every region changed how I build
+    </h1>
+    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+      From shipping software, to operating enterprise systems, to building AI that must explain itself.
+    </p>
   </section>
 
-  {
-    chapters.map((chapter, i) => (
-      <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <SectionHeader
-          eyebrow={chapter.eyebrow}
-          title={chapter.region}
-          accent={chapter.accent}
-        />
-        <div class="reveal mt-6 lg:pl-[3px]">
-          <JourneyMap nodes={chapter.nodes} />
-        </div>
-        {i < chapters.length - 1 && <div class="mt-6 border-t border-ink/8" />}
-      </section>
-    ))
-  }
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <JourneyWorldMap nodes={nodes} currentIndex={5} />
+  </section>
 
-  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-    <div class="panel reveal p-6 sm:p-8">
-      <p class="hud-label">Current objective</p>
-      <h2 class="mt-3 text-xl font-semibold text-ink sm:text-2xl">
-        Build AI products that hold up — then take that standard into research.
-      </h2>
-      <p class="mt-3 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-2">
-        The long-term direction is biomedical AI: models that are not only accurate, but
-        accountable. Everything before this point is preparation for it.
-      </p>
-      <div class="mt-6 flex flex-wrap gap-3">
-        <PixelButton href="/research">See the research</PixelButton>
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <PixelLabel label="Region records" accent="amber" />
+    <dl class="mt-5 divide-y divide-ink/10 border-y border-ink/10">
+      {regions.map((region) => (
+        <div class="grid gap-2 py-4 sm:grid-cols-[4rem_10rem_1fr] sm:items-baseline">
+          <dt class="hud-label text-amber-400">{region.code}</dt>
+          <dd class:list={['text-sm font-semibold', region.accent]}>{region.title}</dd>
+          <dd class="text-sm text-ink-2">{region.fact}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="flex flex-col gap-6 border-l-2 border-amber-400/60 pl-5 sm:flex-row sm:items-end sm:justify-between sm:pl-7">
+      <div>
+        <PixelLabel label="Current objective" accent="amber" />
+        <h2 class="mt-3 max-w-2xl text-xl font-semibold text-ink sm:text-2xl">
+          Build AI products that hold up — then carry that standard into research.
+        </h2>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <PixelButton href="/research">Research path</PixelButton>
         <PixelButton href="/hire" variant="ghost">Hire me</PixelButton>
       </div>
     </div>

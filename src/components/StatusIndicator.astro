@@ -1,0 +1,34 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  label: string;
+  accent?: Accent;
+  kind?: 'dot' | 'diamond' | 'bar';
+  pulse?: boolean;
+  class?: string;
+}
+
+const { label, accent = 'mint', kind = 'dot', pulse = true, class: className = '' } = Astro.props;
+const a = accents[accent];
+---
+
+<span class:list={['inline-flex items-center gap-2', className]}>
+  {
+    kind === 'dot' && (
+      <span class:list={['dot', pulse ? a.dot : a.bg]} aria-hidden="true" />
+    )
+  }
+  {
+    kind === 'diamond' && (
+      <span class:list={['h-2 w-2 rotate-45', a.bg]} aria-hidden="true" />
+    )
+  }
+  {
+    kind === 'bar' && (
+      <span class:list={['h-2.5 w-[3px]', a.bg]} aria-hidden="true" />
+    )
+  }
+  <span class:list={['hud-label', a.text]}>{label}</span>
+</span>

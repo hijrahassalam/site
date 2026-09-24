@@ -1,132 +1,150 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionHeader from '../../components/SectionHeader.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
+import PixelLabel from '../../components/PixelLabel.astro';
+import QuestPanel from '../../components/QuestPanel.astro';
+import ProductionRecord from '../../components/ProductionRecord.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const currentBuilds = projects.filter((p) => p.data.category === 'current');
-const production = projects.filter((p) => p.data.category === 'production');
-const tooling = projects.filter((p) => p.data.category === 'tooling');
+const projects = await getCollection('projects');
+const byId = (id: string) => projects.find((project) => project.id === id)!;
+const asistendiet = byId('asistendiet');
+const bidiktender = byId('bidiktender');
+const uns = byId('penugasan-uns');
+const bundagizi = byId('bundagizi');
+const learnQuran = byId('learn-quran');
+const tooling = projects.filter((project) => project.data.category === 'tooling');
+
+const capabilities = [
+  { label: 'Backend', value: 'Laravel · PHP · Node.js' },
+  { label: 'AI', value: 'Python · LLM · RAG · Agents' },
+  { label: 'Frontend', value: 'Vue.js · JavaScript · Astro' },
+  { label: 'Infra', value: 'Docker · CI/CD · Cloud' },
+];
 
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'Work — Hijrah Assalam',
   url: 'https://www.hijrahassalam.com/work',
-  description:
-    'Production systems, AI products, and enterprise platforms built by Hijrah Assalam.',
+  description: 'Production systems, AI products, and enterprise platforms built by Hijrah Assalam.',
 };
 ---
 
 <BaseLayout
   title="Work — Hijrah Assalam"
-  description="Current builds, production systems, and AI tooling — evidence of what Hijrah Assalam has shipped and operates."
+  description="Current AI builds and production systems — shown through workflows, evidence, and scale."
   jsonLd={jsonLd}
 >
-  <section class="mx-auto max-w-6xl px-4 pb-6 pt-12 sm:px-6 sm:pt-16">
-    <div class="reveal">
-      <p class="eyebrow">Work</p>
-      <h1 class="mt-4 text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
-        What I've built and what I'm building
-      </h1>
-      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">
-        Current builds come first, then the systems already running in production. Each entry states
-        the role, the scale, and what it actually does — no decorative copy.
-      </p>
-    </div>
+  <section class="mx-auto max-w-6xl px-4 pb-8 pt-12 sm:px-6 sm:pt-16">
+    <PixelLabel label="World select · Work" accent="mint" cursor />
+    <h1 class="mt-4 max-w-3xl text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+      Products as quests. Production as proof.
+    </h1>
+    <p class="mt-4 max-w-xl text-base leading-relaxed text-ink-2">
+      Two products in active development, backed by systems already serving real institutions and users.
+    </p>
   </section>
 
-  <!-- CURRENT BUILDS (§25) -->
+  <!-- ACTIVE BUILDS: visual dominates -->
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <SectionHeader eyebrow="Current builds" title="Actively building" accent="mint" />
+    <div class="flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Current builds" accent="mint" />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Active quests</h2>
+      </div>
+      <span class="coord hidden sm:block">01 / 03</span>
+    </div>
+
     <div class="mt-8 space-y-6">
-      {
-        currentBuilds.map((project) => (
-          <div class="reveal">
-            <ProjectCard project={project.data} slug={project.id} variant="feature" />
-          </div>
-        ))
-      }
+      <QuestPanel
+        index="Quest 01"
+        title="AsistenDiet"
+        statusKind={asistendiet.data.statusKind}
+        status={asistendiet.data.status}
+        accent="mint"
+        positioning="Goal-aware nutrition tracking through conversation, not forms."
+        capabilities={['Meals analysed from photos', 'Feedback follows the chosen goal', 'WhatsApp and web, one source of truth']}
+        visual="asistendiet"
+        slug="asistendiet"
+      />
+      <QuestPanel
+        index="Quest 02"
+        title="BidikTender"
+        statusKind={bidiktender.data.statusKind}
+        status={bidiktender.data.status}
+        accent="cyan"
+        positioning="Tender requirements extracted, matched, and scored for readiness."
+        capabilities={['Requirements read from official documents', 'Every clause tied to evidence', 'Blockers surfaced before the deadline']}
+        visual="bidiktender"
+        slug="bidiktender"
+        side="right"
+      />
     </div>
   </section>
 
-  <!-- PRODUCTION SYSTEMS -->
+  <!-- PRODUCTION: network rather than card grid -->
   <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-    <SectionHeader
-      eyebrow="Production systems"
-      title="Running in production"
-      description="Enterprise and consumer platforms with real users, real load, and real consequences when they fail."
-      accent="mint"
-    />
-    <div class="mt-8 grid gap-4 sm:grid-cols-2">
-      {
-        production.map((project) => (
-          <article class="panel reveal flex flex-col justify-between p-5 sm:p-6">
-            <div>
-              <div class="flex flex-wrap items-center gap-2">
-                <h3 class="text-lg font-semibold text-ink">{project.data.title}</h3>
-                <span class="hud-label text-mint-400">{project.data.status}</span>
-              </div>
-              <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">
-                {project.data.positioning}
-              </p>
+    <div class="flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Production systems" accent="cyan" />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">Shipped and operating</h2>
+      </div>
+      <span class="coord hidden sm:block">02 / 03</span>
+    </div>
 
-              {(project.data.metrics ?? []).length > 0 && (
-                <dl class="mt-5 grid grid-cols-3 gap-3 border-t border-ink/10 pt-4">
-                  {(project.data.metrics ?? []).slice(0, 3).map((metric) => (
-                    <div>
-                      <dd class="hud-value text-mint-400">{metric.value}</dd>
-                      <dt class="hud-label mt-1 text-ink-3">{metric.label}</dt>
-                    </div>
-                  ))}
-                </dl>
-              )}
-            </div>
-
-            <div class="mt-5 flex items-center gap-4">
-              {project.data.hasDetail && (
-                <a href={`/work/${project.id}`} class="hud-label text-ink-2 hover:text-cyan-400">
-                  Detail &#8594;
-                </a>
-              )}
-              {(project.data.links ?? [])
-                .filter((link) => link.href.startsWith('http'))
-                .map((link) => (
-                  <a
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hud-label text-ink-3 hover:text-ink"
-                  >
-                    {link.label} &#8599;
-                  </a>
-                ))}
-            </div>
-          </article>
-        ))
-      }
+    <div class="mt-8">
+      <ProductionRecord
+        hub={{
+          title: uns.data.title,
+          note: uns.data.positioning,
+          href: '/work/penugasan-uns',
+          metrics: [
+            { value: '3,500+', label: 'Staff' },
+            { value: '900+', label: 'Units' },
+            { value: 'Live', label: 'Status' },
+          ],
+        }}
+        branches={[
+          {
+            title: learnQuran.data.title,
+            note: learnQuran.data.positioning,
+            href: '/work',
+            metrics: [{ value: '4M+', label: 'Users' }, { value: '4', label: 'Platforms' }],
+          },
+          {
+            title: bundagizi.data.title,
+            note: bundagizi.data.positioning,
+            href: '/work/bundagizi',
+            metrics: [{ value: '1.146', label: 'Foods' }, { value: 'WhatsApp', label: 'Interface' }],
+          },
+        ]}
+      />
     </div>
   </section>
 
-  <!-- TOOLING -->
-  {
-    tooling.length > 0 && (
-      <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <SectionHeader
-          eyebrow="Tooling"
-          title="AI engineering &amp; developer workflow"
-          description="Internal capability rather than a public product — how the work itself gets done."
-          accent="cyan"
-        />
-        <div class="mt-8 space-y-4">
-          {tooling.map((project) => (
-            <div class="reveal">
-              <ProjectCard project={project.data} slug={project.id} variant="compact" />
-            </div>
-          ))}
+  <!-- CAPABILITIES: grouped, technologies are not badges (§31) -->
+  <section class="mx-auto max-w-6xl px-4 py-10 pb-4 sm:px-6">
+    <div class="flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Capability loadout" accent="cyan" />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">How the work gets built</h2>
+      </div>
+      <span class="coord hidden sm:block">03 / 03</span>
+    </div>
+
+    <dl class="mt-8 divide-y divide-ink/10 border-y border-ink/10">
+      {capabilities.map((capability, i) => (
+        <div class="grid gap-2 py-4 sm:grid-cols-[9rem_1fr] sm:items-baseline">
+          <dt class="hud-label text-cyan-400">0{i + 1} · {capability.label}</dt>
+          <dd class="text-sm text-ink-2">{capability.value}</dd>
         </div>
-      </section>
-    )
-  }
+      ))}
+    </dl>
+
+    {tooling.length > 0 && (
+      <p class="mt-6 text-sm text-ink-2">
+        Internal AI engineering: {tooling.map((project) => project.data.title).join(' · ')}
+      </p>
+    )}
+  </section>
 </BaseLayout>

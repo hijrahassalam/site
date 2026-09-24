@@ -1,0 +1,116 @@
+---
+interface Quest {
+  title: string;
+  status: string;
+  accent: 'cyan' | 'mint' | 'violet' | 'amber';
+  href?: string;
+}
+
+interface Props {
+  slot?: string;
+  owner?: string;
+  quests: Quest[];
+  nextObjective: { title: string; note: string };
+  updated: string;
+  class?: string;
+}
+
+const { slot = 'Save file 01', owner = 'Hijrah Assalam', quests, nextObjective, updated, class: className = '' } =
+  Astro.props;
+
+const text: Record<string, string> = {
+  cyan: 'text-cyan-400',
+  mint: 'text-mint-400',
+  violet: 'text-violet-400',
+  amber: 'text-amber-400',
+};
+
+const marker: Record<string, string> = {
+  cyan: '&#9679;',
+  mint: '&#9679;',
+  violet: '&#9670;',
+  amber: '&#9650;',
+};
+---
+
+<div class:list={['px-frame bg-ink/15 p-[2px]', className]}>
+  <div class="px-frame bg-bg-base">
+    <!-- Header save file -->
+    <div class="flex items-center justify-between gap-4 border-b border-ink/10 px-4 py-3">
+      <div class="flex items-center gap-2.5">
+        <span class="dot dot-active" aria-hidden="true"></span>
+        <span class="hud-label text-amber-400">{slot}</span>
+      </div>
+      <span class="coord">Updated {updated}</span>
+    </div>
+
+    <div class="grid gap-0 lg:grid-cols-[1.3fr_1fr]">
+      <!-- QUEST LIST -->
+      <div class="border-b border-ink/10 p-4 sm:p-5 lg:border-b-0 lg:border-r">
+        <p class="hud-label text-ink-3">Player</p>
+        <p class="mt-1.5 text-lg font-semibold tracking-tight text-ink">{owner}</p>
+
+        <p class="hud-label mt-5 text-ink-3">Current quests</p>
+        <ul class="mt-3 divide-y divide-ink/8">
+          {
+            quests.map((quest) => (
+              <li>
+                {quest.href ? (
+                  <a
+                    href={quest.href}
+                    class="group flex items-baseline justify-between gap-4 py-2.5 transition-colors hover:bg-bg-surface/60"
+                  >
+                    <span class="flex min-w-0 items-baseline gap-2.5">
+                      <span class:list={['text-[0.6875rem]', text[quest.accent]]} set:html={marker[quest.accent]} />
+                      <span class="text-sm font-medium text-ink">{quest.title}</span>
+                    </span>
+                    <span class="hud-label flex-none text-ink-3 group-hover:text-ink-2">
+                      {quest.status}
+                    </span>
+                  </a>
+                ) : (
+                  <div class="flex items-baseline justify-between gap-4 py-2.5">
+                    <span class="flex min-w-0 items-baseline gap-2.5">
+                      <span class:list={['text-[0.6875rem]', text[quest.accent]]} set:html={marker[quest.accent]} />
+                      <span class="text-sm font-medium text-ink">{quest.title}</span>
+                    </span>
+                    <span class="hud-label flex-none text-ink-3">{quest.status}</span>
+                  </div>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- NEXT OBJECTIVE -->
+      <div class="flex flex-col justify-between gap-5 bg-bg-surface/40 p-4 sm:p-5">
+        <div>
+          <p class="hud-label text-ink-3">Next objective</p>
+          <p class="mt-2 text-base font-semibold text-amber-400">{nextObjective.title}</p>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">{nextObjective.note}</p>
+        </div>
+
+        <div class="border-t border-ink/10 pt-4">
+          <div class="flex items-center justify-between">
+            <span class="hud-label text-ink-3">Overall progress</span>
+            <span class="hud-label text-amber-400">In progress</span>
+          </div>
+          <div class="mt-2 flex gap-[3px]" role="img" aria-label="Progres keseluruhan: sedang berjalan">
+            {
+              Array.from({ length: 12 }, (_, i) => (
+                <span
+                  class:list={['h-2 flex-1 rounded-[1px]', i < 8 ? 'bg-amber-400' : 'bg-ink/12']}
+                  aria-hidden="true"
+                />
+              ))
+            }
+          </div>
+          <a href="/now" class="hud-label mt-4 inline-flex min-h-6 items-center text-amber-400">
+            Open quest log &#8594;
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

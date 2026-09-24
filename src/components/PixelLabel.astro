@@ -1,0 +1,20 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  label: string;
+  accent?: Accent;
+  /** tampilkan kursor pixel sebelum label */
+  cursor?: boolean;
+  class?: string;
+}
+
+const { label, accent = 'cyan', cursor = false, class: className = '' } = Astro.props;
+const a = accents[accent];
+---
+
+<p class:list={['eyebrow', a.text, className]}>
+  {cursor && <span class="cursor-mark" aria-hidden="true">&#9646;</span>}
+  {label}
+</p>

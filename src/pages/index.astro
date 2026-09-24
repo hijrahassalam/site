@@ -1,53 +1,97 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import StatusHUD from '../components/StatusHUD.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import ResearchPreview from '../components/ResearchPreview.astro';
-import JourneyMap from '../components/JourneyMap.astro';
-import QuestCard from '../components/QuestCard.astro';
+import HeroScene from '../components/HeroScene.astro';
+import PlayerHUD from '../components/PlayerHUD.astro';
+import PixelLabel from '../components/PixelLabel.astro';
+import QuestPanel from '../components/QuestPanel.astro';
+import ProductionRecord from '../components/ProductionRecord.astro';
+import JourneyWorldMap from '../components/JourneyWorldMap.astro';
+import ResearchFlow from '../components/ResearchFlow.astro';
+import SaveScreen from '../components/SaveScreen.astro';
 import PixelButton from '../components/PixelButton.astro';
-import PixelBadge from '../components/PixelBadge.astro';
-import avatar from '../assets/pixel-avatar.png';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const currentBuilds = projects.filter((p) => p.data.category === 'current');
-const production = projects.filter((p) => p.data.category === 'production');
-const tooling = projects.filter((p) => p.data.category === 'tooling');
+const projects = await getCollection('projects');
+const byId = (id: string) => projects.find((p) => p.id === id)!;
 
-const researchEntry = (await getCollection('research')).sort(
-  (a, b) => a.data.order - b.data.order
-)[0];
-const nowEntry = (await getCollection('now'))[0];
+const asistendiet = byId('asistendiet');
+const bidiktender = byId('bidiktender');
+const uns = byId('penugasan-uns');
+const bundagizi = byId('bundagizi');
+const learnQuran = byId('learn-quran');
 
-const journey = [
+const research = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order)[0];
+const now = (await getCollection('now'))[0];
+
+const journeyNodes = [
   {
-    year: '2021',
     title: 'Software engineering',
-    note: 'Starting point: building and shipping web systems end to end.',
+    year: '2021+',
+    note: 'Building and shipping web systems end to end.',
     state: 'done' as const,
+    x: 70,
+    y: 470,
   },
-  { title: 'Full-stack development', note: 'Backend, frontend, and deployment in one loop.', state: 'done' as const },
+  {
+    title: 'Full-stack systems',
+    note: 'Backend, frontend, and deployment in one loop.',
+    state: 'done' as const,
+    x: 215,
+    y: 385,
+  },
   {
     title: 'Enterprise systems',
-    note: 'Institutional workflows at scale — approvals, integrations, audit trails.',
+    note: '3,500+ staff, 900+ units, real audit trails.',
     state: 'done' as const,
+    x: 360,
+    y: 430,
   },
-  { title: 'AI product building', note: 'Shipping AI products with real users and real constraints.', state: 'done' as const },
   {
-    year: '2026',
+    title: 'AI products',
+    note: 'WhatsApp AI in production: BundaGizi.',
+    state: 'done' as const,
+    x: 505,
+    y: 330,
+  },
+  {
     title: 'Applied AI',
-    note: 'Production AI products: AsistenDiet and BidikTender.',
+    year: '2026',
+    note: 'AsistenDiet and BidikTender, in parallel.',
     state: 'current' as const,
+    x: 650,
+    y: 250,
   },
-  { title: 'Biomedical AI', note: 'Interpretability for medical imaging models.', state: 'current' as const },
   {
-    title: 'Next region — graduate study',
+    title: 'Biomedical AI',
+    note: 'Interpretability for medical imaging.',
+    state: 'current' as const,
+    x: 795,
+    y: 160,
+  },
+  {
+    title: 'Next region',
+    year: 'Graduate study',
     note: 'Preparing graduate research in biomedical AI.',
     state: 'next' as const,
+    x: 915,
+    y: 78,
   },
+];
+
+const saveQuests = now.data.quests.map((quest) => ({
+  title: quest.title,
+  status: quest.status,
+  accent: quest.accent,
+  href: quest.href,
+}));
+
+const hudCells = [
+  { label: 'Player', value: 'Hijrah Assalam', accent: 'cyan' as const },
+  { label: 'Class', value: 'AI Builder', accent: 'cyan' as const },
+  { label: 'XP', value: '5+ years', accent: 'cyan' as const },
+  { label: 'Current area', value: 'AI Products', accent: 'mint' as const },
+  { label: 'Builds', value: 'AsistenDiet · BidikTender', accent: 'mint' as const },
+  { label: 'Research path', value: 'Biomedical AI', accent: 'violet' as const },
 ];
 
 const jsonLd = [
@@ -59,13 +103,7 @@ const jsonLd = [
     jobTitle: 'AI Builder & Full-Stack Engineer',
     email: 'mailto:hello@hijrahassalam.com',
     sameAs: ['https://github.com/hijrahassalam', 'https://linkedin.com/in/hijrahassalam'],
-    knowsAbout: [
-      'Applied AI',
-      'Full-Stack Engineering',
-      'Enterprise Systems',
-      'Explainable AI',
-      'Biomedical AI',
-    ],
+    knowsAbout: ['Applied AI', 'Full-Stack Engineering', 'Enterprise Systems', 'Explainable AI', 'Biomedical AI'],
   },
   {
     '@context': 'https://schema.org',
@@ -81,257 +119,199 @@ const jsonLd = [
   description="Hijrah Assalam builds production AI products and full-stack systems, with a growing research direction in biomedical AI."
   jsonLd={jsonLd}
 >
-  <!-- HERO (§17–§19) -->
-  <section class="mx-auto max-w-6xl px-4 pb-14 pt-12 sm:px-6 sm:pt-16 lg:pt-20">
-    <div class="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14">
-      <div class="reveal">
-        <p class="eyebrow">Player profile</p>
+  <!-- 1 · OPENING SCREEN -->
+  <HeroScene />
 
-        <h1
-          class="mt-4 text-[2.125rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl lg:text-[3.5rem]"
-        >
-          Hijrah Assalam
-        </h1>
+  <div class="mx-auto max-w-6xl px-4 pb-14 sm:px-6">
+    <PlayerHUD cells={hudCells} title="Status" class="reveal" />
+  </div>
 
-        <p class="mt-4 text-lg font-medium text-cyan-400 sm:text-xl">
-          AI Builder &amp; Full-Stack Engineer
-        </p>
+  <!-- 2 · SELECT YOUR QUEST -->
+  <section id="quests" class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="reveal flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Active quests" accent="mint" cursor />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-4xl">
+          Select your quest
+        </h2>
+      </div>
+      <span class="coord hidden flex-none sm:block">02 / 06</span>
+    </div>
 
-        <p class="mt-4 max-w-xl text-[1.0625rem] leading-relaxed text-ink-2">
-          Building AI products today. Working toward biomedical AI tomorrow.
-        </p>
+    <div class="reveal mt-8 space-y-6">
+      <QuestPanel
+        index="Quest 01"
+        title="AsistenDiet"
+        statusKind={asistendiet.data.statusKind}
+        status={asistendiet.data.status}
+        accent="mint"
+        positioning="Goal-aware nutrition tracking through conversation, not forms."
+        capabilities={[
+          'Meals analysed from photos',
+          'Feedback follows the chosen goal',
+          'WhatsApp and web on one source of truth',
+        ]}
+        visual="asistendiet"
+        slug="asistendiet"
+      />
 
-        <div class="mt-7 flex flex-wrap gap-3">
-          <PixelButton href="/work">Explore work</PixelButton>
-          <PixelButton href="/hire" variant="ghost">Hire me</PixelButton>
-        </div>
+      <QuestPanel
+        index="Quest 02"
+        title="BidikTender"
+        statusKind={bidiktender.data.statusKind}
+        status={bidiktender.data.status}
+        accent="cyan"
+        positioning="Tender requirements extracted, matched, and scored for readiness."
+        capabilities={[
+          'Requirements read from official documents',
+          'Every clause tied to its fulfilment document',
+          'Blockers shown before the deadline, not after',
+        ]}
+        visual="bidiktender"
+        slug="bidiktender"
+        side="right"
+      />
+    </div>
+  </section>
 
-        <div class="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <span class="hud-label flex items-center gap-2">
-            <span class="dot dot-live" aria-hidden="true"></span>
-            Available for remote work
-          </span>
-          <span class="hud-label text-ink-3">GMT+7</span>
-        </div>
+  <!-- 3 · PRODUCTION RECORD -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="reveal flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Production record" accent="mint" cursor />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-4xl">
+          Systems already running
+        </h2>
+      </div>
+      <span class="coord hidden flex-none sm:block">03 / 06</span>
+    </div>
+
+    <div class="reveal mt-8">
+      <ProductionRecord
+        hub={{
+          title: uns.data.title,
+          note: uns.data.positioning,
+          href: '/work/penugasan-uns',
+          metrics: [
+            { value: '3,500+', label: 'Staff' },
+            { value: '900+', label: 'Units' },
+            { value: 'Live', label: 'Status' },
+          ],
+        }}
+        branches={[
+          {
+            title: learnQuran.data.title,
+            note: learnQuran.data.positioning,
+            href: '/work',
+            metrics: [
+              { value: '4M+', label: 'Users' },
+              { value: '4', label: 'Platforms' },
+            ],
+          },
+          {
+            title: bundagizi.data.title,
+            note: bundagizi.data.positioning,
+            href: '/work/bundagizi',
+            metrics: [
+              { value: '1.146', label: 'Foods' },
+              { value: 'WhatsApp', label: 'Interface' },
+            ],
+          },
+        ]}
+      />
+    </div>
+  </section>
+
+  <!-- 4 · JOURNEY WORLD MAP -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="reveal flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Journey" accent="amber" cursor />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-4xl">
+          The route so far
+        </h2>
+      </div>
+      <span class="coord hidden flex-none sm:block">04 / 06</span>
+    </div>
+
+    <div class="reveal mt-8">
+      <JourneyWorldMap nodes={journeyNodes} currentIndex={4} />
+    </div>
+
+    <div class="reveal mt-6 flex flex-wrap items-center justify-between gap-4">
+      <p class="max-w-xl text-sm text-ink-2">
+        Each region taught something the previous one could not. Research is where both have to
+        hold up at once.
+      </p>
+      <a href="/journey" class="hud-label inline-flex min-h-6 items-center text-amber-400">Full map &#8594;</a>
+    </div>
+  </section>
+
+  <!-- 5 · RESEARCH PATH -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="reveal flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Research path" accent="violet" cursor />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-4xl">
+          The next region
+        </h2>
+      </div>
+      <span class="coord hidden flex-none sm:block">05 / 06</span>
+    </div>
+
+    <p class="reveal mt-4 max-w-xl text-sm leading-relaxed text-ink-2">
+      {research.data.subtitle} — Grad-CAM used as a diagnostic instrument, not decoration.
+    </p>
+
+    <div class="reveal mt-8">
+      <ResearchFlow pipeline={research.data.pipeline} metrics={research.data.metrics} />
+    </div>
+
+    <div class="reveal mt-6">
+      <a href="/research" class="hud-label inline-flex min-h-6 items-center text-violet-400">Full research &#8594;</a>
+    </div>
+  </section>
+
+  <!-- 6 · SAVE FILE -->
+  <section class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+    <div class="reveal flex items-end justify-between gap-6">
+      <div>
+        <PixelLabel label="Quest log" accent="amber" cursor />
+        <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-4xl">Save file</h2>
+      </div>
+      <span class="coord hidden flex-none sm:block">06 / 06</span>
+    </div>
+
+    <div class="reveal mt-8">
+      <SaveScreen
+        quests={saveQuests}
+        updated={now.data.updated}
+        nextObjective={{
+          title: 'Graduate study',
+          note: 'Preparing graduate research in biomedical AI, targeting Japan.',
+        }}
+      />
+    </div>
+  </section>
+
+  <!-- FINAL CTA — panel terminal (§35) -->
+  <section class="mx-auto max-w-6xl px-4 py-12 pb-6 sm:px-6">
+    <div class="panel reveal overflow-hidden">
+      <div class="flex items-center gap-2 border-b border-ink/10 bg-bg-base/50 px-4 py-2.5">
+        <span class="h-2 w-2 rounded-[1px] bg-ink/25" aria-hidden="true"></span>
+        <span class="h-2 w-2 rounded-[1px] bg-ink/25" aria-hidden="true"></span>
+        <span class="h-2 w-2 rounded-[1px] bg-ink/25" aria-hidden="true"></span>
+        <span class="hud-label ml-2 text-ink-3">communication terminal</span>
       </div>
 
-      <div class="reveal">
-        <div class="px-frame mx-auto max-w-[22rem] bg-ink/15 p-[2px] lg:max-w-none">
-          <div class="px-frame bg-bg-base">
-            <Image
-              src={avatar}
-              alt="Pixel-art portrait of Hijrah Assalam"
-              widths={[320, 480, 660]}
-              sizes="(max-width: 1024px) 70vw, 360px"
-              loading="eager"
-              class="h-auto w-full"
-            />
-          </div>
-        </div>
-
-        <StatusHUD class="mt-5" />
-      </div>
-    </div>
-  </section>
-
-  <!-- CURRENT BUILDS (§20–§22) -->
-  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-    <SectionHeader
-      eyebrow="Active quests"
-      title="Current builds"
-      description="The two products I am actively building — one consumer AI product, one enterprise AI platform."
-      accent="mint"
-    />
-
-    <div class="mt-8 space-y-6">
-      {
-        currentBuilds.map((project) => (
-          <div class="reveal">
-            <ProjectCard project={project.data} slug={project.id} variant="feature" />
-          </div>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- PRODUCTION EXPERIENCE (§23) -->
-  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-    <SectionHeader
-      eyebrow="Production proof"
-      title="Systems running in production"
-      description="Not experiments — platforms used daily, at institutional and national scale."
-      accent="mint"
-    />
-
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        production.map((project) => (
-          <article class="panel reveal flex flex-col justify-between p-5">
-            <div>
-              <div class="flex items-center justify-between gap-3">
-                <h3 class="text-base font-semibold text-ink">{project.data.title}</h3>
-                <span class="dot dot-live" aria-hidden="true" />
-              </div>
-              <p class="hud-label mt-2 text-ink-3">{project.data.role}</p>
-
-              <dl class="mt-4 space-y-2.5 border-t border-ink/10 pt-4">
-                {(project.data.metrics ?? []).slice(0, 3).map((metric) => (
-                  <div class="flex items-baseline justify-between gap-3">
-                    <dd class="hud-value text-mint-400">{metric.value}</dd>
-                    <dt class="hud-label text-ink-3">{metric.label}</dt>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            {project.data.hasDetail && (
-              <a href={`/work/${project.id}`} class="hud-label mt-5 text-ink-2 hover:text-cyan-400">
-                Detail &#8594;
-              </a>
-            )}
-          </article>
-        ))
-      }
-    </div>
-  </section>
-
-  <!-- JOURNEY MAP (§29 preview) -->
-  <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-    <SectionHeader
-      eyebrow="Journey"
-      title="An evolving path, not a static CV"
-      description="Software engineering, then enterprise systems, then AI products — and now a research direction in biomedical AI."
-      accent="amber"
-    />
-
-    <div class="reveal mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-      <JourneyMap nodes={journey} />
-
-      <div class="panel h-fit p-5 sm:p-6">
-        <p class="hud-label">Long-term direction</p>
-        <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">
-          The progression is deliberate. Enterprise systems taught me to build for failure and
-          auditability. AI products taught me to ship under real user constraints. Biomedical AI is
-          where I want to apply both — building models that are not only accurate, but accountable.
+      <div class="p-5 sm:p-7">
+        <p class="hud-value text-ink-2">
+          <span class="text-cyan-400">$</span> contact --open
         </p>
-        <div class="mt-5 flex flex-wrap gap-2">
-          <PixelBadge label="Engineering" accent="cyan" />
-          <PixelBadge label="Products" accent="mint" />
-          <PixelBadge label="Research" accent="violet" />
-          <PixelBadge label="Journey" accent="amber" />
-        </div>
-        <a href="/journey" class="hud-label mt-6 inline-flex text-amber-400">
-          Full journey map &#8594;
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURED WORK / TOOLING -->
-  {
-    tooling.length > 0 && (
-      <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <SectionHeader
-          eyebrow="Capability"
-          title="AI engineering &amp; tooling"
-          description="How the work gets done — agent orchestration, model provider management, and workflow automation."
-          accent="cyan"
-        />
-
-        <div class="mt-8 space-y-4">
-          {tooling.map((project) => (
-            <div class="reveal">
-              <ProjectCard project={project.data} slug={project.id} variant="compact" />
-            </div>
-          ))}
-        </div>
-
-        <div class="reveal mt-8">
-          <PixelButton href="/work" variant="ghost">
-            All work
-          </PixelButton>
-        </div>
-      </section>
-    )
-  }
-
-  <!-- RESEARCH PATH (§31–§34 preview) -->
-  {
-    researchEntry && (
-      <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <SectionHeader
-          eyebrow="Research path"
-          title="Explainable AI for medical imaging"
-          description="Grad-CAM used as a diagnostic instrument — including the finding that the model sometimes looks in the wrong place."
-          accent="violet"
-        />
-
-        <div class="reveal mt-8">
-          <ResearchPreview
-            title={researchEntry.data.title}
-            positioning={researchEntry.data.positioning}
-            pipeline={researchEntry.data.pipeline}
-            metrics={researchEntry.data.metrics}
-            findingTitle={researchEntry.data.findingTitle}
-            findingWarning={researchEntry.data.findingWarning}
-            href="/research"
-          />
-        </div>
-      </section>
-    )
-  }
-
-  <!-- NOW (§30 preview) -->
-  {
-    nowEntry && (
-      <section class="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <SectionHeader
-          eyebrow="Quest log"
-          title="What I'm doing now"
-          description={`Status per ${nowEntry.data.updated} — short lines only, no inflated progress bars.`}
-          accent="amber"
-        />
-
-        <div class="reveal mt-8 space-y-2">
-          {nowEntry.data.quests.slice(0, 4).map((quest) => (
-            <QuestCard
-              kind={quest.kind}
-              title={quest.title}
-              status={quest.status}
-              statusKind={quest.statusKind}
-              note={quest.note}
-              accent={quest.accent}
-              href={quest.href}
-            />
-          ))}
-        </div>
-
-        <div class="reveal mt-6">
-          <a href="/now" class="hud-label text-amber-400">
-            Full quest log &#8594;
-          </a>
-        </div>
-      </section>
-    )
-  }
-
-  <!-- CONTACT CTA (§39) -->
-  <section class="mx-auto max-w-6xl px-4 py-14 pb-4 sm:px-6">
-    <div class="panel reveal relative overflow-hidden p-6 sm:p-10">
-      <span class="absolute inset-x-0 top-0 h-[2px] bg-cyan-400" aria-hidden="true"></span>
-
-      <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p class="eyebrow">Communication terminal</p>
-          <h2 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Let's build something that holds up in production.
-          </h2>
-          <p class="mt-3 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">
-            Open to remote roles, product collaborations, and research conversations.
-          </p>
-        </div>
-
-        <div class="flex flex-wrap gap-3">
+        <h2 class="mt-4 max-w-xl text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+          Open to remote roles, product collaborations, and research conversations.
+        </h2>
+        <div class="mt-6 flex flex-wrap gap-3">
           <PixelButton href="/contact">Send message</PixelButton>
           <PixelButton href="/hire" variant="ghost">Hire me</PixelButton>
         </div>

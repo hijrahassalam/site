@@ -1,0 +1,39 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  accent?: 'cyan' | 'mint' | 'violet' | 'amber';
+  size?: 'md' | 'lg';
+  class?: string;
+}
+
+const { value, label, accent = 'violet', size = 'lg', class: className = '' } = Astro.props;
+
+const color: Record<string, string> = {
+  cyan: 'text-cyan-400',
+  mint: 'text-mint-400',
+  violet: 'text-violet-400',
+  amber: 'text-amber-400',
+};
+const bar: Record<string, string> = {
+  cyan: 'bg-cyan-400',
+  mint: 'bg-mint-400',
+  violet: 'bg-violet-400',
+  amber: 'bg-amber-400',
+};
+---
+
+<div class:list={['relative pl-3', className]}>
+  <span class:list={['absolute left-0 top-0 h-full w-[2px] opacity-70', bar[accent]]} aria-hidden="true"
+  ></span>
+  <p
+    class:list={[
+      'font-semibold tabular-nums tracking-tight',
+      color[accent],
+      size === 'lg' ? 'text-2xl sm:text-[1.75rem]' : 'text-lg',
+    ]}
+  >
+    {value}
+  </p>
+  <p class="hud-label mt-1.5 text-ink-3">{label}</p>
+</div>

@@ -1,0 +1,54 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  title: string;
+  year?: string;
+  note?: string;
+  accent?: Accent;
+  state?: 'done' | 'current' | 'next';
+  last?: boolean;
+}
+
+const { title, year, note, accent = 'amber', state = 'done', last = false } = Astro.props;
+const a = accents[accent];
+---
+
+<li class="relative pl-8">
+  {
+    !last && (
+      <span
+        class="absolute left-[6px] top-4 h-full w-px bg-gradient-to-b from-amber-400/40 to-amber-400/10"
+        aria-hidden="true"
+      />
+    )
+  }
+
+  <span
+    class:list={[
+      'absolute left-0 top-1 grid h-3.5 w-3.5 place-items-center border',
+      state === 'done' && 'border-ink/25',
+      state === 'current' && a.border,
+      state === 'next' && 'border-dashed border-ink/20',
+    ]}
+    aria-hidden="true"
+  >
+    <span
+      class:list={[
+        'h-1.5 w-1.5',
+        state === 'done' && 'bg-ink-3',
+        state === 'current' && a.bg,
+        state === 'next' && 'bg-transparent',
+      ]}
+    />
+  </span>
+
+  <div class="pb-5">
+    {year && <p class:list={['hud-label', state === 'current' ? a.text : 'text-ink-3']}>{year}</p>}
+    <p class:list={['mt-1 text-sm font-semibold', state === 'next' ? 'text-ink-2' : 'text-ink']}>
+      {title}
+    </p>
+    {note && <p class="mt-1 text-xs leading-relaxed text-ink-2">{note}</p>}
+  </div>
+</li>

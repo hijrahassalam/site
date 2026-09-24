@@ -1,0 +1,81 @@
+---
+interface Record {
+  title: string;
+  metrics: { value: string; label: string }[];
+  note: string;
+  href?: string;
+}
+
+interface Props {
+  hub: Record;
+  branches: Record[];
+  class?: string;
+}
+
+const { hub, branches, class: className = '' } = Astro.props;
+---
+
+<div class:list={['relative', className]}>
+  <!-- HUB -->
+  <div class="panel-raised relative z-10 mx-auto max-w-xl overflow-hidden p-5 text-center sm:p-6">
+    <span class="absolute inset-x-0 top-0 h-[2px] bg-mint-400" aria-hidden="true"></span>
+    <p class="hud-label text-mint-400">Flagship enterprise system</p>
+    <h3 class="mt-3 text-xl font-semibold text-ink sm:text-2xl">{hub.title}</h3>
+    <p class="mt-2 text-sm leading-relaxed text-ink-2">{hub.note}</p>
+
+    <dl class="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 border-t border-ink/10 pt-4">
+      {
+        hub.metrics.map((metric) => (
+          <div class="text-center">
+            <dd class="text-lg font-semibold tabular-nums text-mint-400">{metric.value}</dd>
+            <dt class="hud-label mt-1 text-ink-3">{metric.label}</dt>
+          </div>
+        ))
+      }
+    </dl>
+
+    {
+      hub.href && (
+        <a href={hub.href} class="hud-label mt-4 inline-flex min-h-6 items-center text-ink-2 hover:text-cyan-400">
+          Detail sistem &#8594;
+        </a>
+      )
+    }
+  </div>
+
+  <!-- KONEKTOR: hub bercabang dua -->
+  <div class="relative hidden h-20 sm:block" aria-hidden="true">
+    <svg class="absolute inset-0 h-full w-full" viewBox="0 0 1000 80" preserveAspectRatio="none" fill="none">
+      <path d="M 500 0 V 34" stroke="#45E6B5" stroke-opacity="0.5" stroke-width="1.5" />
+      <path d="M 500 34 H 250 V 80" stroke="#45E6B5" stroke-opacity="0.35" stroke-width="1.5" />
+      <path d="M 500 34 H 750 V 80" stroke="#45E6B5" stroke-opacity="0.35" stroke-width="1.5" />
+      <rect x="497" y="31" width="6" height="6" fill="#45E6B5" fill-opacity="0.7" />
+    </svg>
+  </div>
+
+  <!-- BRANCHES -->
+  <div class="grid gap-4 sm:grid-cols-2">
+    {
+      branches.map((branch) => (
+        <a
+          href={branch.href ?? '/work'}
+          class="nudge panel block p-5 hover:border-mint-400/45"
+        >
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="text-base font-semibold text-ink">{branch.title}</h3>
+            <span class="dot dot-live flex-none" aria-hidden="true" />
+          </div>
+          <p class="mt-2 text-sm leading-relaxed text-ink-2">{branch.note}</p>
+          <dl class="mt-4 flex gap-6 border-t border-ink/10 pt-3">
+            {branch.metrics.map((metric) => (
+              <div>
+                <dd class="text-base font-semibold tabular-nums text-mint-400">{metric.value}</dd>
+                <dt class="hud-label mt-1 text-ink-3">{metric.label}</dt>
+              </div>
+            ))}
+          </dl>
+        </a>
+      ))
+    }
+  </div>
+</div>

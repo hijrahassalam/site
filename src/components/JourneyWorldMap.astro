@@ -1,0 +1,168 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/pixel-avatar.png';
+import JourneyNode from './JourneyNode.astro';
+
+interface Node {
+  title: string;
+  year?: string;
+  note?: string;
+  state?: 'done' | 'current' | 'next';
+  x: number;
+  y: number;
+}
+
+interface Props {
+  nodes: Node[];
+  /** indeks node tempat avatar berada */
+  currentIndex: number;
+  class?: string;
+}
+
+const { nodes, currentIndex, class: className = '' } = Astro.props;
+
+// Smoothing kuadratik melalui titik tengah antar-node → jalur terlihat seperti rute peta.
+const path = (() => {
+  if (nodes.length === 0) return '';
+  let d = `M ${nodes[0].x} ${nodes[0].y}`;
+  for (let i = 1; i < nodes.length; i++) {
+    const prev = nodes[i - 1];
+    const cur = nodes[i];
+    const mx = (prev.x + cur.x) / 2;
+    const my = (prev.y + cur.y) / 2;
+    d += ` Q ${prev.x} ${prev.y} ${mx} ${my}`;
+    if (i === nodes.length - 1) d += ` T ${cur.x} ${cur.y}`;
+  }
+  return d;
+})();
+
+const pct = (n: Node) => ({ left: `${(n.x / 1000) * 100}%`, top: `${(n.y / 560) * 100}%` });
+---
+
+<div class:list={[className]}>
+  {/* DESKTOP — peta dunia (§21) */}
+  <div class="relative hidden lg:block">
+    <div class="panel relative overflow-hidden">
+      <div class="scanlines absolute inset-0" aria-hidden="true"></div>
+
+      <div class="relative aspect-[1000/560] w-full">
+        <svg
+          class="absolute inset-0 h-full w-full"
+          viewBox="0 0 1000 560"
+          preserveAspectRatio="none"
+          fill="none"
+          aria-hidden="true"
+        >
+          <!-- terrain dots -->
+          <g fill="#FBCB5D" fill-opacity="0.14">
+            {Array.from({ length: 34 }, (_, i) => (
+              <rect
+                x={(i * 137) % 980}
+                y={((i * 223) % 520) + 20}
+                width="2"
+                height="2"
+              />
+            ))}
+          </g>
+
+          <!-- jalur rute -->
+          <path d={path} stroke="#FBCB5D" stroke-opacity="0.18" stroke-width="10" stroke-linecap="round" />
+          <path
+            d={path}
+            stroke="#FBCB5D"
+            stroke-opacity="0.75"
+            stroke-width="2"
+            stroke-dasharray="8 8"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        {
+          nodes.map((node, i) => (
+            <div
+              class="group absolute -translate-x-1/2 -translate-y-1/2"
+              style={pct(node)}
+              tabindex="0"
+              role="group"
+              aria-label={`${node.year ? node.year + ', ' : ''}${node.title}${node.note ? '. ' + node.note : ''}`}
+            >
+              {/* marker */}
+              <span
+                class:list={[
+                  'relative grid h-4 w-4 place-items-center border',
+                  node.state === 'next' ? 'border-dashed border-ink/25' : 'border-amber-400/60',
+                  'bg-bg-deep',
+                ]}
+                aria-hidden="true"
+              >
+                <span
+                  class:list={[
+                    'h-1.5 w-1.5',
+                    node.state === 'next' ? 'bg-transparent' : 'bg-amber-400',
+                    i === currentIndex && 'animate-[px-pulse_2s_ease-in-out_infinite]',
+                  ]}
+                />
+              </span>
+
+              {/* avatar di node sekarang */}
+              {i === currentIndex && (
+                <div class="absolute -top-[82px] left-1/2 w-14 -translate-x-1/2">
+                  <Image
+                    src={avatar}
+                    alt=""
+                    widths={[56]}
+                    class="h-14 w-full border border-amber-400/60 bg-bg-deep object-cover [image-rendering:pixelated]"
+                    aria-hidden="true"
+                  />
+                  <span class="hud-label absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-nowrap text-amber-400">
+                    You are here
+                  </span>
+                </div>
+              )}
+
+              {/* label node */}
+              <span
+                class:list={[
+                  'hud-label absolute whitespace-nowrap',
+                  i === currentIndex
+                    ? 'left-1/2 top-7 -translate-x-1/2'
+                    : i % 2 === 0
+                      ? 'left-1/2 top-6 -translate-x-1/2'
+                      : 'bottom-6 left-1/2 -translate-x-1/2',
+                  node.state === 'current' ? 'text-amber-400' : 'text-ink-3',
+                ]}
+              >
+                {node.title}
+              </span>
+
+              {/* detail saat hover / fokus (§22) */}
+              <div
+                class="panel-raised pointer-events-none absolute left-1/2 top-12 z-20 w-56 -translate-x-1/2 p-3 opacity-0 transition-opacity duration-150 group-hover:opacity-100 group-focus:opacity-100"
+              >
+                {node.year && <p class="hud-label text-amber-400">{node.year}</p>}
+                <p class="mt-1 text-sm font-semibold text-ink">{node.title}</p>
+                {node.note && <p class="mt-1 text-xs leading-relaxed text-ink-2">{node.note}</p>}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  {/* MOBILE — rute vertikal (§36) */}
+  <ol class="lg:hidden">
+    {
+      nodes.map((node, i) => (
+        <JourneyNode
+          title={node.title}
+          year={node.year}
+          note={node.note}
+          accent="amber"
+          state={node.state ?? 'done'}
+          last={i === nodes.length - 1}
+        />
+      ))
+    }
+  </ol>
+</div>

@@ -30,6 +30,7 @@ Client-side JS is limited to three small scripts: the mobile nav toggle, the scr
 ```bash
 npm install
 npm run dev        # local dev server
+npm run check      # Astro + TypeScript diagnostics
 npm run build      # static build → dist/
 npm run preview    # serve the built output
 ```
@@ -47,10 +48,10 @@ node scripts/build-images.mjs
 ```
 src/
 ├── assets/                 # source images (optimised at build time)
-├── components/             # PixelWindow, PixelBadge, PixelButton, PixelCursor,
-│                           # StatusHUD, ProgressBar, QuestCard, PlayerCard,
-│                           # ProjectCard, ProjectPreview, JourneyMap, TimelineNode,
-│                           # ResearchPreview, SectionHeader, Nav, Footer
+├── components/             # HeroScene, PlayerHUD, QuestPanel, ProductVisual,
+│                           # ProductionRecord, JourneyWorldMap, JourneyNode,
+│                           # ResearchFlow, MetricBlock, SaveScreen, PixelLabel,
+│                           # PixelButton, StatusIndicator, Nav, Footer
 ├── content/
 │   ├── projects/           # asistendiet, bidiktender, penugasan-uns,
 │   │                       # bundagizi, learn-quran, ai-agent-tooling
@@ -60,8 +61,8 @@ src/
 ├── layouts/BaseLayout.astro
 ├── lib/accent.ts           # semantic colour + status label mapping
 ├── pages/
-│   ├── index.astro         # hero, current builds, production proof,
-│   │                       # journey map, tooling, research, quest log, CTA
+│   ├── index.astro         # opening scene, active quests, production network,
+│   │                       # world map, research flow, save screen, terminal CTA
 │   ├── work/index.astro
 │   ├── work/[slug].astro   # project detail (flow diagram, metrics, stack)
 │   ├── research.astro

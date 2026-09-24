@@ -1,0 +1,141 @@
+---
+import { Image } from 'astro:assets';
+import avatar from '../assets/pixel-avatar.png';
+import PixelLabel from './PixelLabel.astro';
+import PixelButton from './PixelButton.astro';
+
+
+// Pseudo-3D floor: spoke + row lines computed di frontmatter (bukan JS runtime).
+const VP = { x: 600, y: 300 };
+const spokes = Array.from({ length: 25 }, (_, i) => -400 + i * 100);
+const rows = [4, 12, 24, 42, 66, 98, 140, 192, 256];
+const stars = [
+  [96, 42], [214, 96], [318, 30], [452, 74], [548, 22], [668, 60], [742, 108],
+  [836, 38], [948, 88], [1052, 34], [1128, 72], [176, 140], [392, 132], [880, 146],
+];
+const terrain = [
+  [140, 268, 26], [236, 280, 18], [332, 262, 22], [452, 288, 30], [560, 272, 16],
+  [676, 284, 24], [786, 266, 20], [902, 282, 28], [1010, 270, 18], [1096, 286, 22],
+];
+---
+
+<section class="relative overflow-hidden pb-16 pt-10 sm:pb-20 sm:pt-14">
+  <!-- ENVIRONMENT (§14, §34): horizon grid, terrain, route, stars -->
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    <svg
+      class="absolute inset-x-0 bottom-0 h-[340px] w-full sm:h-[420px]"
+      viewBox="0 0 1200 600"
+      preserveAspectRatio="xMidYMax slice"
+      fill="none"
+    >
+      <!-- stars -->
+      <g fill="#F4F7FC" fill-opacity="0.32">
+        {stars.map(([x, y]) => <rect x={x} y={y} width="2" height="2" />)}
+      </g>
+
+      <!-- horizon glow -->
+      <defs>
+        <linearGradient id="horizon" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#38C7FF" stop-opacity="0.16" />
+          <stop offset="100%" stop-color="#38C7FF" stop-opacity="0" />
+        </linearGradient>
+        <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#38C7FF" stop-opacity="0.22" />
+          <stop offset="100%" stop-color="#38C7FF" stop-opacity="0.02" />
+        </linearGradient>
+      </defs>
+      <rect x="0" y="252" width="1200" height="52" fill="url(#horizon)" />
+
+      <!-- floor spokes -->
+      <g stroke="url(#floor)" stroke-width="1">
+        {spokes.map((x) => <line x1={VP.x} y1={VP.y} x2={x} y2="600" />)}
+      </g>
+
+      <!-- floor rows (perspective spacing) -->
+      <g stroke="#38C7FF" stroke-opacity="0.14" stroke-width="1">
+        {rows.map((offset) => (
+          <line x1="0" y1={VP.y + offset} x2="1200" y2={VP.y + offset} />
+        ))}
+      </g>
+
+      <!-- horizon line -->
+      <line x1="0" y1={VP.y} x2="1200" y2={VP.y} stroke="#63D8FF" stroke-opacity="0.35" stroke-width="1" />
+
+      <!-- distant terrain blocks -->
+      <g>
+        {terrain.map(([x, y, w]) => (
+          <>
+            <rect x={x} y={y} width={w} height="4" fill="#45E6B5" fill-opacity="0.3" />
+            <rect x={x} y={y - 4} width="2" height="4" fill="#45E6B5" fill-opacity="0.18" />
+          </>
+        ))}
+      </g>
+
+      <!-- route line menuju cakrawala -->
+      <path
+        d="M 120 470 L 340 402 L 520 356 L 600 330 L 720 344 L 940 412 L 1120 486"
+        stroke="#FBCB5D"
+        stroke-opacity="0.28"
+        stroke-width="1.5"
+        stroke-dasharray="6 7"
+      />
+    </svg>
+
+    <span class="coord absolute left-4 top-6 hidden lg:block">X:036 Y:128</span>
+    <span class="coord absolute right-4 top-6 hidden lg:block">WORLD 01 · PORTFOLIO</span>
+  </div>
+
+  <!-- OPENING SCREEN (§13) -->
+  <div class="relative mx-auto max-w-4xl px-4 text-center sm:px-6">
+    <PixelLabel label="Player profile" accent="cyan" cursor class="justify-center" />
+
+    <!-- Karakter utama, bukan foto di dalam kartu -->
+    <div class="relative mx-auto mt-8 w-[190px] sm:w-[230px]">
+      <div
+        class="absolute inset-x-0 -bottom-4 h-10 rounded-[50%] bg-cyan-400/20 blur-xl"
+        aria-hidden="true"
+      >
+      </div>
+      <div class="relative animate-[px-float_7s_ease-in-out_infinite]">
+        <Image
+          src={avatar}
+          alt="Pixel-art character of Hijrah Assalam"
+          widths={[190, 230, 380]}
+          sizes="(max-width: 640px) 190px, 230px"
+          loading="eager"
+          class="h-auto w-full [image-rendering:pixelated] drop-shadow-[0_0_28px_rgba(56,199,255,0.28)]"
+        />
+      </div>
+    </div>
+
+    <h1
+      class="mt-8 text-[2rem] font-semibold leading-[1.05] tracking-tight text-ink sm:text-[3.25rem]"
+    >
+      Hijrah Assalam
+    </h1>
+
+    <p class="mt-4 text-base font-medium text-cyan-400 sm:text-lg">
+      AI Builder &amp; Full-Stack Engineer
+    </p>
+
+    <p class="mx-auto mt-4 max-w-md text-[0.9375rem] leading-relaxed text-ink-2 sm:text-base">
+      Building AI products today. Working toward biomedical AI tomorrow.
+    </p>
+
+    <div class="mt-7 inline-flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+      <span class="hud-label flex items-center gap-2 text-mint-400">
+        <span class="dot dot-live" aria-hidden="true"></span>
+        Current quest · AsistenDiet
+      </span>
+      <span class="hud-label flex items-center gap-2 text-cyan-400">
+        <span class="dot dot-live" aria-hidden="true"></span>
+        BidikTender
+      </span>
+    </div>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <PixelButton href="#quests">Explore world</PixelButton>
+      <PixelButton href="/hire" variant="ghost">Hire me</PixelButton>
+    </div>
+  </div>
+</section>

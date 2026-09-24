@@ -1,0 +1,102 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents, statusLabels } from '../lib/accent';
+import ProductVisual from './ProductVisual.astro';
+
+interface Props {
+  index: string;
+  title: string;
+  statusKind: string;
+  status: string;
+  accent: Accent;
+  positioning: string;
+  capabilities: string[];
+  visual: 'asistendiet' | 'bidiktender' | 'uns';
+  slug?: string;
+  /** sisi visual — dibalik antar quest supaya ritmenya tidak monoton (§19, §35) */
+  side?: 'left' | 'right';
+  class?: string;
+}
+
+const {
+  index,
+  title,
+  statusKind,
+  status,
+  accent,
+  positioning,
+  capabilities,
+  visual,
+  slug,
+  side = 'left',
+  class: className = '',
+} = Astro.props;
+
+const a = accents[accent];
+const label = statusLabels[statusKind] ?? status;
+---
+
+<article class:list={['relative overflow-hidden', className]}>
+  <span class:list={['absolute inset-x-0 top-0 h-[2px]', a.bg]} aria-hidden="true"></span>
+
+  <div
+    class:list={[
+      'grid items-stretch gap-0 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]',
+      side === 'right' && 'lg:[&>*:first-child]:order-2',
+    ]}
+  >
+    <!-- VISUAL: mendominasi, menempel ke tepi panel -->
+    <div
+      class:list={[
+        'scanlines relative bg-bg-base/50 p-4 sm:p-6',
+        side === 'left' ? 'lg:border-r' : 'lg:border-l',
+        'border-b border-ink/10 lg:border-b-0 lg:border-ink/10',
+      ]}
+    >
+      <div class="absolute left-4 top-4 sm:left-6 sm:top-6">
+        <span class:list={['hud-label', a.text]}>{index}</span>
+      </div>
+      <div class="mt-6">
+        <ProductVisual variant={visual} />
+      </div>
+    </div>
+
+    <!-- TEKS: maksimal 3 baris kapabilitas (§29, §30) -->
+    <div class="flex flex-col justify-between gap-6 p-5 sm:p-6">
+      <div>
+        <span class:list={['hud-label', a.text]}>{label}</span>
+
+        <h3 class="mt-3 text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{title}</h3>
+
+        <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{positioning}</p>
+
+        <ul class="mt-5 space-y-2">
+          {
+            capabilities.map((capability) => (
+              <li class="flex gap-2.5 text-sm text-ink-2">
+                <span class:list={['mt-[7px] h-1.5 w-1.5 flex-none', a.bg]} aria-hidden="true" />
+                <span>{capability}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      {
+        slug && (
+          <a
+            href={`/work/${slug}`}
+            class:list={[
+              'group inline-flex min-h-6 items-center gap-2 hud-label',
+              a.text,
+              'transition-transform duration-150 hover:translate-x-1',
+            ]}
+          >
+            Open quest
+            <span aria-hidden="true">&#8594;</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>
