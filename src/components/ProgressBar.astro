@@ -16,7 +16,7 @@ const a = accents[accent];
 ---
 
 <div class:list={['w-full', className]}>
-  <div class="flex gap-[3px]" role="img" aria-label={`Tahap ${current + 1} dari ${stages.length}: ${stages[current]}`}>
+  <div class="flex gap-[3px]" role="img" aria-label={`Stage ${current + 1} of ${stages.length}: ${stages[current]}`}>
     {
       stages.map((stage, i) => (
         <span
@@ -33,6 +33,6 @@ const a = accents[accent];
   </div>
   <p class="hud-label mt-2">
     <span class={a.text}>{stages[current]}</span>
-    <span class="text-ink-3"> · tahap {current + 1}/{stages.length}</span>
+    <span class="text-ink-3"> · stage {current + 1}/{stages.length}</span>
   </p>
 </div>

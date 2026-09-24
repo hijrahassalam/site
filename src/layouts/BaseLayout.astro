@@ -64,7 +64,7 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
     {jsonLdBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
 
-    <!-- Analytics: GA4 (sama seperti situs sebelumnya) -->
+    <!-- Analytics: GA4 (unchanged from the previous site) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YYE9X6L4E"></script>
     <script is:inline>
       // Tandai JS aktif sebelum paint, supaya animasi reveal hanya berlaku saat JS ada.
@@ -96,7 +96,7 @@ const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
       href="#main"
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-[2px] focus:bg-cyan-400 focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-bg-deep"
     >
-      Lewati ke konten
+      Skip to content
     </a>
 
     <div class="relative z-10 flex min-h-dvh flex-col">
