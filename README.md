@@ -93,7 +93,7 @@ Text: `--color-ink` `#F4F7FC`, `--color-ink-2` `#9DAAC0`, `--color-ink-3` `#6474
 
 ### Typography
 
-Two systems only: **Inter** for everything readable, **Pixelify Sans** for HUD labels, section eyebrows, badges, and status values. Pixel font is never used for body copy.
+Two systems only: **Inter** for everything readable, **VT323** for pixel accents — HUD labels, section eyebrows, badges, buttons, and footer microcopy. Pixel font is never used for body copy or for values that carry real information (product names, durations, metrics); those stay in Inter so they read instantly.
 
 ### Pixel UI rules
 
