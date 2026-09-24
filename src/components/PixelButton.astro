@@ -1,0 +1,20 @@
+---
+interface Props {
+  href: string;
+  variant?: 'primary' | 'ghost';
+  external?: boolean;
+  class?: string;
+}
+
+const { href, variant = 'primary', external = false, class: className = '' } = Astro.props;
+const isExternal = external || /^https?:\/\//.test(href);
+---
+
+<a
+  href={href}
+  class:list={['btn', variant === 'primary' ? 'btn-primary' : 'btn-ghost', className]}
+  {...isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
+>
+  <slot />
+  {isExternal && <span aria-hidden="true">&rarr;</span>}
+</a>

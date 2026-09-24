@@ -1,0 +1,161 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents, statusLabels } from '../lib/accent';
+import PixelBadge from './PixelBadge.astro';
+import ProjectPreview from './ProjectPreview.astro';
+
+interface ProjectLike {
+  title: string;
+  positioning: string;
+  status: string;
+  statusKind: string;
+  accent: Accent;
+  role: string;
+  scale?: string;
+  flow?: string[];
+  highlights?: string[];
+  metrics?: { value: string; label: string }[];
+  links?: { label: string; href: string }[];
+  hasDetail?: boolean;
+}
+
+interface Props {
+  project: ProjectLike;
+  slug: string;
+  variant?: 'feature' | 'compact';
+  class?: string;
+}
+
+const { project, slug, variant = 'feature', class: className = '' } = Astro.props;
+const a = accents[project.accent];
+const label = statusLabels[project.statusKind] ?? project.status;
+const external = project.links?.find((l) => l.href.startsWith('http'));
+---
+
+{
+  variant === 'feature' ? (
+    <article
+      class:list={[
+        'panel nudge group relative overflow-hidden',
+        className,
+      ]}
+    >
+      <span class:list={['absolute inset-x-0 top-0 h-[2px]', a.bg]} aria-hidden="true" />
+
+      <div class="grid gap-0 lg:grid-cols-[1.05fr_1fr]">
+        {/* Kolom konten */}
+        <div class="order-2 p-5 sm:p-6 lg:order-1">
+          <div class="flex flex-wrap items-center gap-2">
+            <PixelBadge label={label} accent={project.accent} pulse />
+            <span class="hud-label text-ink-3">{project.role}</span>
+          </div>
+
+          <h3 class="mt-4 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+            {project.title}
+          </h3>
+          <p class="mt-2.5 max-w-xl text-[0.9375rem] leading-relaxed text-ink-2">
+            {project.positioning}
+          </p>
+
+          {
+            project.highlights && project.highlights.length > 0 && (
+              <ul class="mt-5 space-y-2">
+                {project.highlights.slice(0, 3).map((h) => (
+                  <li class="flex gap-2.5 text-sm leading-relaxed text-ink-2">
+                    <span class:list={['mt-[7px] h-1.5 w-1.5 flex-none', a.bg]} aria-hidden="true" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+
+          {
+            project.metrics && project.metrics.length > 0 && (
+              <dl class="mt-5 grid grid-cols-3 gap-3 border-t border-ink/10 pt-4">
+                {project.metrics.slice(0, 3).map((m) => (
+                  <div>
+                    <dd class="hud-value text-ink">{m.value}</dd>
+                    <dt class="hud-label mt-1 text-ink-3">{m.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            )
+          }
+
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            {project.hasDetail && (
+              <a href={`/work/${slug}`} class:list={['btn btn-ghost', a.hoverText]}>
+                Detail
+                <span aria-hidden="true">&#8594;</span>
+              </a>
+            )}
+            {
+              external && (
+                <a
+                  href={external.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class:list={['hud-label', a.text]}
+                >
+                  {external.label} &#8599;
+                </a>
+              )
+            }
+          </div>
+        </div>
+
+        {/* Kolom visual */}
+        <div class="order-1 border-b border-ink/10 bg-bg-base/40 p-5 sm:p-6 lg:order-2 lg:border-b-0 lg:border-l">
+          <ProjectPreview
+            flow={project.flow}
+            accent={project.accent}
+            caption={project.scale}
+            class="h-full"
+          />
+        </div>
+      </div>
+    </article>
+  ) : (
+    <article
+      class:list={[
+        'nudge flex flex-col gap-3 border-l-2 bg-bg-surface/45 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-5 sm:py-4',
+        a.border,
+        className,
+      ]}
+    >
+      <div class="min-w-0">
+        <div class="flex flex-wrap items-center gap-2">
+          <h3 class="text-base font-semibold text-ink">{project.title}</h3>
+          <span class:list={['hud-label', a.text]}>{label}</span>
+        </div>
+        <p class="mt-1.5 text-sm leading-relaxed text-ink-2">{project.positioning}</p>
+        <p class="hud-label mt-2 text-ink-3">
+          {project.role}
+          {project.scale ? ` · ${project.scale}` : ''}
+        </p>
+      </div>
+      <div class="flex flex-none items-center gap-4">
+        {
+          project.hasDetail && (
+            <a href={`/work/${slug}`} class:list={['hud-label whitespace-nowrap', a.text]}>
+              Detail &#8594;
+            </a>
+          )
+        }
+        {
+          external && (
+            <a
+              href={external.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hud-label whitespace-nowrap text-ink-3 hover:text-ink"
+            >
+              Situs &#8599;
+            </a>
+          )
+        }
+      </div>
+    </article>
+  )
+}

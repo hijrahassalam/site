@@ -1,0 +1,93 @@
+---
+import { accents } from '../lib/accent';
+import type { Accent } from '../lib/accent';
+import PixelBadge from './PixelBadge.astro';
+
+interface Props {
+  title: string;
+  positioning: string;
+  pipeline: string[];
+  metrics: { value: string; label: string }[];
+  findingTitle: string;
+  findingWarning: string;
+  accent?: Accent;
+  href?: string;
+  class?: string;
+}
+
+const {
+  title,
+  positioning,
+  pipeline,
+  metrics,
+  findingTitle,
+  findingWarning,
+  accent = 'violet',
+  href,
+  class: className = '',
+} = Astro.props;
+const a = accents[accent];
+---
+
+<div class:list={['panel overflow-hidden', className]}>
+  <span class:list={['block h-[2px] w-full', a.bg]} aria-hidden="true"></span>
+
+  <div class="p-5 sm:p-6">
+    <div class="flex flex-wrap items-center gap-2">
+      <PixelBadge label="Research" accent={accent} />
+      <span class="hud-label text-ink-3">Explainable AI</span>
+    </div>
+
+    <h3 class="mt-4 text-lg font-semibold leading-snug text-ink sm:text-xl">{title}</h3>
+    <p class="mt-2.5 max-w-2xl text-[0.9375rem] leading-relaxed text-ink-2">{positioning}</p>
+
+    {/* Pipeline riset (§31) */}
+    <ol class="mt-5 flex flex-wrap items-center gap-x-2.5 gap-y-2">
+      {
+        pipeline.map((step, i) => (
+          <>
+            <li class:list={['hud-value rounded-[2px] border px-2 py-1', a.border, a.bgSoft, a.text]}>
+              {step}
+            </li>
+            {i < pipeline.length - 1 && (
+              <li class="hud-label text-ink-3" aria-hidden="true">
+                &#8594;
+              </li>
+            )}
+          </>
+        ))
+      }
+    </ol>
+
+    {/* Metrik (§33) */}
+    {
+      metrics.length > 0 && (
+        <dl class="mt-5 grid grid-cols-2 gap-3 border-t border-ink/10 pt-4 sm:grid-cols-4">
+          {metrics.map((m) => (
+            <div>
+              <dd class:list={['hud-value text-base', a.text]}>{m.value}</dd>
+              <dt class="hud-label mt-1 text-ink-3">{m.label}</dt>
+            </div>
+          ))}
+        </dl>
+      )
+    }
+
+    {/* Temuan (§34) */}
+    <div class:list={['mt-5 flex items-start gap-3 border-l-2 px-4 py-3', a.border, a.bgSoft]}>
+      <span class:list={['mt-0.5 text-sm', a.text]} aria-hidden="true">&#9888;</span>
+      <div>
+        <p class="hud-label text-ink-2">{findingTitle}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-ink-2">{findingWarning}</p>
+      </div>
+    </div>
+
+    {
+      href && (
+        <a href={href} class:list={['mt-5 inline-flex hud-label', a.text]}>
+          Buka penelitian &#8594;
+        </a>
+      )
+    }
+  </div>
+</div>

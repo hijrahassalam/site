@@ -1,0 +1,23 @@
+{
+  "name": "hijrahassalam-site",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "description": "hijrahassalam.com — Pixel Tech Adventure portfolio (Astro)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "astro": "^5.14.1",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^4.1.14"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

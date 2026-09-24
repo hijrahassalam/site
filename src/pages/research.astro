@@ -1,0 +1,210 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelBadge from '../components/PixelBadge.astro';
+import PixelButton from '../components/PixelButton.astro';
+
+const entries = (await getCollection('research')).sort((a, b) => a.data.order - b.data.order);
+const entry = entries[0];
+const { Content } = await render(entry);
+const data = entry.data;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  name: data.title,
+  alternativeHeadline: data.subtitle,
+  author: { '@type': 'Person', name: 'Hijrah Assalam' },
+  description: data.positioning,
+  url: 'https://www.hijrahassalam.com/research',
+  about: ['COVID-19 Detection', 'Grad-CAM', 'Explainable AI', 'Medical Imaging'],
+};
+---
+
+<BaseLayout
+  title="Research — Hijrah Assalam · Explainable AI for Healthcare"
+  description="Three-class COVID-19 detection from chest X-ray with honest Grad-CAM analysis — including evidence of shortcut learning."
+  jsonLd={jsonLd}
+>
+  <!-- HERO (§32) -->
+  <section class="mx-auto max-w-6xl px-4 pb-4 pt-12 sm:px-6 sm:pt-16">
+    <div class="reveal">
+      <p class="eyebrow text-violet-400">Research</p>
+      <h1
+        class="mt-4 max-w-3xl text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl"
+      >
+        {data.title}
+      </h1>
+      <p class="mt-4 text-lg text-violet-400">{data.subtitle}</p>
+      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">{data.positioning}</p>
+
+      <div class="mt-6 flex flex-wrap items-center gap-2">
+        <PixelBadge label={data.status} accent="violet" pulse />
+        <PixelBadge label="Explainable AI" accent="violet" />
+        <PixelBadge label="Medical imaging" accent="violet" />
+      </div>
+    </div>
+
+    <!-- Pipeline visual (§31–§32) -->
+    <div class="reveal mt-10">
+      <p class="hud-label mb-3">Research pipeline</p>
+      <ol class="flex flex-wrap items-center gap-x-3 gap-y-3">
+        {
+          data.pipeline.map((step, i) => (
+            <>
+              <li class="hud-value rounded-[2px] border border-violet-400/45 bg-violet-400/10 px-3 py-2 text-violet-400">
+                {step}
+              </li>
+              {i < data.pipeline.length - 1 && (
+                <li class="hud-label text-ink-3" aria-hidden="true">
+                  &#8594;
+                </li>
+              )}
+            </>
+          ))
+        }
+      </ol>
+    </div>
+
+    <!-- Schematic: apa yang diperiksa model -->
+    <div class="reveal mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        [
+          { label: 'Original CXR', note: 'Input image' },
+          { label: 'CNN', note: 'Feature extraction' },
+          { label: 'Grad-CAM', note: 'Attention map' },
+          { label: 'Prediction', note: 'Class + confidence' },
+        ].map((tile, i) => (
+          <figure class="panel overflow-hidden">
+            <div class="scanlines flex h-32 items-center justify-center bg-bg-base/60">
+              <svg viewBox="0 0 120 80" class="h-24 w-auto" role="img" aria-label={`Diagram skematik ${tile.label}`}>
+                <rect x="8" y="6" width="104" height="68" fill="none" stroke="#A78BFA" stroke-opacity="0.35" stroke-width="1" />
+                <rect x="22" y="16" width="32" height="48" fill="none" stroke="#A78BFA" stroke-opacity="0.5" stroke-width="1" />
+                <rect x="66" y="16" width="32" height="48" fill="none" stroke="#A78BFA" stroke-opacity="0.5" stroke-width="1" />
+                {i >= 2 && (
+                  <rect
+                    x={i === 2 ? 24 : 26}
+                    y={i === 2 ? 24 : 18}
+                    width={i === 2 ? 28 : 26}
+                    height={i === 2 ? 32 : 20}
+                    fill="#A78BFA"
+                    fill-opacity="0.28"
+                  />
+                )}
+                {i === 3 && (
+                  <g fill="#A78BFA">
+                    <rect x="88" y="60" width="6" height="6" />
+                    <rect x="96" y="60" width="6" height="6" fill-opacity="0.5" />
+                    <rect x="104" y="60" width="6" height="6" fill-opacity="0.25" />
+                  </g>
+                )}
+              </svg>
+            </div>
+            <figcaption class="border-t border-ink/10 px-4 py-3">
+              <p class="hud-value text-ink">{tile.label}</p>
+              <p class="hud-label mt-1 text-ink-3">{tile.note}</p>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+    <p class="coord mt-3">Diagram skematik — bukan citra pasien</p>
+  </section>
+
+  <!-- METRICS (§33) -->
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <dl class="grid grid-cols-2 gap-4 border-y border-ink/10 py-8 sm:grid-cols-4">
+      {
+        data.metrics.map((metric) => (
+          <div class="reveal">
+            <dd class="hud-value text-2xl text-violet-400 sm:text-3xl">{metric.value}</dd>
+            <dt class="hud-label mt-2 text-ink-3">{metric.label}</dt>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 pb-4 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14 sm:px-6">
+    <!-- BODY -->
+    <div class="reveal">
+      <div class="text-[0.9375rem] leading-relaxed text-ink-2 [&>p+p]:mt-5">
+        <Content />
+      </div>
+
+      <!-- SHORTCUT LEARNING (§34) -->
+      <section class="mt-12">
+        <h2 class="hud-label">Key finding</h2>
+        <h3 class="mt-3 text-xl font-semibold text-ink sm:text-2xl">{data.findingTitle}</h3>
+        <p class="mt-3 text-[0.9375rem] leading-relaxed text-ink-2">{data.findingBody}</p>
+
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          <figure class="panel overflow-hidden">
+            <div class="scanlines flex h-40 items-center justify-center bg-bg-base/60">
+              <svg viewBox="0 0 160 90" class="h-32 w-auto" role="img" aria-label="Perhatian model pada area paru (diharapkan)">
+                <rect x="6" y="4" width="148" height="82" fill="none" stroke="#F4F7FC" stroke-opacity="0.18" />
+                <rect x="30" y="18" width="42" height="58" fill="none" stroke="#A78BFA" stroke-opacity="0.55" />
+                <rect x="88" y="18" width="42" height="58" fill="none" stroke="#A78BFA" stroke-opacity="0.55" />
+                <rect x="34" y="24" width="34" height="46" fill="#45E6B5" fill-opacity="0.32" />
+                <rect x="92" y="24" width="34" height="46" fill="#45E6B5" fill-opacity="0.32" />
+              </svg>
+            </div>
+            <figcaption class="border-t border-ink/10 px-4 py-3">
+              <p class="hud-label text-mint-400">Expected attention</p>
+              <p class="hud-label mt-1 text-ink-3">Lung region</p>
+            </figcaption>
+          </figure>
+
+          <figure class="panel overflow-hidden border-amber-400/40">
+            <div class="scanlines flex h-40 items-center justify-center bg-bg-base/60">
+              <svg viewBox="0 0 160 90" class="h-32 w-auto" role="img" aria-label="Perhatian model di luar area paru (teramati)">
+                <rect x="6" y="4" width="148" height="82" fill="none" stroke="#F4F7FC" stroke-opacity="0.18" />
+                <rect x="30" y="18" width="42" height="58" fill="none" stroke="#A78BFA" stroke-opacity="0.55" />
+                <rect x="88" y="18" width="42" height="58" fill="none" stroke="#A78BFA" stroke-opacity="0.55" />
+                <rect x="118" y="10" width="30" height="22" fill="#FBCB5D" fill-opacity="0.4" />
+                <rect x="12" y="62" width="24" height="18" fill="#FBCB5D" fill-opacity="0.28" />
+              </svg>
+            </div>
+            <figcaption class="border-t border-ink/10 px-4 py-3">
+              <p class="hud-label text-amber-400">Observed attention</p>
+              <p class="hud-label mt-1 text-ink-3">Extra-pulmonary area</p>
+            </figcaption>
+          </figure>
+        </div>
+
+        <p class="mt-4 flex items-start gap-3 border-l-2 border-amber-400/45 bg-amber-400/10 px-4 py-3 text-sm text-ink-2">
+          <span class="text-amber-400" aria-hidden="true">&#9888;</span>
+          <span>{data.findingWarning} — indikasi model memanfaatkan artefak dataset, bukan ciri klinis.</span>
+        </p>
+      </section>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="reveal h-fit">
+      <div class="panel p-5">
+        <h2 class="hud-label">Reference</h2>
+        <p class="mt-3 text-sm leading-relaxed text-ink-2">{data.reference}</p>
+      </div>
+
+      <div class="panel mt-4 p-5">
+        <h2 class="hud-label">Status</h2>
+        <p class="mt-3 flex items-center gap-2 text-sm text-ink-2">
+          <span class="dot dot-research" aria-hidden="true"></span>
+          {data.status}
+        </p>
+        <p class="hud-label mt-3 text-ink-3">Direction · Biomedical AI</p>
+      </div>
+
+      <div class="panel mt-4 p-5">
+        <h2 class="hud-label">Next</h2>
+        <p class="mt-3 text-sm leading-relaxed text-ink-2">
+          Preparing graduate research in biomedical AI — interpretability and accountability of
+          clinical models.
+        </p>
+        <div class="mt-4">
+          <PixelButton href="/contact" variant="ghost">Research inquiry</PixelButton>
+        </div>
+      </div>
+    </aside>
+  </div>
+</BaseLayout>

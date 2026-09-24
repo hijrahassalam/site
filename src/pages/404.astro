@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PixelButton from '../components/PixelButton.astro';
+---
+
+<BaseLayout
+  title="404 — Region not found · Hijrah Assalam"
+  description="This page does not exist. Head back to the map."
+>
+  <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6">
+    <p class="eyebrow">System message</p>
+    <p class="hud-value mt-6 text-5xl text-cyan-400 sm:text-6xl">404</p>
+    <h1 class="mt-6 text-2xl font-semibold text-ink sm:text-3xl">Region not found</h1>
+    <p class="mt-4 max-w-md text-[0.9375rem] leading-relaxed text-ink-2">
+      This area of the map hasn't been unlocked — or the path was mistyped.
+    </p>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <PixelButton href="/">Return home</PixelButton>
+      <PixelButton href="/work" variant="ghost">See the work</PixelButton>
+    </div>
+
+    <p class="coord mt-10">PRESS START TO CONTINUE</p>
+  </section>
+</BaseLayout>

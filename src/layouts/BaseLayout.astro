@@ -1,0 +1,133 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Path relatif gambar OG, mis. /images/og-default.png */
+  ogImage?: string;
+  ogType?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  ogImage = '/images/pixel-avatar.png',
+  ogType = 'website',
+  jsonLd,
+  class: className = '',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site).href;
+const ogUrl = new URL(ogImage, Astro.site).href;
+const jsonLdBlocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#050A18" />
+
+    <link rel="icon" type="image/svg+xml" href="/images/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/pixel-avatar.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:site_name" content="Hijrah Assalam" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <!-- Typography (§11): Inter + Pixelify Sans only -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600&display=swap"
+    />
+
+    {jsonLdBlocks.map((block) => <script type="application/ld+json" set:html={JSON.stringify(block)} />)}
+
+    <!-- Analytics: GA4 (sama seperti situs sebelumnya) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9YYE9X6L4E"></script>
+    <script is:inline>
+      // Tandai JS aktif sebelum paint, supaya animasi reveal hanya berlaku saat JS ada.
+      // Tanpa JS, konten tetap terlihat penuh (aksesibilitas + crawler).
+      document.documentElement.classList.add('js');
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-9YYE9X6L4E');
+    </script>
+  </head>
+
+  <body class:list={['bg-adventure min-h-dvh', className]}>
+    <!-- Background layer (§13): subtle grid + scanline, tidak boleh ramai -->
+    <div
+      class="scanlines pointer-events-none fixed inset-0 z-0 opacity-40"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+      <span class="coord absolute left-4 top-24 hidden lg:block">X:036 Y:128</span>
+      <span class="coord absolute right-4 top-[42vh] hidden lg:block">X:128 Y:036</span>
+    </div>
+
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-[2px] focus:bg-cyan-400 focus:px-3 focus:py-2 focus:text-sm focus:font-semibold focus:text-bg-deep"
+    >
+      Lewati ke konten
+    </a>
+
+    <div class="relative z-10 flex min-h-dvh flex-col">
+      <Nav />
+      <main id="main" class="flex-1">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+
+    <script>
+      // Section enter motion (§14) — subtle, one-shot, dihormati prefers-reduced-motion
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const items = document.querySelectorAll<HTMLElement>('.reveal');
+
+      if (reduce) {
+        items.forEach((el) => el.classList.add('is-in'));
+      } else {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-in');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+        );
+        items.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

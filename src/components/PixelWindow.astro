@@ -1,0 +1,35 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  title?: string;
+  accent?: Accent;
+  class?: string;
+}
+
+const { title, accent = 'cyan', class: className = '' } = Astro.props;
+const a = accents[accent];
+---
+
+<div class:list={['px-frame bg-ink/15 p-[2px]', className]}>
+  <div class="px-frame bg-bg-surface">
+    {
+      title && (
+        <div
+          class:list={[
+            'flex items-center gap-2 border-b px-3 py-2',
+            a.border,
+            a.bgSoft,
+          ]}
+        >
+          <span class:list={['dot', a.dot]} aria-hidden="true"></span>
+          <span class="hud-label text-ink-2">{title}</span>
+        </div>
+      )
+    }
+    <div class="p-4 sm:p-5">
+      <slot />
+    </div>
+  </div>
+</div>

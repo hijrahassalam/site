@@ -1,0 +1,34 @@
+---
+import type { Accent } from '../lib/accent';
+import TimelineNode from './TimelineNode.astro';
+
+interface Node {
+  year?: string;
+  title: string;
+  note?: string;
+  accent?: Accent;
+  state?: 'done' | 'current' | 'next';
+}
+
+interface Props {
+  nodes: Node[];
+  class?: string;
+}
+
+const { nodes, class: className = '' } = Astro.props;
+---
+
+<ol class:list={['relative', className]}>
+  {
+    nodes.map((node, i) => (
+      <TimelineNode
+        year={node.year}
+        title={node.title}
+        note={node.note}
+        accent={node.accent ?? 'amber'}
+        state={node.state ?? 'done'}
+        last={i === nodes.length - 1}
+      />
+    ))
+  }
+</ol>

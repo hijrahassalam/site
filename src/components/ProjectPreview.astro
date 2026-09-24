@@ -1,0 +1,93 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  /** Alur proses nyata (mis. DOKUMEN PEMILIHAN → AI ANALYSIS → …) */
+  flow?: string[];
+  src?: string;
+  alt?: string;
+  caption?: string;
+  accent?: Accent;
+  direction?: 'vertical' | 'horizontal';
+  class?: string;
+}
+
+const {
+  flow,
+  src,
+  alt = '',
+  caption,
+  accent = 'cyan',
+  direction = 'vertical',
+  class: className = '',
+} = Astro.props;
+const a = accents[accent];
+---
+
+<figure class:list={['panel overflow-hidden', className]}>
+  <div class:list={['scanlines relative bg-bg-base/60 p-4 sm:p-5']}>
+    {
+      src ? (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          class="w-full rounded-[2px] border border-ink/10"
+        />
+      ) : flow && flow.length > 0 ? (
+        <ol
+          class:list={[
+            direction === 'horizontal'
+              ? 'flex flex-wrap items-center gap-x-3 gap-y-2'
+              : 'space-y-2',
+          ]}
+        >
+          {flow.map((step, i) => (
+            <li
+              class:list={[
+                direction === 'horizontal'
+                  ? 'flex items-center gap-2'
+                  : 'flex items-center gap-2.5',
+              ]}
+            >
+              <span
+                class:list={[
+                  'grid h-4 w-4 flex-none place-items-center border',
+                  a.border,
+                  a.bgSoft,
+                ]}
+                aria-hidden="true"
+              >
+                <span class:list={['h-1 w-1', a.bg]} />
+              </span>
+              <span class="hud-value text-ink-2">{step}</span>
+              {direction === 'vertical' && i < flow.length - 1 && (
+                <span class="hud-label ml-auto text-ink-3" aria-hidden="true">
+                  &#8595;
+                </span>
+              )}
+              {direction === 'horizontal' && i < flow.length - 1 && (
+                <span class:list={['hud-label', a.text]} aria-hidden="true">
+                  &#8594;
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <div class="flex min-h-[120px] items-center justify-center">
+          <p class="hud-label text-ink-3">Slot visual — pratinjau menyusul</p>
+        </div>
+      )
+    }
+  </div>
+  {
+    caption && (
+      <figcaption class="hud-label border-t border-ink/10 px-4 py-2.5 text-ink-3 sm:px-5">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>

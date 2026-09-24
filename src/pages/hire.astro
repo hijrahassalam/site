@@ -1,0 +1,172 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PlayerCard from '../components/PlayerCard.astro';
+import PixelButton from '../components/PixelButton.astro';
+import PixelBadge from '../components/PixelBadge.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const proof = projects.filter((p) => p.data.category === 'production');
+const selected = projects.filter((p) => p.data.category === 'current' || p.data.category === 'tooling');
+
+const skillBlocks = [
+  { label: 'Backend', items: 'Laravel · PHP · Node.js · Python' },
+  { label: 'AI', items: 'LLM · RAG · Agents · Document extraction' },
+  { label: 'Frontend', items: 'Vue.js · React · Astro · JavaScript' },
+  { label: 'Data', items: 'PostgreSQL · MySQL · Vector search' },
+  { label: 'Infra', items: 'Docker · CI/CD · Nginx · Cloud' },
+  { label: 'Practice', items: 'Integration reliability · Audit trails · Production monitoring' },
+];
+
+const remote = [
+  { label: 'Timezone', value: 'GMT+7', note: 'Strong overlap with EU, Middle East, and Asian teams' },
+  { label: 'English', value: 'C1 Advanced', note: 'EF SET verified · async-first' },
+  { label: 'Work style', value: 'Remote', note: 'Async-first with regular sync' },
+  { label: 'Contract', value: 'B2B / remote', note: 'Flexible invoicing structure' },
+  { label: 'Payment', value: 'PayPal · Payoneer', note: 'Open to other arrangements' },
+  { label: 'Availability', value: 'Open', note: 'Remote roles and product collaborations' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  name: 'Hire — Hijrah Assalam',
+  url: 'https://www.hijrahassalam.com/hire',
+  description:
+    'Recruiter summary: skills, production experience, remote readiness, and selected builds of Hijrah Assalam.',
+};
+---
+
+<BaseLayout
+  title="Hire — Hijrah Assalam"
+  description="AI Builder and Full-Stack Engineer available for remote work. Skills, production experience, and remote readiness at a glance."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 pb-4 pt-12 sm:px-6 sm:pt-16">
+    <div class="reveal">
+      <p class="eyebrow">Hire me</p>
+      <h1 class="mt-4 text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+        Recruiter summary
+      </h1>
+      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">
+        Available for remote work. Looking for a role where AI engineering and product quality
+        matter — and where production reliability is not an afterthought.
+      </p>
+    </div>
+  </section>
+
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 py-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14 sm:px-6">
+    <!-- PLAYER CARD (§36) -->
+    <div class="reveal lg:sticky lg:top-24 lg:h-fit">
+      <PlayerCard blocks={skillBlocks} />
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        <PixelBadge label="Available" accent="mint" pulse />
+        <PixelBadge label="Remote" accent="cyan" />
+      </div>
+
+      <div class="mt-5 flex flex-wrap gap-3">
+        <PixelButton href="/contact">Contact me</PixelButton>
+        <PixelButton href="/work" variant="ghost">See work</PixelButton>
+      </div>
+    </div>
+
+    <!-- KANAN -->
+    <div>
+      <!-- PRODUCTION EXPERIENCE -->
+      <section class="reveal">
+        <SectionHeader
+          eyebrow="Production experience"
+          title="Systems with real users and real load"
+          accent="mint"
+        />
+        <div class="mt-6 space-y-3">
+          {
+            proof.map((project) => (
+              <article class="panel flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6">
+                <div class="min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-base font-semibold text-ink">{project.data.title}</h3>
+                    <span class="hud-label text-mint-400">{project.data.status}</span>
+                  </div>
+                  <p class="mt-1.5 text-sm leading-relaxed text-ink-2">
+                    {project.data.positioning}
+                  </p>
+                </div>
+                <dl class="flex flex-none gap-6">
+                  {(project.data.metrics ?? []).slice(0, 2).map((metric) => (
+                    <div class="text-right">
+                      <dd class="hud-value text-mint-400">{metric.value}</dd>
+                      <dt class="hud-label mt-1 text-ink-3">{metric.label}</dt>
+                    </div>
+                  ))}
+                </dl>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- REMOTE READY (§37) -->
+      <section class="reveal mt-12">
+        <SectionHeader
+          eyebrow="Remote ready"
+          title="Practical details, no skill bars"
+          accent="cyan"
+        />
+        <dl class="mt-6 grid gap-3 sm:grid-cols-2">
+          {
+            remote.map((item) => (
+              <div class="panel p-4">
+                <dt class="hud-label text-ink-3">{item.label}</dt>
+                <dd class="hud-value mt-2 text-ink">{item.value}</dd>
+                <p class="mt-2 text-sm leading-relaxed text-ink-2">{item.note}</p>
+              </div>
+            ))
+          }
+        </dl>
+      </section>
+
+      <!-- SELECTED BUILDS -->
+      <section class="reveal mt-12">
+        <SectionHeader eyebrow="Selected builds" title="What I'd be judged on" accent="cyan" />
+        <div class="mt-6 space-y-2">
+          {
+            selected.map((project) => (
+              <a
+                href={project.data.hasDetail ? `/work/${project.id}` : '/work'}
+                class="nudge flex items-center justify-between gap-4 border-l-2 border-cyan-400/45 bg-bg-surface/45 px-4 py-3 hover:bg-bg-surface"
+              >
+                <span class="min-w-0">
+                  <span class="block text-sm font-semibold text-ink">{project.data.title}</span>
+                  <span class="mt-1 block text-sm leading-relaxed text-ink-2">
+                    {project.data.positioning}
+                  </span>
+                </span>
+                <span class="hud-label flex-none text-cyan-400">&#8594;</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="reveal mt-12">
+        <div class="panel relative overflow-hidden p-6">
+          <span class="absolute inset-x-0 top-0 h-[2px] bg-cyan-400" aria-hidden="true"></span>
+          <p class="hud-label">Next step</p>
+          <h2 class="mt-3 text-xl font-semibold text-ink">
+            Send the role or the problem — I'll tell you honestly if I'm a fit.
+          </h2>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <PixelButton href="/contact">Contact me</PixelButton>
+            <PixelButton href="mailto:hello@hijrahassalam.com" variant="ghost">
+              hello@hijrahassalam.com
+            </PixelButton>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  label: string;
+  accent?: Accent;
+  /** true = tampilkan titik status berdenyut */
+  pulse?: boolean;
+  class?: string;
+}
+
+const { label, accent = 'cyan', pulse = false, class: className = '' } = Astro.props;
+const a = accents[accent];
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-[2px] border px-2 py-[3px]',
+    'hud-label',
+    a.border,
+    a.text,
+    className,
+  ]}
+>
+  {pulse && <span class:list={['dot', a.dot]} aria-hidden="true"></span>}
+  {label}
+</span>

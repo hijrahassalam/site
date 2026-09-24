@@ -1,81 +1,129 @@
 # hijrahassalam.com
 
-Personal website and portfolio of **Hijrah Assalam** — Senior Full-Stack Engineer (PHP/Laravel/Vue.js) and Applied AI Researcher.
+Personal site and portfolio of **Hijrah Assalam** — AI Builder, Full-Stack Engineer, and Applied AI researcher.
 
-## About
+Positioning: *builds production AI products and full-stack systems, with a growing research direction in biomedical AI.*
 
-Production-grade engineer building systems that serve thousands of users daily at Universitas Sebelas Maret. Researching explainable AI for medical imaging — using Grad-CAM as a diagnostic tool, not decoration.
+Design language: **Pixel Tech Adventure** — professional core, pixel shell. Visual-first storytelling, dark navy foundation, semantic accent colours, restrained motion.
 
-## Tech Stack
+---
 
-- **Frontend:** HTML5, Tailwind CSS (CDN), Vanilla JavaScript
-- **Styling:** CSS Custom Properties with dark/light theme support
-- **Analytics:** Plausible.io (privacy-friendly, GDPR compliant)
-- **Hosting:** Netlify
-- **Domain:** hijrahassalam.com
+## Stack
 
-## Pages
+| Layer | Choice |
+|---|---|
+| Framework | Astro 5 (static output) |
+| Language | TypeScript (strict) |
+| Styling | Tailwind CSS 4 via `@tailwindcss/vite`, tokens in `src/styles/global.css` |
+| Content | Astro Content Collections (`glob` loader) |
+| Images | `astro:assets` (automatic WebP + responsive widths) |
+| Sitemap | `@astrojs/sitemap` |
+| Analytics | GA4 `G-9YYE9X6L4E` |
+| Hosting | Vercel (static build, `dist/`) |
 
-| Page | Description |
-|------|-------------|
-| [Home](https://hijrahassalam.com/) | Overview — stats, skills, featured projects, certifications |
-| [Hire Me](https://hijrahassalam.com/hire.html) | Production experience, tech stack, remote readiness |
-| [Research](https://hijrahassalam.com/research.html) | COVID-19 CXR detection with explainable CNN |
-| [Contact](https://hijrahassalam.com/contact.html) | Contact form and direct links |
-| [Now](https://hijrahassalam.com/now.html) | What I'm working on right now |
+Client-side JS is limited to three small scripts: the mobile nav toggle, the scroll-reveal observer, and the contact form handler.
 
-## Features
+---
 
-- Dark/light theme toggle with `localStorage` persistence
-- `prefers-reduced-motion` support for accessibility
-- Responsive design (mobile-first)
-- Scroll-reveal animations via IntersectionObserver
-- SEO: Open Graph, Twitter Cards, JSON-LD structured data, sitemap, robots.txt
-- Print-friendly styles
-
-## Local Development
+## Commands
 
 ```bash
-# Clone
-git clone https://github.com/hijrahassalam/site.git
-cd site
-
-# Serve locally
-python3 -m http.server 8000
-# → http://localhost:8000
+npm install
+npm run dev        # local dev server
+npm run build      # static build → dist/
+npm run preview    # serve the built output
 ```
 
-No build step required. Open `index.html` in a browser or use any static file server.
+Regenerate the OG image, apple-touch icon, and avatar derivatives:
+
+```bash
+node scripts/build-images.mjs
+```
+
+---
 
 ## Structure
 
 ```
-site/
-├── index.html              # Homepage
-├── hire.html               # Hire me page
-├── research.html           # Research page
-├── contact.html            # Contact form
-├── now.html                # Now page (Derek Sivers concept)
-├── 404.html                # Custom 404
-├── tailwind-config.js      # Shared Tailwind configuration
-├── robots.txt
-├── sitemap.xml
-└── assets/
-    ├── css/styles.css      # Design system
-    ├── js/main.js          # Theme toggle, scroll reveals, form handler
-    └── images/
-        ├── profile.webp    # Profile photo
-        ├── favicon.svg     # Favicon
-        ├── og-image.svg    # Open Graph image template
-        └── apple-touch-icon.svg
+src/
+├── assets/                 # source images (optimised at build time)
+├── components/             # PixelWindow, PixelBadge, PixelButton, PixelCursor,
+│                           # StatusHUD, ProgressBar, QuestCard, PlayerCard,
+│                           # ProjectCard, ProjectPreview, JourneyMap, TimelineNode,
+│                           # ResearchPreview, SectionHeader, Nav, Footer
+├── content/
+│   ├── projects/           # asistendiet, bidiktender, penugasan-uns,
+│   │                       # bundagizi, learn-quran, ai-agent-tooling
+│   ├── research/           # covid-cxr-gradcam
+│   └── now/                # quest log entries
+├── content.config.ts       # collection schemas
+├── layouts/BaseLayout.astro
+├── lib/accent.ts           # semantic colour + status label mapping
+├── pages/
+│   ├── index.astro         # hero, current builds, production proof,
+│   │                       # journey map, tooling, research, quest log, CTA
+│   ├── work/index.astro
+│   ├── work/[slug].astro   # project detail (flow diagram, metrics, stack)
+│   ├── research.astro
+│   ├── journey.astro
+│   ├── now.astro
+│   ├── hire.astro
+│   ├── contact.astro
+│   └── 404.astro
+└── styles/global.css       # design tokens, pixel primitives, motion
 ```
 
-## Contact
+`legacy/` holds the previous static HTML site (pre-Astro) for reference. It is not part of the build.
 
-- **Email:** hello@hijrahassalam.com
-- **GitHub:** [hijrahassalam](https://github.com/hijrahassalam)
-- **LinkedIn:** [hijrahassalam](https://linkedin.com/in/hijrahassalam)
+---
 
-## License
+## Design system
 
-All rights reserved. © 2026 Hijrah Assalam.
+### Semantic colour mapping
+
+| Meaning | Token | Hex |
+|---|---|---|
+| Engineering | `cyan-400` | `#38C7FF` |
+| Products / production | `mint-400` | `#45E6B5` |
+| Research | `violet-400` | `#A78BFA` |
+| Journey / progress | `amber-400` | `#FBCB5D` |
+
+Surfaces: `--color-bg-deep` `#050A18` → `--color-bg-elevated` `#121E33`.
+Text: `--color-ink` `#F4F7FC`, `--color-ink-2` `#9DAAC0`, `--color-ink-3` `#64748B`.
+
+### Typography
+
+Two systems only: **Inter** for everything readable, **Pixelify Sans** for HUD labels, section eyebrows, badges, and status values. Pixel font is never used for body copy.
+
+### Pixel UI rules
+
+- Border radius 2–6px; notched corners (`.px-frame`) reserved for HUD windows
+- Thin outlined panels instead of heavy rounded SaaS cards
+- Motion 150–350ms, one-shot reveals, full `prefers-reduced-motion` support
+- Scroll reveal only applies when JS is present (`html.js`) — without JS all content stays visible for crawlers and no-JS users
+
+---
+
+## Content editing
+
+Add a project by dropping a Markdown file into `src/content/projects/`. Frontmatter drives the cards, detail page, flow diagram, metrics, and stack blocks — no repeated markup.
+
+Key fields: `title`, `positioning`, `category` (`current` | `production` | `tooling`), `status`, `statusKind`, `accent`, `role`, `scale`, `flow`, `metrics`, `stack`, `highlights`, `hasDetail`.
+
+Update the quest log by editing `src/content/now/`.
+
+---
+
+## Deployment
+
+Vercel project: `hijrahassalam-site` (team `bundagizi-s-projects`). Framework auto-detected as Astro; build `astro build`, output `dist`.
+
+The domain `www.hijrahassalam.com` currently points to a separate Vercel project on a different account. `vercel.json` keeps 301 redirects from the old `.html` URLs so nothing breaks when the domain is moved.
+
+---
+
+## Contact form
+
+`src/pages/contact.astro` reads `PUBLIC_FORMSPREE_ID`. When set, submissions POST to Formspree. When unset, the form does **not** pretend to succeed — it opens the visitor's mail client with the message prefilled, so nothing is silently lost.
+
+The previous site posted to `https://formspree.io/f/FORM_ID` (a placeholder), so submissions were never delivered.

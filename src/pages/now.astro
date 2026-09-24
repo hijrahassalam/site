@@ -1,0 +1,102 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import QuestCard from '../components/QuestCard.astro';
+import PixelButton from '../components/PixelButton.astro';
+import PixelBadge from '../components/PixelBadge.astro';
+
+const entries = (await getCollection('now')).sort((a, b) => b.id.localeCompare(a.id));
+const now = entries[0];
+const quests = now.data.quests;
+
+const statusLegend = [
+  { label: 'Production', accent: 'mint' as const, dot: 'dot-live' },
+  { label: 'Building', accent: 'cyan' as const, dot: 'dot-live' },
+  { label: 'Researching', accent: 'violet' as const, dot: 'dot-research' },
+  { label: 'Preparing', accent: 'amber' as const, dot: 'dot-active' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: 'Now — Hijrah Assalam',
+  url: 'https://www.hijrahassalam.com/now',
+  description: 'Current quest log: what Hijrah Assalam is building, running, and researching right now.',
+};
+---
+
+<BaseLayout
+  title="Now — Hijrah Assalam"
+  description="Quest log: the products I am building, the systems I run, and the research direction I am following."
+  jsonLd={jsonLd}
+>
+  <section class="mx-auto max-w-6xl px-4 pb-4 pt-12 sm:px-6 sm:pt-16">
+    <div class="reveal">
+      <p class="eyebrow text-amber-400">Quest log</p>
+      <h1 class="mt-4 text-[2rem] font-semibold leading-tight tracking-tight text-ink sm:text-4xl">
+        What I'm doing now
+      </h1>
+      <p class="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-2">
+        Short status lines only. No inflated progress bars — a stage label is more honest than a
+        percentage nobody can verify.
+      </p>
+      <p class="hud-label mt-5 text-ink-3">Terakhir diperbarui · {now.data.updated}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <div class="reveal space-y-2">
+      {
+        quests.map((quest) => (
+          <QuestCard
+            kind={quest.kind}
+            title={quest.title}
+            status={quest.status}
+            statusKind={quest.statusKind}
+            note={quest.note}
+            accent={quest.accent}
+            href={quest.href}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+    <div class="panel reveal p-5 sm:p-6">
+      <p class="hud-label">Status legend</p>
+      <ul class="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+        {
+          statusLegend.map((item) => (
+            <li class="flex items-center gap-2">
+              <span class:list={['dot', item.dot]} aria-hidden="true" />
+              <span class="hud-label text-ink-2">{item.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="panel reveal relative overflow-hidden p-6 sm:p-8">
+      <span class="absolute inset-x-0 top-0 h-[2px] bg-amber-400" aria-hidden="true"></span>
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div>
+          <p class="hud-label">Want the detail behind a quest?</p>
+          <h2 class="mt-3 text-xl font-semibold text-ink sm:text-2xl">
+            Each build has a page with its workflow and evidence.
+          </h2>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <PixelButton href="/work">See the work</PixelButton>
+          <PixelButton href="/contact" variant="ghost">Get in touch</PixelButton>
+        </div>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <PixelBadge label="Updated monthly" accent="amber" />
+        <PixelBadge label="Quest log" accent="amber" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

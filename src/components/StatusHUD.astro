@@ -1,0 +1,34 @@
+---
+import PixelWindow from './PixelWindow.astro';
+import PixelBadge from './PixelBadge.astro';
+
+const rows = [
+  { label: 'Class', value: 'AI Builder' },
+  { label: 'Experience', value: '5+ years' },
+  { label: 'Current build', value: 'AsistenDiet · BidikTender' },
+  { label: 'Research path', value: 'Biomedical AI' },
+];
+---
+
+<PixelWindow title="Player status" accent="cyan">
+  <p class="hud-label">Name</p>
+  <p class="mt-1.5 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+    HIJRAH ASSALAM
+  </p>
+  <div class="mt-2 flex flex-wrap gap-2">
+    <PixelBadge label="AI Builder" accent="cyan" />
+    <PixelBadge label="Full-Stack" accent="mint" />
+    <PixelBadge label="Applied AI" accent="violet" />
+  </div>
+
+  <dl class="mt-5 space-y-3 border-t border-ink/10 pt-4">
+    {
+      rows.map((row) => (
+        <div class="flex items-baseline justify-between gap-4">
+          <dt class="hud-label">{row.label}</dt>
+          <dd class="hud-value text-right text-ink">{row.value}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</PixelWindow>

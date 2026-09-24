@@ -1,0 +1,45 @@
+---
+const year = new Date().getFullYear();
+
+const socials = [
+  { label: 'GitHub', href: 'https://github.com/hijrahassalam' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/hijrahassalam' },
+  { label: 'Email', href: 'mailto:hello@hijrahassalam.com' },
+];
+---
+
+<footer class="mt-20 border-t border-ink/10 bg-bg-base/60">
+  <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="hud-value text-ink">hijrahassalam</p>
+        <p class="hud-label mt-2">AI Builder &amp; Full-Stack Engineer</p>
+      </div>
+
+      <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        {
+          socials.map((social) => (
+            <li>
+              <a
+                href={social.href}
+                class="hud-label text-ink-2 transition-colors duration-150 hover:text-cyan-400"
+                {...social.href.startsWith('http')
+                  ? { target: '_blank', rel: 'noopener noreferrer' }
+                  : {}}
+              >
+                {social.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div
+      class="mt-8 flex flex-col gap-2 border-t border-ink/10 pt-6 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p class="hud-label text-ink-3">Built with Astro · {year}</p>
+      <p class="coord">PRESS START TO CONTINUE</p>
+    </div>
+  </div>
+</footer>

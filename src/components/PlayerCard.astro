@@ -1,0 +1,43 @@
+---
+import PixelWindow from './PixelWindow.astro';
+
+interface Props {
+  name?: string;
+  role?: string;
+  experience?: string;
+  blocks: { label: string; items: string }[];
+  class?: string;
+}
+
+const {
+  name = 'Hijrah Assalam',
+  role = 'AI Builder / Full-Stack Engineer',
+  experience = '5+ years',
+  blocks,
+  class: className = '',
+} = Astro.props;
+---
+
+<PixelWindow title="Player card" accent="cyan" class={className}>
+  <p class="hud-label">Name</p>
+  <p class="mt-1.5 text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+    {name.toUpperCase()}
+  </p>
+  <p class="hud-label mt-2 text-cyan-400">{role}</p>
+
+  <div class="mt-4 flex items-baseline justify-between border-y border-ink/10 py-3">
+    <span class="hud-label">Experience</span>
+    <span class="hud-value text-ink">{experience}</span>
+  </div>
+
+  <dl class="mt-4 space-y-3.5">
+    {
+      blocks.map((block) => (
+        <div>
+          <dt class="hud-label text-ink-3">{block.label}</dt>
+          <dd class="hud-value mt-1.5 text-ink-2">{block.items}</dd>
+        </div>
+      ))
+    }
+  </dl>
+</PixelWindow>

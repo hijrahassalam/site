@@ -1,0 +1,38 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents } from '../lib/accent';
+
+interface Props {
+  /** Tahapan nyata, bukan persentase rekaan (§24) */
+  stages: string[];
+  /** Indeks tahap yang sedang berjalan (0-based) */
+  current: number;
+  accent?: Accent;
+  class?: string;
+}
+
+const { stages, current, accent = 'cyan', class: className = '' } = Astro.props;
+const a = accents[accent];
+---
+
+<div class:list={['w-full', className]}>
+  <div class="flex gap-[3px]" role="img" aria-label={`Tahap ${current + 1} dari ${stages.length}: ${stages[current]}`}>
+    {
+      stages.map((stage, i) => (
+        <span
+          class:list={[
+            'h-2 flex-1 rounded-[1px]',
+            i < current && a.bg,
+            i === current && `${a.bg} opacity-70`,
+            i > current && 'bg-ink/12',
+          ]}
+          aria-hidden="true"
+        />
+      ))
+    }
+  </div>
+  <p class="hud-label mt-2">
+    <span class={a.text}>{stages[current]}</span>
+    <span class="text-ink-3"> · tahap {current + 1}/{stages.length}</span>
+  </p>
+</div>

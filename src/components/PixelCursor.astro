@@ -1,0 +1,9 @@
+---
+/** Kursor menu terpilih (§14) — elemen mikro, bukan dekorasi besar */
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class:list={['cursor-mark', className]} aria-hidden="true">&#9646;</span>

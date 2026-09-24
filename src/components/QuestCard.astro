@@ -1,0 +1,55 @@
+---
+import type { Accent } from '../lib/accent';
+import { accents, statusLabels } from '../lib/accent';
+import PixelCursor from './PixelCursor.astro';
+
+interface Props {
+  kind: string;
+  title: string;
+  status: string;
+  statusKind: string;
+  note: string;
+  accent: Accent;
+  href?: string;
+}
+
+const { kind, title, status, statusKind, note, accent, href } = Astro.props;
+const a = accents[accent];
+const label = statusLabels[statusKind] ?? status;
+---
+
+{
+  href ? (
+    <a
+      href={href}
+      class:list={[
+        'nudge group flex items-start gap-4 border-l-2 bg-bg-surface/50 px-4 py-3.5 hover:bg-bg-surface',
+        a.border,
+      ]}
+    >
+      <div class="min-w-0 flex-1">
+        <p class="hud-label">{kind}</p>
+        <p class="mt-1.5 flex items-center gap-2 text-[0.9375rem] font-semibold text-ink">
+          <PixelCursor class="text-[0.6rem] opacity-0 transition-opacity group-hover:opacity-100" />
+          {title}
+        </p>
+        <p class="mt-1.5 text-sm leading-relaxed text-ink-2">{note}</p>
+      </div>
+      <span class:list={['hud-label mt-1 flex-none', a.text]}>{label}</span>
+    </a>
+  ) : (
+    <div
+      class:list={[
+        'flex items-start gap-4 border-l-2 bg-bg-surface/50 px-4 py-3.5',
+        a.border,
+      ]}
+    >
+      <div class="min-w-0 flex-1">
+        <p class="hud-label">{kind}</p>
+        <p class="mt-1.5 text-[0.9375rem] font-semibold text-ink">{title}</p>
+        <p class="mt-1.5 text-sm leading-relaxed text-ink-2">{note}</p>
+      </div>
+      <span class:list={['hud-label mt-1 flex-none', a.text]}>{label}</span>
+    </div>
+  )
+}
