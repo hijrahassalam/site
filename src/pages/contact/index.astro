@@ -22,7 +22,7 @@ const thanksUrl = new URL('/contact/thanks/', Astro.site).toString();
   <section>
     <div class="mx-auto grid max-w-6xl gap-14 px-4 py-16 sm:px-6 md:grid-cols-[1.5fr_1fr] md:gap-20 md:py-24">
       {formEnabled ? (
-      <form method="POST" action="https://api.web3forms.com/submit" class="space-y-6">
+      <form method="POST" action="https://api.web3forms.com/submit" class="space-y-6" data-contact-form>
         <input type="hidden" name="access_key" value={site.web3formsKey} />
         <input type="hidden" name="subject" value="New message from hijrahassalam.com" />
         <input type="hidden" name="from_name" value="hijrahassalam.com" />
@@ -66,9 +66,12 @@ const thanksUrl = new URL('/contact/thanks/', Astro.site).toString();
           <textarea class={`${field} min-h-44 resize-y`} name="message" required placeholder="A few lines about the role or project, the team, and the timeline."></textarea>
         </label>
 
-        <button type="submit" class="inline-flex cursor-pointer items-center gap-2 rounded-md bg-ink px-6 py-3.5 font-semibold text-paper transition hover:opacity-90">
-          Send message <span aria-hidden="true">→</span>
-        </button>
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="inline-flex cursor-pointer items-center gap-2 rounded-md bg-ink px-6 py-3.5 font-semibold text-paper transition hover:opacity-90 disabled:cursor-wait disabled:opacity-60">
+            <span data-label>Send message</span> <span aria-hidden="true">→</span>
+          </button>
+          <p data-status role="status" aria-live="polite" class="text-sm text-ink-soft"></p>
+        </div>
       </form>
       ) : (
       <div class="border border-line bg-surface p-8">
@@ -116,3 +119,40 @@ const thanksUrl = new URL('/contact/thanks/', Astro.site).toString();
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Submit in the background so visitors stay on the site, then show our own thank-you page.
+  // Without JavaScript the form still posts directly to Web3Forms.
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = form.querySelector<HTMLElement>('[data-label]')!;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      label.textContent = 'Sending…';
+      status.textContent = '';
+
+      const data = new FormData(form);
+      data.delete('redirect');
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: data,
+        });
+        const json = await res.json().catch(() => ({}));
+        if (!res.ok || json.success === false) throw new Error(json.message || 'Request failed');
+        window.location.assign('/contact/thanks/');
+      } catch {
+        button.disabled = false;
+        label.textContent = 'Send message';
+        status.innerHTML =
+          'Sorry, that didn’t go through. Please try again or email <a class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4" href="mailto:hijrahassalam@gmail.com">hijrahassalam@gmail.com</a>.';
+      }
+    });
+  }
+</script>
