@@ -15,6 +15,7 @@
   --gold-ink: #8a6a12;
   --motif: #16304f;
   --motif-opacity: 0.045;
+  --rule: #16304f;
   color-scheme: light;
 }
 
@@ -31,6 +32,7 @@
     --gold-ink: #e2c057;
     --motif: #e2c057;
     --motif-opacity: 0.035;
+    --rule: #2b4a72;
     color-scheme: dark;
   }
 }
@@ -47,6 +49,7 @@
   --gold-ink: #e2c057;
   --motif: #e2c057;
   --motif-opacity: 0.035;
+  --rule: #2b4a72;
   color-scheme: dark;
 }
 
@@ -116,7 +119,7 @@ body {
 /* Navy rule with a gold segment, like an institutional letterhead. */
 .letterhead {
   height: 4px;
-  background: linear-gradient(90deg, var(--ink) 0 78%, var(--gold) 78% 100%);
+  background: linear-gradient(90deg, var(--rule) 0 78%, var(--gold) 78% 100%);
 }
 
 /* ───────────────────────── Kawung motif ─────────────────────────

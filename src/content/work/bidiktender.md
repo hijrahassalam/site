@@ -5,7 +5,7 @@ role: Lead AI Engineer & Solution Architect
 kind: AI tender-document platform
 status: Production
 summary: An AI-assisted tender workspace that reads procurement requirements, matches them against supporting documents, flags missing evidence and compares RAB against BOQ.
-url: https://bidiktender.web.id
+url: https://putrakalingga.web.id/
 stack: [Document analysis, LLM pipeline, Validation workflows, Human review]
 highlight: Human-in-the-loop by design
 ---

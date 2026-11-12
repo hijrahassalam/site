@@ -5,7 +5,7 @@ role: Founder & Applied AI Engineer
 kind: AI nutrition companion
 status: Live · Early access
 summary: Snap a meal on WhatsApp, get an estimated nutrition log, daily summaries and personalised targets, all synced to a web dashboard.
-url: https://asistendiet.com
+url: https://www.asistendiet.com/
 stack: [LLM vision, WhatsApp, Web dashboard, Backend APIs]
 highlight: Founder-built, end to end
 ---

@@ -5,6 +5,7 @@ role: Senior Software Engineer · Architect
 kind: Institutional assignment & travel system
 status: Production · Universitas Sebelas Maret
 summary: The university's digital workflow for assignment letters and official travel, with multilevel approvals, electronic signatures, document verification and reporting.
+url: https://penugasan.uns.ac.id/
 stack: [Laravel, Vue.js, MySQL, RBAC, PDF generation, Payment gateway]
 highlight: 15k+ assignment letters issued
 ---
