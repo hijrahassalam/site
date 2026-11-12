@@ -12,7 +12,7 @@ export const site = {
   cv: '/cv/Hijrah_Assalam_CV.pdf',
   // Web3Forms access key for the contact form (public by design; get one free at https://web3forms.com).
   // While this is empty, the contact page shows email links instead of the form.
-  web3formsKey: '',
+  web3formsKey: '34c090a6-9741-4139-8604-de1ac6735abe',
   links: {
     github: 'https://github.com/hijrahassalam',
     linkedin: 'https://www.linkedin.com/in/hijrahassalam',
