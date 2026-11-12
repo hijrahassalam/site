@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+// Update this page monthly. Keep it short and true.
+const updated = 'November 2026';
+
+const items = [
+  {
+    tag: 'Building',
+    title: 'AsistenDiet, in early access',
+    body: 'Making WhatsApp food-photo logging faster and more accurate, and tightening the loop between the chat and the web dashboard.',
+    href: '/work/asistendiet/',
+  },
+  {
+    tag: 'Building',
+    title: 'BundaGizi',
+    body: 'Iterating on age-aware MPASI guidance, growth tracking and reminders with feedback from real parents.',
+    href: '/work/bundagizi/',
+  },
+  {
+    tag: 'Day job',
+    title: 'Senior Software Engineer at Universitas Sebelas Maret',
+    body: 'Architecting the university’s assignment, expense and legal-document systems. The assignment system has now passed 15,000 letters issued.',
+    href: '/work/penugasan-uns/',
+  },
+  {
+    tag: 'Writing',
+    title: 'COVID-19 chest X-ray paper',
+    body: 'Turning the explainable-CNN work into a paper, with the shortcut-learning finding at its centre.',
+    href: '/research/',
+  },
+  {
+    tag: 'Looking',
+    title: 'My next role',
+    body: 'Open to Applied AI and senior engineering roles, remote or hybrid, at teams building AI products.',
+    href: '/hire/',
+  },
+];
+---
+
+<BaseLayout title="Now" description="What Hijrah Assalam is building and focused on right now.">
+  <PageHeader
+    eyebrow={`Now · Updated ${updated}`}
+    title="What I'm focused on right now"
+    intro="A snapshot of where my time goes this month: the products I'm building, the day job, and what's next."
+  />
+
+  <section>
+    <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 md:py-24">
+      <ol class="border-t border-line-strong">
+        {
+          items.map((it) => (
+            <li class="border-b border-line">
+              <a href={it.href} class="group grid gap-3 py-8 md:grid-cols-[9rem_1fr_1.5rem] md:gap-10">
+                <span>
+                  <span class="inline-block rounded-sm border border-line-strong px-2 py-0.5 text-[0.7rem] font-bold tracking-[0.14em] text-ink-soft uppercase">
+                    {it.tag}
+                  </span>
+                </span>
+                <span>
+                  <span class="block text-xl font-bold tracking-tight transition group-hover:text-gold-ink">{it.title}</span>
+                  <span class="mt-2 block max-w-3xl leading-relaxed text-ink-soft">{it.body}</span>
+                </span>
+                <span class="hidden pt-1 text-ink-soft transition group-hover:translate-x-1 group-hover:text-ink md:block" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-10 text-sm text-muted">
+        This is a <a href="https://nownownow.com/about" class="underline decoration-gold decoration-2 underline-offset-4 hover:text-ink">now page</a>,
+        an idea from Derek Sivers.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

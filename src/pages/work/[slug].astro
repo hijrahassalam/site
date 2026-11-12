@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+  return work.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, next: work[(i + 1) % work.length] },
+  }));
+}
+
+const { entry, next } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<BaseLayout title={d.title} description={d.summary}>
+  <article>
+    <header class="kawung border-b border-line">
+      <div class="mx-auto max-w-6xl px-4 pt-12 pb-14 sm:px-6 md:pt-16 md:pb-20">
+        <div>
+          <a href="/#work" class="text-sm font-semibold text-ink-soft hover:text-ink">
+            <span aria-hidden="true">←</span> Selected work
+          </a>
+        </div>
+        <p class="eyebrow mt-10">Case study {pad(d.order)} · {d.kind}</p>
+        <h1 class="mt-5 text-5xl font-extrabold tracking-[-0.035em] sm:text-6xl">{d.title}</h1>
+        <p class="mt-6 max-w-3xl text-xl leading-relaxed text-ink-soft text-pretty">{d.summary}</p>
+      </div>
+
+      <dl class="border-t border-line bg-surface/60">
+        <div class="mx-auto grid max-w-6xl grid-cols-1 sm:grid-cols-3 sm:px-6">
+          <div class="px-4 py-6 sm:pl-0">
+            <dt class="text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">Role</dt>
+            <dd class="mt-2 font-semibold">{d.role}</dd>
+          </div>
+          <div class="border-t border-line px-4 py-6 sm:border-t-0 sm:border-l sm:px-6">
+            <dt class="text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">Status</dt>
+            <dd class="mt-2 font-semibold">{d.status}</dd>
+          </div>
+          <div class="border-t border-line px-4 py-6 sm:border-t-0 sm:border-l sm:px-6">
+            <dt class="text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">Links</dt>
+            <dd class="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-semibold">
+              {d.url && <a href={d.url} class="underline decoration-gold decoration-2 underline-offset-4">{new URL(d.url).host} ↗</a>}
+              {d.repo && <a href={d.repo} class="underline decoration-gold decoration-2 underline-offset-4">Source on GitHub ↗</a>}
+              {!d.url && !d.repo && <span class="text-muted">Internal system</span>}
+            </dd>
+          </div>
+        </div>
+      </dl>
+    </header>
+
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-[1fr_15rem] md:gap-20 md:py-20">
+      <div class="prose-case max-w-[42rem]">
+        <Content />
+      </div>
+      <aside class="md:sticky md:top-28 md:self-start">
+        <p class="text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">Stack &amp; methods</p>
+        <ul class="mt-4 flex flex-wrap gap-2 md:flex-col md:gap-0">
+          {d.stack.map((s) => (
+            <li class="rounded border border-line px-2.5 py-1 text-sm text-ink-soft md:rounded-none md:border-0 md:border-b md:px-0 md:py-2.5">{s}</li>
+          ))}
+        </ul>
+      </aside>
+    </div>
+
+    <nav aria-label="Next case study" class="border-t border-line">
+      <a href={`/work/${next.id}/`} class="group mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-10 sm:px-6">
+        <span>
+          <span class="block text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">Next</span>
+          <span class="mt-2 block text-2xl font-extrabold tracking-tight group-hover:text-gold-ink">{next.data.title}</span>
+        </span>
+        <span class="text-2xl text-ink-soft transition group-hover:translate-x-1 group-hover:text-ink" aria-hidden="true">→</span>
+      </a>
+    </nav>
+  </article>
+</BaseLayout>

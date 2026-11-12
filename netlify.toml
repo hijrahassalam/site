@@ -1,0 +1,33 @@
+# Production is served by Vercel (see vercel.json). Netlify builds deploy previews only.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Old .html URLs from the pre-Astro site
+[[redirects]]
+  from = "/hire.html"
+  to = "/hire/"
+  status = 301
+
+[[redirects]]
+  from = "/research.html"
+  to = "/research/"
+  status = 301
+
+[[redirects]]
+  from = "/contact.html"
+  to = "/contact/"
+  status = 301
+
+[[redirects]]
+  from = "/now.html"
+  to = "/now/"
+  status = 301
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301

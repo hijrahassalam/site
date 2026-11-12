@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+---
+
+<BaseLayout title="Page not found" description="This page doesn't exist or has moved.">
+  <PageHeader
+    eyebrow="404"
+    title="This page doesn't exist, or it has moved."
+    intro="The site was recently rebuilt, so an old link may point somewhere that no longer exists. These are good places to start:"
+  >
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="/" class="rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper hover:opacity-90">Home →</a>
+      <a href="/#work" class="rounded-md border border-line-strong bg-surface px-5 py-3 text-sm font-semibold hover:border-ink">Selected work</a>
+      <a href="/contact/" class="rounded-md border border-line-strong bg-surface px-5 py-3 text-sm font-semibold hover:border-ink">Contact</a>
+    </div>
+  </PageHeader>
+</BaseLayout>

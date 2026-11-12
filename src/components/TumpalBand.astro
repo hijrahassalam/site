@@ -1,0 +1,12 @@
+---
+// A thin band of tumpal, the row of triangles used on the border (pinggiran) of batik cloth.
+// Used as an ornamental section divider.
+interface Props {
+  tone?: 'ink' | 'gold';
+  flip?: boolean;
+  class?: string;
+}
+const { tone = 'ink', flip = false, class: className } = Astro.props;
+---
+
+<div class:list={['tumpal-band', `tumpal-${tone}`, flip && 'tumpal-flip', className]} aria-hidden="true"></div>

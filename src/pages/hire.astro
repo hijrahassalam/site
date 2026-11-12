@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import TumpalBand from '../components/TumpalBand.astro';
+import { site, proof } from '../data/profile';
+
+const roles = [
+  {
+    title: 'Applied AI Engineer',
+    body: 'Taking LLM features from prototype to production: agent and RAG workflows, guardrails, evaluation, and keeping cost and latency under control.',
+  },
+  {
+    title: 'Senior Full-Stack / Backend Engineer',
+    body: 'Owning systems end to end, from API and data design through to deployment. Laravel, Node.js, Vue.js, PostgreSQL/MySQL, Docker.',
+  },
+  {
+    title: 'Founding / Product Engineer',
+    body: 'Small teams that need someone who can talk to users, make the architecture call, ship it, and run it, because I do that for my own products.',
+  },
+];
+
+const bring = [
+  {
+    n: '01',
+    title: 'AI that holds up in production',
+    body: 'I have shipped AI to real users on WhatsApp and the web, so I design for the unglamorous parts: wrong answers, outages, abuse and the monthly bill.',
+  },
+  {
+    n: '02',
+    title: 'Systems institutions rely on',
+    body: 'At Universitas Sebelas Maret I architect workflow systems with multilevel approvals, e-signatures and audit trails. More than 15,000 assignment letters have been issued through one of them.',
+  },
+  {
+    n: '03',
+    title: 'Architecture and delivery ownership',
+    body: 'Five years as lead engineer and solutions architect at Root Labs: turning requirements into designs, coordinating engineers and owning the result in production.',
+  },
+];
+
+const practical = [
+  { k: 'Time zone', v: 'GMT+7 (Surakarta, Indonesia). Good overlap with Asia-Pacific, the Middle East and European mornings.' },
+  { k: 'Working style', v: 'Async-first, with written updates and design docs. Happy to join regular stand-ups in your hours.' },
+  { k: 'Language', v: 'English C1 Advanced (EF SET), and comfortable in fully English-speaking teams. Native Indonesian.' },
+  { k: 'Arrangement', v: 'Full-time remote or hybrid, or long-term contract. Payments via B2B invoice, PayPal or Payoneer.' },
+];
+---
+
+<BaseLayout
+  title="Work with me"
+  description="Hire Hijrah Assalam, Applied AI Engineer and senior full-stack engineer, for remote or hybrid roles and long-term contracts."
+>
+  <PageHeader
+    eyebrow="Work with me"
+    title="An engineer who ships AI to production, and keeps it running."
+    intro="I'm open to Applied AI and senior engineering roles, remote or hybrid, and to long-term contracts with teams building AI products."
+  >
+    <div class="rise rise-4 mt-9 flex flex-wrap gap-3">
+      <a href={`mailto:${site.email}?subject=Role%20opportunity`} class="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:opacity-90">
+        Email me <span aria-hidden="true">→</span>
+      </a>
+      <a href={site.cv} class="inline-flex items-center gap-2 rounded-md border border-line-strong bg-surface px-5 py-3 text-sm font-semibold transition hover:border-ink">
+        Download CV
+      </a>
+    </div>
+    <Fragment slot="after">
+      <dl class="border-t border-line bg-surface/60">
+        <div class="mx-auto grid max-w-6xl grid-cols-2 sm:px-6 lg:grid-cols-4">
+          {
+            proof.map((p, i) => (
+              <div class:list={[
+                'px-4 py-7 sm:px-6',
+                i % 2 === 1 && 'border-l border-line',
+                i >= 2 && 'border-t border-line lg:border-t-0',
+                i === 2 && 'lg:border-l',
+                i === 0 && 'sm:pl-0',
+              ]}>
+                <dt class="sr-only">{p.label}</dt>
+                <dd class="tnum text-4xl font-extrabold tracking-tight">{p.value}</dd>
+                <dd class="mt-2 max-w-[15rem] text-sm leading-snug text-ink-soft">{p.label}</dd>
+              </div>
+            ))
+          }
+        </div>
+      </dl>
+    </Fragment>
+  </PageHeader>
+
+  <!-- Roles -->
+  <section class="border-b border-line">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+      <p class="eyebrow">Roles I'm a fit for</p>
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        {
+          roles.map((r) => (
+            <div class="border-t-2 border-ink pt-5">
+              <h2 class="text-lg font-bold tracking-tight">{r.title}</h2>
+              <p class="mt-3 leading-relaxed text-ink-soft">{r.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- What I bring -->
+  <section class="border-b border-line bg-surface/60">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+      <p class="eyebrow">What I bring</p>
+      <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Founder judgement, engineer discipline</h2>
+      <ol class="mt-12 border-t border-line-strong">
+        {
+          bring.map((b) => (
+            <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[4rem_18rem_1fr] md:gap-10">
+              <span class="tnum text-sm font-semibold text-gold-ink">{b.n}</span>
+              <h3 class="text-lg font-bold tracking-tight">{b.title}</h3>
+              <p class="leading-relaxed text-ink-soft">{b.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+      <a href="/#work" class="mt-8 inline-flex items-center gap-2 text-sm font-semibold underline decoration-gold decoration-2 underline-offset-4">
+        See the case studies <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Practicalities -->
+  <section class="border-b border-line">
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-[1fr_2fr] md:py-24">
+      <div>
+        <p class="eyebrow">Practicalities</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight">Easy to work with across borders</h2>
+        <p class="mt-5 leading-relaxed text-ink-soft">Compensation is open to discussion based on scope, duration and team structure.</p>
+      </div>
+      <dl class="border-t border-line-strong">
+        {
+          practical.map((p) => (
+            <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[10rem_1fr] sm:gap-8">
+              <dt class="text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase sm:pt-1">{p.k}</dt>
+              <dd class="leading-relaxed text-ink-soft">{p.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="kawung kawung-gold bg-[#16304f] text-[#eef1f5]">
+    <TumpalBand tone="gold" />
+    <div class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="text-xs font-bold tracking-[0.16em] text-[#e2c057] uppercase">Let's talk</p>
+        <h2 class="mt-4 max-w-2xl text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">
+          Have a role or project in mind? Tell me about it.
+        </h2>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a href="/contact/" class="rounded-md bg-[#e2c057] px-5 py-3 font-semibold text-[#16304f] transition hover:opacity-90">Send a message →</a>
+        <a href={site.links.linkedin} class="rounded-md border border-white/25 px-5 py-3 font-semibold transition hover:border-white/60">LinkedIn ↗</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
