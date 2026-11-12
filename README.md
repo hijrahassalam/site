@@ -8,71 +8,41 @@ Production-grade engineer building systems that serve thousands of users daily a
 
 ## Tech Stack
 
-- **Frontend:** HTML5, Tailwind CSS (CDN), Vanilla JavaScript
-- **Styling:** CSS Custom Properties with dark/light theme support
-- **Analytics:** Plausible.io (privacy-friendly, GDPR compliant)
-- **Hosting:** Netlify
-- **Domain:** hijrahassalam.com
-
-## Pages
-
-| Page | Description |
-|------|-------------|
-| [Home](https://hijrahassalam.com/) | Overview — stats, skills, featured projects, certifications |
-| [Hire Me](https://hijrahassalam.com/hire.html) | Production experience, tech stack, remote readiness |
-| [Research](https://hijrahassalam.com/research.html) | COVID-19 CXR detection with explainable CNN |
-| [Contact](https://hijrahassalam.com/contact.html) | Contact form and direct links |
-| [Now](https://hijrahassalam.com/now.html) | What I'm working on right now |
-
-## Features
-
-- Dark/light theme toggle with `localStorage` persistence
-- `prefers-reduced-motion` support for accessibility
-- Responsive design (mobile-first)
-- Scroll-reveal animations via IntersectionObserver
-- SEO: Open Graph, Twitter Cards, JSON-LD structured data, sitemap, robots.txt
-- Print-friendly styles
+- **Framework:** [Astro](https://astro.build) (static output)
+- **Styling:** Tailwind CSS v4, design tokens in `src/styles/global.css` (paper / navy / gold, kawung motif)
+- **Type:** Plus Jakarta Sans (self-hosted via Fontsource), JetBrains Mono for small metadata
+- **Content:** case studies as Markdown in `src/content/work/`, profile facts in `src/data/profile.ts`
+- **Analytics:** Plausible + GA4 (`public/analytics.js`)
+- **Hosting:** Netlify (`netlify.toml`: `npm run build` → `dist/`)
 
 ## Local Development
 
 ```bash
-# Clone
-git clone https://github.com/hijrahassalam/site.git
-cd site
-
-# Serve locally
-python3 -m http.server 8000
-# → http://localhost:8000
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static site in dist/
 ```
-
-No build step required. Open `index.html` in a browser or use any static file server.
 
 ## Structure
 
 ```
-site/
-├── index.html              # Homepage
-├── hire.html               # Hire me page
-├── research.html           # Research page
-├── contact.html            # Contact form
-├── now.html                # Now page (Derek Sivers concept)
-├── 404.html                # Custom 404
-├── tailwind-config.js      # Shared Tailwind configuration
-├── robots.txt
-├── sitemap.xml
-└── assets/
-    ├── css/styles.css      # Design system
-    ├── js/main.js          # Theme toggle, scroll reveals, form handler
-    └── images/
-        ├── profile.webp    # Profile photo
-        ├── favicon.svg     # Favicon
-        ├── og-image.svg    # Open Graph image template
-        └── apple-touch-icon.svg
+src/
+├── pages/index.astro          # Homepage
+├── pages/work/[slug].astro    # Case study template
+├── content/work/*.md          # One file per project (add a file = add a case study)
+├── data/profile.ts            # Single source of truth: links, experience, recognition
+├── layouts/BaseLayout.astro   # <head>, SEO, JSON-LD, analytics
+├── components/                # Header, footer
+└── styles/global.css          # Design system
+public/
+├── hire.html, research.html, contact.html, now.html, 404.html   # Legacy pages, pending migration
+├── assets/                    # Legacy assets (still used by legacy pages)
+└── cv/Hijrah_Assalam_CV.pdf
 ```
 
 ## Contact
 
-- **Email:** hello@hijrahassalam.com
+- **Email:** hijrahassalam@gmail.com
 - **GitHub:** [hijrahassalam](https://github.com/hijrahassalam)
 - **LinkedIn:** [hijrahassalam](https://linkedin.com/in/hijrahassalam)
 

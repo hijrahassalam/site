@@ -1,0 +1,46 @@
+---
+import { site } from '../data/profile';
+import TumpalBand from './TumpalBand.astro';
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <TumpalBand tone="ink" />
+  <div class="border-t border-line">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6"
+  >
+    <p>© {year} {site.legalName}</p>
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <span class="inline-flex items-center gap-2">
+        <span class="size-2 rounded-full bg-emerald-500" aria-hidden="true"></span>
+        Open to new roles · {site.timezone}
+      </span>
+      <a href={site.links.github} class="hover:text-ink">GitHub</a>
+      <a href={site.links.linkedin} class="hover:text-ink">LinkedIn</a>
+      <button
+        type="button"
+        data-theme-toggle
+        class="cursor-pointer rounded border border-line-strong px-2 py-1 text-xs font-semibold hover:text-ink"
+        aria-label="Toggle colour theme"
+      >
+        Theme
+      </button>
+    </div>
+  </div>
+  </div>
+</footer>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  btn?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const current =
+      root.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const next = current === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch (_) {}
+  });
+</script>
