@@ -7,10 +7,7 @@ export default defineConfig({
   site: 'https://hijrahassalam.com',
   integrations: [
     sitemap({
-      // Legacy static pages in /public, until they are migrated to Astro.
-      customPages: ['hire', 'research', 'contact', 'now'].map(
-        (p) => `https://hijrahassalam.com/${p}.html`,
-      ),
+      filter: (page) => !page.includes('/contact/thanks'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

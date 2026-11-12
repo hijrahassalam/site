@@ -27,16 +27,22 @@ npm run build    # static site in dist/
 
 ```
 src/
-├── pages/index.astro          # Homepage
-├── pages/work/[slug].astro    # Case study template
+├── pages/
+│   ├── index.astro            # Homepage
+│   ├── work/[slug].astro      # Case study template
+│   ├── hire.astro             # Work with me
+│   ├── research.astro         # Explainable medical AI research
+│   ├── now.astro              # Now page (update monthly)
+│   ├── contact/               # Contact form (Netlify Forms) + thank-you page
+│   └── 404.astro
 ├── content/work/*.md          # One file per project (add a file = add a case study)
 ├── data/profile.ts            # Single source of truth: links, experience, recognition
 ├── layouts/BaseLayout.astro   # <head>, SEO, JSON-LD, analytics
-├── components/                # Header, footer
-└── styles/global.css          # Design system
+├── components/                # Header, footer, page header, batik seal, tumpal band
+└── styles/global.css          # Design system and batik motifs
 public/
-├── hire.html, research.html, contact.html, now.html, 404.html   # Legacy pages, pending migration
-├── assets/                    # Legacy assets (still used by legacy pages)
+├── analytics.js               # GA4 event tracking
+├── assets/images/             # Favicon, OG image, profile photo
 └── cv/Hijrah_Assalam_CV.pdf
 ```
 

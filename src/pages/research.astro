@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const repo = 'https://github.com/hijrahassalam/covid-cxr-gradcam';
+
+const metrics = [
+  { value: '95.27%', label: 'Test accuracy on 6,788 held-out images' },
+  { value: '0.95', label: 'Macro F1 across three classes' },
+  { value: '1.8%', label: 'COVID-19 false-negative rate' },
+  { value: '456K', label: 'Parameters (1.74 MB), small enough for in-browser inference' },
+];
+
+const perClass = [
+  { cls: 'COVID-19', f1: 0.99, p: 0.99, r: 0.98 },
+  { cls: 'Non-COVID infection', f1: 0.94, p: 0.92, r: 0.95 },
+  { cls: 'Normal', f1: 0.93, p: 0.94, r: 0.92 },
+];
+
+const contributions = [
+  {
+    title: 'Three classes, not binary',
+    body: 'Most COVID-19 classifiers only separate COVID from normal. This one separates COVID-19, non-COVID infection and normal lungs, which is closer to the decision a clinician actually faces.',
+  },
+  {
+    title: 'Benchmark-scale data',
+    body: 'Built on COVID-QU-Ex with its standardised split: 33,958 chest X-rays (21,753 train · 5,417 validation · 6,788 test).',
+  },
+  {
+    title: 'Interpretability used honestly',
+    body: 'Grad-CAM is treated as a diagnostic instrument for finding where the model fails, not as a heat-map to decorate a slide.',
+  },
+];
+
+const publications = [
+  {
+    year: 'In progress',
+    title: 'Three-class COVID-19 detection from chest X-rays with an explainable CNN and Grad-CAM analysis',
+    venue: 'Research paper (draft)',
+    href: repo,
+  },
+  {
+    year: '2021',
+    title: 'CNN-based COVID-19 detection from X-ray and CT images',
+    venue: 'Undergraduate thesis · Universitas Sebelas Maret',
+  },
+  {
+    year: '2020',
+    title: 'Forecasting COVID-19 cases with Single Exponential Smoothing and Holt methods',
+    venue: 'Ultimatics: Jurnal Teknik Informatika',
+  },
+];
+---
+
+<BaseLayout
+  title="Research"
+  description="Explainable AI for medical imaging: a three-class COVID-19 chest X-ray classifier with Grad-CAM analysis that exposes shortcut learning."
+>
+  <PageHeader
+    eyebrow="Research · Explainable medical AI"
+    title="What is the model actually looking at?"
+    intro="I build CNNs for medical imaging and use Grad-CAM as a diagnostic instrument, not decoration, to find out whether a model has learned clinical signal or just a shortcut."
+  >
+    <Fragment slot="after">
+      <dl class="border-t border-line bg-surface/60">
+        <div class="mx-auto grid max-w-6xl grid-cols-2 sm:px-6 lg:grid-cols-4">
+          {
+            metrics.map((m, i) => (
+              <div class:list={[
+                'px-4 py-7 sm:px-6',
+                i % 2 === 1 && 'border-l border-line',
+                i >= 2 && 'border-t border-line lg:border-t-0',
+                i === 2 && 'lg:border-l',
+                i === 0 && 'sm:pl-0',
+              ]}>
+                <dt class="sr-only">{m.label}</dt>
+                <dd class="tnum text-4xl font-extrabold tracking-tight">{m.value}</dd>
+                <dd class="mt-2 max-w-[15rem] text-sm leading-snug text-ink-soft">{m.label}</dd>
+              </div>
+            ))
+          }
+        </div>
+      </dl>
+    </Fragment>
+  </PageHeader>
+
+  <!-- Key finding -->
+  <section class="border-b border-line">
+    <div class="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-[1fr_1.3fr] md:py-24">
+      <div>
+        <p class="eyebrow">Key finding</p>
+        <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Evidence of shortcut learning</h2>
+      </div>
+      <div class="space-y-5 text-lg leading-relaxed text-ink-soft">
+        <p>
+          Grad-CAM showed <strong class="font-semibold text-ink">activation outside the lungs</strong> in some COVID-19
+          samples. The model's attention landed on regions with no clinical meaning, a sign that it was partly using
+          dataset artefacts rather than pathology.
+        </p>
+        <p>
+          The pattern is consistent with the shortcut-learning failure described by DeGrave, Janizek &amp; Lee (2021) in{' '}
+          <em>Nature Machine Intelligence</em>. Instead of hiding it behind the accuracy figure, I treat it as a core result,
+          because a 95% model that is right for the wrong reasons should not go near a patient.
+        </p>
+        <blockquote class="border-l-[3px] border-gold pl-5 text-xl font-semibold text-ink">
+          High accuracy is where the analysis starts, not where it ends.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Per-class -->
+  <section class="border-b border-line bg-surface/60">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+      <p class="eyebrow">Results by class</p>
+      <div class="mt-10 overflow-x-auto">
+        <table class="tnum w-full min-w-[32rem] text-left">
+          <thead>
+            <tr class="border-b border-line-strong text-[0.7rem] font-bold tracking-[0.16em] text-muted uppercase">
+              <th class="py-3 pr-4 font-bold">Class</th>
+              <th class="w-[40%] py-3 pr-4 font-bold"><span class="sr-only">F1 bar</span></th>
+              <th class="py-3 pr-4 text-right font-bold">F1</th>
+              <th class="py-3 pr-4 text-right font-bold">Precision</th>
+              <th class="py-3 text-right font-bold">Recall</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              perClass.map((c, i) => (
+                <tr class="border-b border-line">
+                  <td class="py-5 pr-4 font-semibold">{c.cls}</td>
+                  <td class="py-5 pr-4">
+                    <span class="block h-[3px] bg-line" aria-hidden="true">
+                      <span class:list={['block h-full', i === 0 ? 'bg-gold' : 'bg-ink-soft']} style={`width:${c.f1 * 100}%`} />
+                    </span>
+                  </td>
+                  <td class="py-5 pr-4 text-right font-bold">{c.f1.toFixed(2)}</td>
+                  <td class="py-5 pr-4 text-right text-ink-soft">{c.p.toFixed(2)}</td>
+                  <td class="py-5 text-right text-ink-soft">{c.r.toFixed(2)}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contributions -->
+  <section class="border-b border-line">
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+      <p class="eyebrow">Why it matters</p>
+      <div class="mt-10 grid gap-8 md:grid-cols-3">
+        {
+          contributions.map((c, i) => (
+            <div class="border-t-2 border-ink pt-5">
+              <span class="tnum text-sm font-semibold text-gold-ink">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-2 text-lg font-bold tracking-tight">{c.title}</h3>
+              <p class="mt-3 leading-relaxed text-ink-soft">{c.body}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-12 flex flex-col gap-4 border border-line bg-surface p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="font-bold">covid-cxr-gradcam</p>
+          <p class="mt-1 text-sm text-ink-soft">Model, training scripts, Grad-CAM analysis, figures and the full classification report.</p>
+        </div>
+        <a href={repo} class="shrink-0 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:opacity-90">Code on GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Publications -->
+  <section>
+    <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
+      <p class="eyebrow">Publications &amp; writing</p>
+      <ol class="mt-10 border-t border-line-strong">
+        {
+          publications.map((p) => (
+            <li class="grid gap-2 border-b border-line py-6 md:grid-cols-[10rem_1fr] md:gap-10">
+              <span class="tnum text-sm font-semibold text-muted">{p.year}</span>
+              <div>
+                <p class="font-bold leading-snug">
+                  {p.href ? <a href={p.href} class="hover:text-gold-ink">{p.title}</a> : p.title}
+                </p>
+                <p class="mt-1 text-sm text-ink-soft">{p.venue}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+</BaseLayout>

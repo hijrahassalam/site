@@ -1,0 +1,21 @@
+---
+// Shared page hero for inner pages: eyebrow, title, intro, on a kawung ground.
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+}
+const { eyebrow, title, intro } = Astro.props;
+---
+
+<header class="kawung border-b border-line">
+  <div class="mx-auto max-w-6xl px-4 pt-14 pb-14 sm:px-6 md:pt-20 md:pb-20">
+    <p class="eyebrow rise">{eyebrow}</p>
+    <h1 class="rise rise-2 mt-6 max-w-4xl text-[2.5rem] leading-[1.06] font-extrabold tracking-[-0.035em] text-balance sm:text-6xl">
+      {title}
+    </h1>
+    {intro && <p class="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft text-pretty">{intro}</p>}
+    <slot />
+  </div>
+  <slot name="after" />
+</header>

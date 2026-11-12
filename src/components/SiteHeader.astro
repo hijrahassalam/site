@@ -3,10 +3,12 @@ import { site } from '../data/profile';
 
 const nav = [
   { href: '/#work', label: 'Work' },
-  { href: '/#experience', label: 'Experience' },
-  { href: '/#speaking', label: 'Speaking' },
-  { href: '/now.html', label: 'Now' },
+  { href: '/research/', label: 'Research' },
+  { href: '/now/', label: 'Now' },
+  { href: '/contact/', label: 'Contact' },
 ];
+const path = Astro.url.pathname;
+const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(href);
 ---
 
 <header class="sticky top-0 z-40 bg-paper/85 backdrop-blur-md">
@@ -27,13 +29,17 @@ const nav = [
       <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">
         {
           nav.map((item) => (
-            <a href={item.href} class="text-sm font-semibold text-ink-soft transition hover:text-ink">
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              class="text-sm font-semibold text-ink-soft transition hover:text-ink aria-[current=page]:text-ink aria-[current=page]:underline aria-[current=page]:decoration-gold aria-[current=page]:decoration-2 aria-[current=page]:underline-offset-8"
+            >
               {item.label}
             </a>
           ))
         }
         <a
-          href="/#contact"
+          href="/hire/"
           class="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:opacity-90"
         >
           Work with me
@@ -41,7 +47,7 @@ const nav = [
       </nav>
 
       <div class="flex items-center gap-2 md:hidden">
-        <a href="/#contact" class="rounded-md bg-ink px-3 py-2 text-xs font-semibold text-paper">Contact</a>
+        <a href="/hire/" class="rounded-md bg-ink px-3 py-2 text-xs font-semibold text-paper">Hire me</a>
         <details class="relative">
           <summary
             class="grid size-9 cursor-pointer list-none place-items-center rounded-md border border-line-strong [&::-webkit-details-marker]:hidden"

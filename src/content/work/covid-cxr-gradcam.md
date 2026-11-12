@@ -16,12 +16,13 @@ High accuracy on a medical-imaging benchmark does not prove that a model is look
 
 ## What I did
 
-- Trained a CNN for three-class classification (COVID-19, non-COVID infection, normal) on the **COVID-QU-Ex** dataset, reaching **95.27% accuracy**.
+- Trained a lightweight CNN (456K parameters, 1.74 MB) for three-class classification (COVID-19, non-COVID infection, normal) on the **COVID-QU-Ex** benchmark of 33,958 images.
+- Reached **95.27% test accuracy** and **0.95 macro F1** on 6,788 held-out images, with a COVID-19 false-negative rate of 1.8%.
 - Used **Grad-CAM** as a diagnostic tool rather than decoration, inspecting where the model's attention fell.
 
 ## Finding
 
-The analysis documented activations outside the lungs, which is evidence of **shortcut learning**: the model was partly relying on cues that are not clinically meaningful. That is exactly the failure mode a headline accuracy number hides.
+The analysis documented activations outside the lungs, which is evidence of **shortcut learning**: the model was partly relying on cues that are not clinically meaningful. That is exactly the failure mode a headline accuracy number hides. The full results and per-class breakdown are on the [research page](/research/).
 
 ## Background
 

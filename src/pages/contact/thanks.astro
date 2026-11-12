@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+---
+
+<BaseLayout title="Message sent" description="Thanks for getting in touch.">
+  <PageHeader
+    eyebrow="Message sent"
+    title="Thank you. I'll be in touch."
+    intro="Your message has arrived. I read every message and will reply personally."
+  >
+    <div class="mt-9 flex flex-wrap gap-3">
+      <a href="/#work" class="rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper hover:opacity-90">Browse selected work →</a>
+      <a href="/" class="rounded-md border border-line-strong bg-surface px-5 py-3 text-sm font-semibold hover:border-ink">Back to home</a>
+    </div>
+  </PageHeader>
+</BaseLayout>
