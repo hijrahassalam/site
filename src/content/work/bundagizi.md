@@ -5,7 +5,7 @@ role: Founder & Applied AI Engineer
 kind: AI child-nutrition assistant
 status: Live
 summary: A WhatsApp-first assistant for complementary feeding (MPASI) and child growth, with age-aware guidance, growth tracking, immunisation reminders and web reports.
-url: https://bundagizi.com
+url: https://www.bundagizi.com/
 stack: [Python, Node.js, Generative AI, WhatsApp, PostgreSQL, Docker]
 highlight: Health domain, with guardrails
 ---

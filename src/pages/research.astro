@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import ProofRow from '../components/ProofRow.astro';
 
 const repo = 'https://github.com/hijrahassalam/covid-cxr-gradcam';
 
@@ -61,27 +62,7 @@ const publications = [
     title="What is the model actually looking at?"
     intro="I build CNNs for medical imaging and use Grad-CAM as a diagnostic instrument, not decoration, to find out whether a model has learned clinical signal or just a shortcut."
   >
-    <Fragment slot="after">
-      <dl class="border-t border-line bg-surface/60">
-        <div class="mx-auto grid max-w-6xl grid-cols-2 sm:px-6 lg:grid-cols-4">
-          {
-            metrics.map((m, i) => (
-              <div class:list={[
-                'px-4 py-7 sm:px-6',
-                i % 2 === 1 && 'border-l border-line',
-                i >= 2 && 'border-t border-line lg:border-t-0',
-                i === 2 && 'lg:border-l',
-                i === 0 && 'sm:pl-0',
-              ]}>
-                <dt class="sr-only">{m.label}</dt>
-                <dd class="tnum text-4xl font-extrabold tracking-tight">{m.value}</dd>
-                <dd class="mt-2 max-w-[15rem] text-sm leading-snug text-ink-soft">{m.label}</dd>
-              </div>
-            ))
-          }
-        </div>
-      </dl>
-    </Fragment>
+    <ProofRow slot="after" items={metrics} />
   </PageHeader>
 
   <!-- Key finding -->

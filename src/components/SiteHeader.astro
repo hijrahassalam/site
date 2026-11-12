@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/profile';
+import ThemeSwitcher from './ThemeSwitcher.astro';
 
 const nav = [
   { href: '/#work', label: 'Work' },
@@ -26,7 +27,7 @@ const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(hre
         </span>
       </a>
 
-      <nav aria-label="Primary" class="hidden items-center gap-8 md:flex">
+      <nav aria-label="Primary" class="hidden items-center gap-7 md:flex">
         {
           nav.map((item) => (
             <a
@@ -38,6 +39,7 @@ const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(hre
             </a>
           ))
         }
+        <ThemeSwitcher />
         <a
           href="/hire/"
           class="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-paper transition hover:opacity-90"
@@ -57,7 +59,7 @@ const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(hre
               <path d="M2 4.5h12M2 8h12M2 11.5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
             </svg>
           </summary>
-          <div class="absolute right-0 mt-2 w-48 rounded-md border border-line bg-surface p-2 shadow-lg">
+          <div class="absolute right-0 mt-2 w-52 rounded-md border border-line bg-surface p-2 shadow-lg">
             {
               nav.map((item) => (
                 <a href={item.href} class="block rounded px-3 py-2 text-sm font-semibold text-ink-soft hover:bg-paper hover:text-ink">
@@ -65,6 +67,10 @@ const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(hre
                 </a>
               ))
             }
+            <div class="mt-2 flex items-center justify-between border-t border-line px-3 pt-3 pb-1">
+              <span class="text-xs font-semibold text-muted">Theme</span>
+              <ThemeSwitcher />
+            </div>
           </div>
         </details>
       </div>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import ProofRow from '../components/ProofRow.astro';
 import TumpalBand from '../components/TumpalBand.astro';
 import { site, proof } from '../data/profile';
 
@@ -62,27 +63,7 @@ const practical = [
         Download CV
       </a>
     </div>
-    <Fragment slot="after">
-      <dl class="border-t border-line bg-surface/60">
-        <div class="mx-auto grid max-w-6xl grid-cols-2 sm:px-6 lg:grid-cols-4">
-          {
-            proof.map((p, i) => (
-              <div class:list={[
-                'px-4 py-7 sm:px-6',
-                i % 2 === 1 && 'border-l border-line',
-                i >= 2 && 'border-t border-line lg:border-t-0',
-                i === 2 && 'lg:border-l',
-                i === 0 && 'sm:pl-0',
-              ]}>
-                <dt class="sr-only">{p.label}</dt>
-                <dd class="tnum text-4xl font-extrabold tracking-tight">{p.value}</dd>
-                <dd class="mt-2 max-w-[15rem] text-sm leading-snug text-ink-soft">{p.label}</dd>
-              </div>
-            ))
-          }
-        </div>
-      </dl>
-    </Fragment>
+    <ProofRow slot="after" items={proof} />
   </PageHeader>
 
   <!-- Roles -->

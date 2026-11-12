@@ -22,7 +22,6 @@ export const site = {
 export const proof = [
   { value: '15k+', label: 'Assignment letters issued through a university system I architected' },
   { value: '3', label: 'AI products I built and run in production' },
-  { value: '36', label: 'Open-source libraries for AI-agent infrastructure' },
   { value: '5+', label: 'Years shipping production software end to end' },
 ];
 

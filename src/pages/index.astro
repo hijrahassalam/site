@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BatikSeal from '../components/BatikSeal.astro';
 import TumpalBand from '../components/TumpalBand.astro';
+import ProofRow from '../components/ProofRow.astro';
 import profilePhoto from '../assets/profile.webp';
 import gdgPhoto from '../assets/gdg-semarang-2026.jpg';
 import { site, proof, experience, recognition, capabilities } from '../data/profile';
@@ -22,7 +23,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
           I build AI products people actually use.
         </h1>
         <p class="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft text-pretty">
-          Founder of <a href="https://asistendiet.com" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">AsistenDiet</a>{' '}and{' '}<a href="https://bundagizi.com" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">BundaGizi</a>,
+          Founder of <a href="https://www.asistendiet.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">AsistenDiet</a>{' '}and{' '}<a href="https://www.bundagizi.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">BundaGizi</a>,
           and Senior Software Engineer at Universitas Sebelas Maret. I take AI from prompt to production:
           LLM workflows, guardrails and evaluation, and the backend that keeps them running.
         </p>
@@ -59,25 +60,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     </div>
 
     <!-- Proof row -->
-    <div class="border-t border-line bg-surface/60">
-      <dl class="mx-auto grid max-w-6xl grid-cols-2 sm:px-6 lg:grid-cols-4">
-        {
-          proof.map((p, i) => (
-            <div class:list={[
-              'px-4 py-7 sm:px-6',
-              i % 2 === 1 && 'border-l border-line',
-              i >= 2 && 'border-t border-line lg:border-t-0',
-              i === 2 && 'lg:border-l',
-              i === 0 && 'sm:pl-0',
-            ]}>
-              <dt class="sr-only">{p.label}</dt>
-              <dd class="tnum text-4xl font-extrabold tracking-tight sm:text-[2.75rem]">{p.value}</dd>
-              <dd class="mt-2 max-w-[15rem] text-sm leading-snug text-ink-soft">{p.label}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
+    <ProofRow items={proof} />
   </section>
 
   <!-- ───────────── Selected work ───────────── -->
@@ -100,14 +83,13 @@ const pad = (n: number) => String(n).padStart(2, '0');
       <ol>
         {
           work.map((w, i) => (
-            <li class="border-b border-line">
-              <a
-                href={`/work/${w.id}/`}
-                class="group grid grid-cols-[2.25rem_1fr_1.25rem] gap-x-4 gap-y-1 py-6 transition md:grid-cols-[3rem_1.4fr_1fr_1fr_1.5rem] md:items-baseline md:gap-6"
-              >
+            <li class="group relative border-b border-line">
+              <div class="grid grid-cols-[2.25rem_1fr_1.25rem] gap-x-4 gap-y-1 py-6 md:grid-cols-[3rem_1.4fr_1fr_1fr_1.5rem] md:items-baseline md:gap-6">
                 <span class="tnum pt-1 text-sm font-semibold text-muted md:pt-0">{pad(i + 1)}</span>
                 <span>
-                  <span class="block text-xl font-bold tracking-tight transition group-hover:text-gold-ink">{w.data.title}</span>
+                  <a href={`/work/${w.id}/`} class="block text-xl font-bold tracking-tight transition group-hover:text-gold-ink after:absolute after:inset-0 after:content-['']">
+                    {w.data.title}
+                  </a>
                   <span class="mt-1 block text-sm text-ink-soft">{w.data.kind}</span>
                   {i === 0 && <span class="mt-3 block h-[3px] w-24 bg-gold" aria-hidden="true" />}
                 </span>
@@ -115,9 +97,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
                 <span class="row-start-3 col-start-2 text-sm md:row-auto md:col-auto">
                   <span class="font-semibold">{w.data.status}</span>
                   {w.data.highlight && <span class="block text-muted">{w.data.highlight}</span>}
+                  {w.data.url && (
+                    <a
+                      href={w.data.url}
+                      class="relative z-10 mt-2 inline-flex items-center gap-1 font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4 hover:text-gold-ink"
+                    >
+                      Visit live site <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
                 </span>
                 <span class="col-start-3 row-start-1 pt-1 text-right text-ink-soft transition group-hover:translate-x-1 group-hover:text-ink md:col-auto md:row-auto md:pt-0" aria-hidden="true">→</span>
-              </a>
+              </div>
             </li>
           ))
         }

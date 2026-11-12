@@ -1,0 +1,31 @@
+---
+// A row of large figures separated by hairlines, as on the penugasan dashboard.
+interface Props {
+  items: { value: string; label: string }[];
+}
+const { items } = Astro.props;
+const four = items.length === 4;
+---
+
+<dl class="border-t border-line bg-surface/60">
+  <div class:list={['mx-auto grid max-w-6xl sm:px-6', four ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-1 sm:grid-cols-3']}>
+    {
+      items.map((p, i) => (
+        <div
+          class:list={[
+            'px-4 py-7 sm:px-6',
+            i === 0 && 'sm:pl-0',
+            four && i % 2 === 1 && 'border-l border-line',
+            four && i >= 2 && 'border-t border-line lg:border-t-0',
+            four && i === 2 && 'lg:border-l',
+            !four && i > 0 && 'border-t border-line sm:border-t-0 sm:border-l',
+          ]}
+        >
+          <dt class="sr-only">{p.label}</dt>
+          <dd class="tnum text-4xl font-extrabold tracking-tight sm:text-[2.75rem]">{p.value}</dd>
+          <dd class="mt-2 max-w-[16rem] text-sm leading-snug text-ink-soft">{p.label}</dd>
+        </div>
+      ))
+    }
+  </div>
+</dl>
