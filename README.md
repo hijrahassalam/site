@@ -34,7 +34,7 @@ src/
 │   ├── hire.astro             # Work with me
 │   ├── research.astro         # Explainable medical AI research
 │   ├── now.astro              # Now page (update monthly)
-│   ├── contact/               # Contact form (Netlify Forms) + thank-you page
+│   ├── contact/               # Contact form (Web3Forms) + thank-you page
 │   └── 404.astro
 ├── content/work/*.md          # One file per project (add a file = add a case study)
 ├── data/profile.ts            # Single source of truth: links, experience, recognition
