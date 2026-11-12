@@ -10,6 +10,9 @@ export const site = {
   location: 'Surakarta, Indonesia',
   timezone: 'GMT+7',
   cv: '/cv/Hijrah_Assalam_CV.pdf',
+  // Web3Forms access key for the contact form (public by design; get one free at https://web3forms.com).
+  // While this is empty, the contact page shows email links instead of the form.
+  web3formsKey: '',
   links: {
     github: 'https://github.com/hijrahassalam',
     linkedin: 'https://www.linkedin.com/in/hijrahassalam',

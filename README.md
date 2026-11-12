@@ -13,7 +13,8 @@ Production-grade engineer building systems that serve thousands of users daily a
 - **Type:** Plus Jakarta Sans (self-hosted via Fontsource), JetBrains Mono for small metadata
 - **Content:** case studies as Markdown in `src/content/work/`, profile facts in `src/data/profile.ts`
 - **Analytics:** Plausible + GA4 (`public/analytics.js`)
-- **Hosting:** Netlify (`netlify.toml`: `npm run build` → `dist/`)
+- **Hosting:** Vercel serves the production domain (`vercel.json`); Netlify also builds deploy previews (`netlify.toml`)
+- **Contact form:** [Web3Forms](https://web3forms.com). Set `web3formsKey` in `src/data/profile.ts`; while it is empty the page falls back to email links
 
 ## Local Development
 
