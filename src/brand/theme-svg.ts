@@ -18,6 +18,8 @@ export function themeSvg(raw: string, { label, className = '', viewBox, prepend 
   // Symbol: four arcs share one stroked group; the centre dot is r=21.2.
   s = s.replace(/stroke="#071425"(\s+stroke-width="16\.4")/g, 'class="kc-mark-stroke"$1');
   s = s.replace(/(r="21\.2")\s+fill="#071425"/g, '$1 class="kc-mark-fill"');
+  // pathLength="1" lets CSS draw each arc with stroke-dasharray: 1 (see .kc-draw in global.css).
+  s = s.replace(/<path transform="rotate\(/g, '<path pathLength="1" transform="rotate(');
   // Everything else (letters, seal ring) follows the text colour.
   s = s.replace(/stroke="#071425"/g, 'stroke="currentColor"').replace(/fill="#071425"/g, 'fill="currentColor"');
 

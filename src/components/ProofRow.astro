@@ -22,10 +22,55 @@ const four = items.length === 4;
           ]}
         >
           <dt class="sr-only">{p.label}</dt>
-          <dd class="tnum text-4xl font-extrabold tracking-tight sm:text-[2.75rem]">{p.value}</dd>
+          <dd class="tnum text-4xl font-extrabold tracking-tight sm:text-[2.75rem]" data-count={p.value}>{p.value}</dd>
           <dd class="mt-2 max-w-[16rem] text-sm leading-snug text-ink-soft">{p.label}</dd>
         </div>
       ))
     }
   </div>
 </dl>
+
+<script>
+  // Count proof figures up from zero the first time they scroll into view.
+  // The real value is in the HTML, so no-JS, crawlers and reduced-motion users see it as is.
+  const els = document.querySelectorAll<HTMLElement>('[data-count]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    const parse = (v: string) => {
+      const m = v.match(/^([\d.]+)(.*)$/);
+      if (!m) return null;
+      return { n: parseFloat(m[1]), dec: (m[1].split('.')[1] || '').length, suffix: m[2] };
+    };
+    const run = (el: HTMLElement) => {
+      const p = parse(el.dataset.count!);
+      if (!p) return;
+      const start = performance.now();
+      const dur = 1300;
+      const tick = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = (p.n * eased).toFixed(p.dec) + p.suffix;
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = el.dataset.count!;
+      };
+      requestAnimationFrame(tick);
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          io.unobserve(e.target);
+          run(e.target as HTMLElement);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    els.forEach((el) => {
+      const p = parse(el.dataset.count!);
+      if (!p) return;
+      el.textContent = (0).toFixed(p.dec) + p.suffix;
+      io.observe(el);
+    });
+  }
+</script>

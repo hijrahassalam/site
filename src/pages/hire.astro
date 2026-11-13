@@ -70,7 +70,7 @@ const practical = [
   <section class="border-b border-line">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">Roles I'm a fit for</p>
-      <div class="mt-10 grid gap-8 md:grid-cols-3">
+      <div class="mt-10 grid gap-8 md:grid-cols-3" data-reveal>
         {
           roles.map((r) => (
             <div class="border-t-2 border-ink pt-5">
@@ -88,7 +88,7 @@ const practical = [
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">What I bring</p>
       <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Founder judgement, engineer discipline</h2>
-      <ol class="mt-12 border-t border-line-strong">
+      <ol class="mt-12 border-t border-line-strong" data-reveal>
         {
           bring.map((b) => (
             <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[4rem_18rem_1fr] md:gap-10">
@@ -113,7 +113,7 @@ const practical = [
         <h2 class="mt-4 text-3xl font-extrabold tracking-tight">Easy to work with across borders</h2>
         <p class="mt-5 leading-relaxed text-ink-soft">Compensation is open to discussion based on scope, duration and team structure.</p>
       </div>
-      <dl class="border-t border-line-strong">
+      <dl class="border-t border-line-strong" data-reveal>
         {
           practical.map((p) => (
             <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[10rem_1fr] sm:gap-8">

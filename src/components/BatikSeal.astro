@@ -6,10 +6,12 @@ import { themeSvg } from '../brand/theme-svg';
 
 interface Props {
   class?: string;
+  /** Draw the symbol's arcs, then drop in the centre dot. */
+  draw?: boolean;
 }
-const { class: className = '' } = Astro.props;
+const { class: className = '', draw = false } = Astro.props;
 const svg = themeSvg(raw, {
-  className: `kc-seal ${className}`,
+  className: `kc-seal ${draw ? 'kc-draw' : ''} ${className}`,
   viewBox: '50 50 220 220',
   prepend: '<circle cx="160" cy="160" r="109" class="kc-seal-bg"/>',
 });

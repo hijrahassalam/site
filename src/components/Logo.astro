@@ -5,10 +5,12 @@ import { themeSvg } from '../brand/theme-svg';
 
 interface Props {
   class?: string;
+  /** Draw the symbol's arcs, then drop in the centre dot. */
+  draw?: boolean;
   label?: string;
 }
-const { class: className = '', label } = Astro.props;
-const svg = themeSvg(raw, { label, className: `block h-auto ${className}` });
+const { class: className = '', label, draw = false } = Astro.props;
+const svg = themeSvg(raw, { label, className: `block h-auto ${draw ? 'kc-draw-intro' : ''} ${className}` });
 ---
 
 <Fragment set:html={svg} />

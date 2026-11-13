@@ -72,6 +72,12 @@ const personSchema = {
     <!-- Apply a saved theme choice before paint to avoid a flash. -->
     <script is:inline>
       try {
+        if (!sessionStorage.getItem('kc-intro')) {
+          document.documentElement.classList.add('kc-intro');
+          sessionStorage.setItem('kc-intro', '1');
+        }
+      } catch (_) {}
+      try {
         const t = localStorage.getItem('theme');
         if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
       } catch (_) {}

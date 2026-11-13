@@ -53,7 +53,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
             loading="eager"
             class="relative aspect-square w-full bg-surface object-cover"
           />
-          <BatikSeal class="absolute -bottom-10 -left-10 size-28 drop-shadow-sm sm:-bottom-12 sm:-left-14 sm:size-36" />
+          <BatikSeal draw class="absolute -bottom-10 -left-10 size-28 drop-shadow-sm sm:-bottom-12 sm:-left-14 sm:size-36" />
         </div>
         <figcaption class="mt-6 pl-20 text-sm sm:pl-22 leading-snug text-muted">
           <span class="block font-semibold text-ink">{site.legalName}</span>
@@ -83,10 +83,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
         <span>No</span><span>Project</span><span>Role</span><span>Status</span><span></span>
       </div>
 
-      <ol>
+      <ol data-reveal>
         {
           work.map((w, i) => (
             <li class="group relative border-b border-line">
+              <span class="pointer-events-none absolute inset-x-0 -bottom-px h-[2px] origin-left scale-x-0 bg-gold transition-transform duration-500 ease-out group-hover:scale-x-100 motion-reduce:transition-none" aria-hidden="true"></span>
               <div class="grid grid-cols-[2.25rem_1fr_1.25rem] gap-x-4 gap-y-1 py-6 md:grid-cols-[3rem_1.4fr_1fr_1fr_1.5rem] md:items-baseline md:gap-6">
                 <span class="tnum pt-1 text-sm font-semibold text-muted md:pt-0">{pad(i + 1)}</span>
                 <span>
@@ -130,7 +131,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
           products, and as the engineer behind systems a whole university depends on.
         </p>
       </div>
-      <div class="grid gap-8 sm:grid-cols-3">
+      <div class="grid gap-8 sm:grid-cols-3" data-reveal>
         {
           capabilities.map((c) => (
             <div class="border-t-2 border-ink pt-5">
@@ -150,7 +151,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-28">
       <p class="eyebrow">Experience</p>
       <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">5+ years, end to end</h2>
-      <ol class="mt-12 border-t border-line-strong">
+      <ol class="mt-12 border-t border-line-strong" data-reveal>
         {
           experience.map((e) => (
             <li class="grid gap-2 border-b border-line py-7 md:grid-cols-[13rem_1fr] md:gap-10">
@@ -226,7 +227,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section class="border-b border-line">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <p class="eyebrow">Recognition &amp; credentials</p>
-      <ul class="mt-10 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="mt-10 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3" data-reveal>
         {
           recognition.map((r) => (
             <li class="border-r border-b border-line">
