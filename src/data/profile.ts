@@ -52,12 +52,32 @@ export const experience = [
   },
 ];
 
-export const recognition = [
+export const recognition: { title: string; detail: string; href?: string; source?: string }[] = [
   { title: 'Cum Laude, GPA 3.86', detail: 'B.Ed. Informatics, Universitas Sebelas Maret' },
-  { title: 'Invited Speaker', detail: 'Build With AI Solo 2026 · GDG Semarang' },
-  { title: 'Bronze Medal', detail: 'Advanced Innovation JAM, Japan · 2019' },
-  { title: 'Publication', detail: 'COVID-19 forecasting · Ultimatics · 2020' },
-  { title: 'EF SET C1 Advanced', detail: 'English proficiency' },
+  {
+    title: 'Invited Speaker',
+    detail: 'Build With AI Solo 2026 · GDG Semarang',
+    href: 'https://www.linkedin.com/posts/hijrahassalam_buildwithai-gdgsemarang-googleaistudio-ugcPost-7471541089368162304-VgXk/',
+    source: 'Event recap',
+  },
+  {
+    title: 'Bronze Medal',
+    detail: 'AI-JAM Japan 2019 · "Tuker Sampah" app',
+    href: 'https://www.kompas.com/tren/read/2019/12/25/064400365/mengenal-aplikasi-tuker-sampah-mahasiswa-uns-yang-meraih-medali-perunggu-di',
+    source: 'Kompas',
+  },
+  {
+    title: 'Publication',
+    detail: 'COVID-19 forecasting · Ultimatics · 2020',
+    href: 'https://doi.org/10.31937/ti.v12i2.1689',
+    source: 'DOI',
+  },
+  {
+    title: 'EF SET C1 Advanced',
+    detail: 'English proficiency',
+    href: 'https://cert.efset.org/cEDXzq',
+    source: 'Certificate',
+  },
   { title: 'BNSP Programmer', detail: 'National certification' },
 ];
 
