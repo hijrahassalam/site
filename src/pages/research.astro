@@ -47,8 +47,9 @@ const publications = [
   },
   {
     year: '2020',
-    title: 'Forecasting COVID-19 cases with Single Exponential Smoothing and Holt methods',
-    venue: 'Ultimatics: Jurnal Teknik Informatika',
+    title: 'Perbandingan Metode Single Exponential Smoothing dan Metode Holt untuk Prediksi Kasus COVID-19 di Indonesia',
+    venue: 'Ultimatics: Jurnal Teknik Informatika, 12(2) · Comparing Single Exponential Smoothing and Holt methods for predicting COVID-19 cases in Indonesia · doi:10.31937/ti.v12i2.1689',
+    href: 'https://doi.org/10.31937/ti.v12i2.1689',
   },
 ];
 ---
@@ -105,14 +106,14 @@ const publications = [
               <th class="py-3 text-right font-bold">Recall</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-reveal>
             {
               perClass.map((c, i) => (
                 <tr class="border-b border-line">
                   <td class="py-5 pr-4 font-semibold">{c.cls}</td>
                   <td class="py-5 pr-4">
                     <span class="block h-[3px] bg-line" aria-hidden="true">
-                      <span class:list={['block h-full', i === 0 ? 'bg-gold' : 'bg-ink-soft']} style={`width:${c.f1 * 100}%`} />
+                      <span class:list={['grow-bar block h-full', i === 0 ? 'bg-gold' : 'bg-ink-soft']} style={`width:${c.f1 * 100}%`} />
                     </span>
                   </td>
                   <td class="py-5 pr-4 text-right font-bold">{c.f1.toFixed(2)}</td>
@@ -131,7 +132,7 @@ const publications = [
   <section class="border-b border-line">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">Why it matters</p>
-      <div class="mt-10 grid gap-8 md:grid-cols-3">
+      <div class="mt-10 grid gap-8 md:grid-cols-3" data-reveal>
         {
           contributions.map((c, i) => (
             <div class="border-t-2 border-ink pt-5">
@@ -156,7 +157,7 @@ const publications = [
   <section>
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">Publications &amp; writing</p>
-      <ol class="mt-10 border-t border-line-strong">
+      <ol class="mt-10 border-t border-line-strong" data-reveal>
         {
           publications.map((p) => (
             <li class="grid gap-2 border-b border-line py-6 md:grid-cols-[10rem_1fr] md:gap-10">

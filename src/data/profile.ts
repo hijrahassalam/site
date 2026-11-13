@@ -3,9 +3,14 @@
 export const site = {
   name: 'Hijrah Assalam',
   legalName: 'Nur Hijrah As Salam Al Ihsan',
-  role: 'Applied AI Engineer',
+  // Short form for tight spaces (navbar, schema jobTitle). Matches the actual current job title.
+  role: 'Senior Software Engineer',
+  // Full professional identity, used where discoverability matters (hero eyebrow, SEO, meta).
+  identity: 'Senior Software Engineer · Applied AI Engineer',
+  // Compact form for <title>, kept under ~60 characters so search results don't truncate it.
+  titleRole: 'Senior Software & Applied AI Engineer',
   description:
-    'Applied AI Engineer and founder of AsistenDiet and BundaGizi. I build production AI products and the systems behind them, from LLM workflows to the backend that keeps them running.',
+    'Senior Software Engineer and Applied AI Engineer with 5+ years building production systems. Founder of AsistenDiet and BundaGizi.',
   email: 'hijrahassalam@gmail.com',
   location: 'Surakarta, Indonesia',
   timezone: 'GMT+7',
@@ -52,12 +57,32 @@ export const experience = [
   },
 ];
 
-export const recognition = [
+export const recognition: { title: string; detail: string; href?: string; source?: string }[] = [
   { title: 'Cum Laude, GPA 3.86', detail: 'B.Ed. Informatics, Universitas Sebelas Maret' },
-  { title: 'Invited Speaker', detail: 'Build With AI Solo 2026 · GDG Semarang' },
-  { title: 'Bronze Medal', detail: 'Advanced Innovation JAM, Japan · 2019' },
-  { title: 'Publication', detail: 'COVID-19 forecasting · Ultimatics · 2020' },
-  { title: 'EF SET C1 Advanced', detail: 'English proficiency' },
+  {
+    title: 'Invited Speaker',
+    detail: 'Build With AI Solo 2026 · GDG Semarang',
+    href: 'https://www.linkedin.com/posts/hijrahassalam_buildwithai-gdgsemarang-googleaistudio-ugcPost-7471541089368162304-VgXk/',
+    source: 'Event recap',
+  },
+  {
+    title: 'Bronze Medal',
+    detail: 'AI-JAM Japan 2019 · "Tuker Sampah" app',
+    href: 'https://www.kompas.com/tren/read/2019/12/25/064400365/mengenal-aplikasi-tuker-sampah-mahasiswa-uns-yang-meraih-medali-perunggu-di',
+    source: 'Kompas',
+  },
+  {
+    title: 'Publication',
+    detail: 'COVID-19 forecasting · Ultimatics · 2020',
+    href: 'https://doi.org/10.31937/ti.v12i2.1689',
+    source: 'DOI',
+  },
+  {
+    title: 'EF SET C1 Advanced',
+    detail: 'English proficiency',
+    href: 'https://cert.efset.org/cEDXzq',
+    source: 'Certificate',
+  },
   { title: 'BNSP Programmer', detail: 'National certification' },
 ];
 

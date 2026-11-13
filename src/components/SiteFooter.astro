@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/profile';
 import TumpalBand from './TumpalBand.astro';
+import BrandSymbol from './BrandSymbol.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -10,7 +11,13 @@ const year = new Date().getFullYear();
   <div
     class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6"
   >
-    <p>© {year} {site.legalName}</p>
+    <div class="flex items-center gap-3">
+      <BrandSymbol class="size-8 shrink-0 text-ink" />
+      <div class="leading-snug">
+        <p class="font-semibold text-ink">Connect the dots. Solve the problem.</p>
+        <p>© {year} {site.legalName}</p>
+      </div>
+    </div>
     <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
       <span class="inline-flex items-center gap-2">
         <span class="size-2 rounded-full bg-emerald-500" aria-hidden="true"></span>

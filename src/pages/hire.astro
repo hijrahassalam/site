@@ -7,16 +7,16 @@ import { site, proof } from '../data/profile';
 
 const roles = [
   {
+    title: 'Senior Software Engineer (Backend / Full-Stack)',
+    body: 'Owning systems end to end, from API and data design through to deployment. Laravel, Node.js, Vue.js, PostgreSQL/MySQL, Docker.',
+  },
+  {
     title: 'Applied AI Engineer',
     body: 'Taking LLM features from prototype to production: agent and RAG workflows, guardrails, evaluation, and keeping cost and latency under control.',
   },
   {
-    title: 'Senior Full-Stack / Backend Engineer',
-    body: 'Owning systems end to end, from API and data design through to deployment. Laravel, Node.js, Vue.js, PostgreSQL/MySQL, Docker.',
-  },
-  {
-    title: 'Founding / Product Engineer',
-    body: 'Small teams that need someone who can talk to users, make the architecture call, ship it, and run it, because I do that for my own products.',
+    title: 'Founding Engineer / Technical Lead',
+    body: 'Teams that need someone to make the architecture call, lead the build, ship it and run it. I did that for five years as lead engineer and solutions architect at Root Labs, and I do it for my own products.',
   },
 ];
 
@@ -48,12 +48,12 @@ const practical = [
 
 <BaseLayout
   title="Work with me"
-  description="Hire Hijrah Assalam, Applied AI Engineer and senior full-stack engineer, for remote or hybrid roles and long-term contracts."
+  description="Hire Hijrah Assalam, Senior Software Engineer and Applied AI Engineer, for remote or hybrid roles, long-term contracts and selected technical consulting."
 >
   <PageHeader
     eyebrow="Work with me"
     title="An engineer who ships AI to production, and keeps it running."
-    intro="I'm open to Applied AI and senior engineering roles, remote or hybrid, and to long-term contracts with teams building AI products."
+    intro="I'm open to senior software engineering and Applied AI roles, remote or hybrid, and to long-term contracts and selected technical consulting."
   >
     <div class="rise rise-4 mt-9 flex flex-wrap gap-3">
       <a href={`mailto:${site.email}?subject=Role%20opportunity`} class="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper transition hover:opacity-90">
@@ -70,7 +70,7 @@ const practical = [
   <section class="border-b border-line">
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">Roles I'm a fit for</p>
-      <div class="mt-10 grid gap-8 md:grid-cols-3">
+      <div class="mt-10 grid gap-8 md:grid-cols-3" data-reveal>
         {
           roles.map((r) => (
             <div class="border-t-2 border-ink pt-5">
@@ -88,7 +88,7 @@ const practical = [
     <div class="mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-24">
       <p class="eyebrow">What I bring</p>
       <h2 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-4xl">Founder judgement, engineer discipline</h2>
-      <ol class="mt-12 border-t border-line-strong">
+      <ol class="mt-12 border-t border-line-strong" data-reveal>
         {
           bring.map((b) => (
             <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[4rem_18rem_1fr] md:gap-10">
@@ -113,7 +113,7 @@ const practical = [
         <h2 class="mt-4 text-3xl font-extrabold tracking-tight">Easy to work with across borders</h2>
         <p class="mt-5 leading-relaxed text-ink-soft">Compensation is open to discussion based on scope, duration and team structure.</p>
       </div>
-      <dl class="border-t border-line-strong">
+      <dl class="border-t border-line-strong" data-reveal>
         {
           practical.map((p) => (
             <div class="grid gap-2 border-b border-line py-6 sm:grid-cols-[10rem_1fr] sm:gap-8">
@@ -127,17 +127,17 @@ const practical = [
   </section>
 
   <!-- CTA -->
-  <section class="kawung kawung-gold bg-[#16304f] text-[#eef1f5]">
+  <section class="kawung kawung-gold bg-navy text-[#eef1f5]">
     <TumpalBand tone="gold" />
     <div class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-20 sm:px-6 md:flex-row md:items-end md:justify-between">
       <div>
-        <p class="text-xs font-bold tracking-[0.16em] text-[#e2c057] uppercase">Let's talk</p>
+        <p class="text-xs font-bold tracking-[0.16em] text-brand-gold uppercase">Let's talk</p>
         <h2 class="mt-4 max-w-2xl text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">
           Have a role or project in mind? Tell me about it.
         </h2>
       </div>
       <div class="flex flex-wrap gap-3">
-        <a href="/contact/" class="rounded-md bg-[#e2c057] px-5 py-3 font-semibold text-[#16304f] transition hover:opacity-90">Send a message →</a>
+        <a href="/contact/" class="rounded-md bg-brand-gold px-5 py-3 font-semibold text-navy transition hover:opacity-90">Send a message →</a>
         <a href={site.links.linkedin} class="rounded-md border border-white/25 px-5 py-3 font-semibold transition hover:border-white/60">LinkedIn ↗</a>
       </div>
     </div>

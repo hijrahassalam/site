@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/profile';
 import ThemeSwitcher from './ThemeSwitcher.astro';
+import Logo from './Logo.astro';
 
 const nav = [
   { href: '/#work', label: 'Work' },
@@ -16,14 +17,11 @@ const isActive = (href: string) => !href.startsWith('/#') && path.startsWith(hre
   <div class="letterhead"></div>
   <div class="border-b border-line">
     <div class="mx-auto flex max-w-6xl items-center justify-between gap-6 px-4 py-4 sm:px-6">
-      <a href="/" class="group flex items-center gap-3" aria-label={`${site.name}, home`}>
-        <span
-          class="grid size-9 place-items-center rounded-full border border-line-strong text-[0.8rem] font-extrabold tracking-tight text-ink transition group-hover:border-gold"
-          aria-hidden="true">HA</span
-        >
-        <span class="leading-tight">
-          <span class="block text-[0.95rem] font-bold tracking-tight">{site.name}</span>
-          <span class="block text-xs text-muted">{site.role}</span>
+      <a href="/" class="group flex items-center gap-4" aria-label={`${site.name}, ${site.role}, home`}>
+        <Logo draw class="w-[150px] text-ink sm:w-[172px]" />
+        <span class="hidden h-7 w-px bg-line-strong lg:block" aria-hidden="true"></span>
+        <span class="hidden text-xs leading-tight font-semibold tracking-[0.14em] text-muted uppercase lg:block">
+          {site.role}
         </span>
       </a>
 
