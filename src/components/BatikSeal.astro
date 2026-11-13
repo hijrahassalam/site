@@ -1,82 +1,18 @@
 ---
-// A round seal in the spirit of a batik cap stamp: a kawung flower in the centre,
-// ringed by the owner's name and hometown. Decorative only.
+// Kawung Convergence v1.1 seal (HIJRAH ASSALAM · SURAKARTA · INDONESIA), theme-aware.
+// Cropped to the ring and given a paper disc so it can sit over the portrait.
+import raw from '../brand/kc-seal.svg?raw';
+import { themeSvg } from '../brand/theme-svg';
+
 interface Props {
   class?: string;
 }
-const { class: className } = Astro.props;
-const ring = 'HIJRAH ASSALAM · SURAKARTA · INDONESIA · ';
-// Four kawung petals, rotated around the centre.
-const petals = [0, 90, 180, 270];
-const seeds = [45, 135, 225, 315];
+const { class: className = '' } = Astro.props;
+const svg = themeSvg(raw, {
+  className: `kc-seal ${className}`,
+  viewBox: '50 50 220 220',
+  prepend: '<circle cx="160" cy="160" r="109" class="kc-seal-bg"/>',
+});
 ---
 
-<svg
-  viewBox="0 0 140 140"
-  class:list={['batik-seal', className]}
-  aria-hidden="true"
-  focusable="false"
->
-  <defs>
-    <path id="seal-ring" d="M70,70 m-52,0 a52,52 0 1,1 104,0 a52,52 0 1,1 -104,0"></path>
-  </defs>
-  <circle cx="70" cy="70" r="68" class="seal-bg"></circle>
-  <circle cx="70" cy="70" r="66" class="seal-line" stroke-width="1"></circle>
-  <circle cx="70" cy="70" r="40" class="seal-line" stroke-width="1"></circle>
-  <circle cx="70" cy="70" r="37" class="seal-line" stroke-width="0.6" stroke-dasharray="1 3"></circle>
-
-  <g class="seal-ring-text">
-    <text>
-      <textPath href="#seal-ring" textLength="324" lengthAdjust="spacing">{ring}</textPath>
-    </text>
-  </g>
-
-  <g transform="translate(70 70)">
-    {
-      petals.map((r) => (
-        <g transform={`rotate(${r})`}>
-          <ellipse cx="0" cy="-15" rx="8" ry="14" class="seal-line" stroke-width="1.3"></ellipse>
-          <ellipse cx="0" cy="-15" rx="3.2" ry="7" class="seal-gold"></ellipse>
-        </g>
-      ))
-    }
-    {seeds.map((r) => <circle cx="0" cy="-25" r="1.8" transform={`rotate(${r})`} class="seal-ink"></circle>)}
-    <circle r="3" class="seal-gold"></circle>
-  </g>
-</svg>
-
-<style>
-  .batik-seal {
-    overflow: visible;
-  }
-  .seal-bg {
-    fill: var(--paper);
-  }
-  .seal-line {
-    fill: none;
-    stroke: var(--ink);
-  }
-  .seal-ink {
-    fill: var(--ink);
-  }
-  .seal-gold {
-    fill: var(--gold);
-  }
-  .seal-ring-text {
-    fill: var(--ink);
-    font-size: 9.5px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    transform-origin: 70px 70px;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .seal-ring-text {
-      animation: seal-spin 60s linear infinite;
-    }
-  }
-  @keyframes seal-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-</style>
+<Fragment set:html={svg} />

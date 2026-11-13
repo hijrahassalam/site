@@ -1,0 +1,14 @@
+---
+// Kawung Convergence horizontal logo (symbol + "Hijrah Assalam"), theme-aware.
+import raw from '../brand/kc-horizontal.svg?raw';
+import { themeSvg } from '../brand/theme-svg';
+
+interface Props {
+  class?: string;
+  label?: string;
+}
+const { class: className = '', label } = Astro.props;
+const svg = themeSvg(raw, { label, className: `block h-auto ${className}` });
+---
+
+<Fragment set:html={svg} />

@@ -50,7 +50,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
             loading="eager"
             class="relative aspect-square w-full bg-surface object-cover"
           />
-          <BatikSeal class="absolute -bottom-10 -left-10 size-28 drop-shadow-sm sm:-left-12 sm:size-32" />
+          <BatikSeal class="absolute -bottom-10 -left-10 size-28 drop-shadow-sm sm:-bottom-12 sm:-left-14 sm:size-36" />
         </div>
         <figcaption class="mt-6 pl-20 text-sm sm:pl-22 leading-snug text-muted">
           <span class="block font-semibold text-ink">{site.legalName}</span>
@@ -214,11 +214,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
   </section>
 
   <!-- ───────────── Contact ───────────── -->
-  <section id="contact" class="kawung kawung-gold scroll-mt-24 bg-[#16304f] text-[#eef1f5]">
+  <section id="contact" class="kawung kawung-gold scroll-mt-24 bg-navy text-[#eef1f5]">
     <TumpalBand tone="gold" />
     <div class="mx-auto grid max-w-6xl gap-10 px-4 py-20 sm:px-6 md:grid-cols-[1.4fr_1fr] md:items-end md:py-24">
       <div>
-        <p class="text-xs font-bold tracking-[0.16em] text-[#e2c057] uppercase">Work with me</p>
+        <p class="text-xs font-bold tracking-[0.16em] text-brand-gold uppercase">Work with me</p>
         <h2 class="mt-4 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-5xl">
           Have an AI product that needs to work in the real world?
         </h2>
@@ -228,7 +228,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
         </p>
       </div>
       <div class="flex flex-col gap-3">
-        <a href={`mailto:${site.email}`} class="flex items-center justify-between rounded-md bg-[#e2c057] px-5 py-4 font-semibold text-[#16304f] transition hover:opacity-90">
+        <a href={`mailto:${site.email}`} class="flex items-center justify-between rounded-md bg-brand-gold px-5 py-4 font-semibold text-navy transition hover:opacity-90">
           {site.email}
           <span aria-hidden="true">→</span>
         </a>

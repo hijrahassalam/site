@@ -1,0 +1,13 @@
+---
+// Kawung Convergence symbol on its own, theme-aware.
+import raw from '../brand/kc-symbol.svg?raw';
+import { themeSvg } from '../brand/theme-svg';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+const svg = themeSvg(raw, { className });
+---
+
+<Fragment set:html={svg} />

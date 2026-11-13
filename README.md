@@ -9,7 +9,8 @@ Production-grade engineer building systems that serve thousands of users daily a
 ## Tech Stack
 
 - **Framework:** [Astro](https://astro.build) (static output)
-- **Styling:** Tailwind CSS v4, design tokens in `src/styles/global.css` (paper / navy / gold, kawung motif)
+- **Brand:** Kawung Convergence v1.1. Production SVGs in `src/brand/` are rendered theme-aware by `src/brand/theme-svg.ts` (symbol = `--logo-mark`, text = `currentColor`). Icons, manifest and OG share card in `public/`
+- **Styling:** Tailwind CSS v4, design tokens in `src/styles/global.css` (Kawung Convergence palette, kawung motif, tumpal band)
 - **Type:** Plus Jakarta Sans (self-hosted via Fontsource), JetBrains Mono for small metadata
 - **Content:** case studies as Markdown in `src/content/work/`, profile facts in `src/data/profile.ts`
 - **Analytics:** Plausible + GA4 (`public/analytics.js`)
@@ -39,7 +40,8 @@ src/
 ├── content/work/*.md          # One file per project (add a file = add a case study)
 ├── data/profile.ts            # Single source of truth: links, experience, recognition
 ├── layouts/BaseLayout.astro   # <head>, SEO, JSON-LD, analytics
-├── components/                # Header, footer, page header, batik seal, tumpal band
+├── brand/                     # Kawung Convergence production SVGs + themeSvg helper
+├── components/                # Header, footer, logo, symbol, seal, theme switcher, tumpal band
 └── styles/global.css          # Design system and batik motifs
 public/
 ├── analytics.js               # GA4 event tracking

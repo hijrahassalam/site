@@ -1,55 +1,59 @@
 @import "tailwindcss";
 
 /* ───────────────────────── Design tokens ─────────────────────────
-   Quiet-luxury palette: paper, navy ink, a single gold accent.
-   Gold is used sparingly: rules, markers, the first bar. Never for body text. */
+   Kawung Convergence v1.1 palette (05-foundations/kc-tokens.css).
+   Gold (#F6BE3D) is decorative on light backgrounds (1.6:1): rules, markers, bars.
+   Gold text on light uses --gold-ink (4.7:1). On navy, gold is fine for anything. */
 :root {
-  --paper: #f7f6f2;
-  --surface: #ffffff;
-  --ink: #16304f;
-  --ink-soft: #3d5573;
-  --muted: #6b7a8c;
-  --line: #e4e1d8;
-  --line-strong: #cfcabd;
-  --gold: #d9b13b;
-  --gold-ink: #8a6a12;
+  --paper: #f7f6f2;        /* kc-paper */
+  --surface: #ffffff;      /* kc-surface */
+  --ink: #071425;          /* kc-navy */
+  --ink-soft: #3d5573;     /* body copy, between navy and slate (7.1:1) */
+  --muted: #526075;        /* kc-slate (5.9:1) */
+  --line: #e4e1d8;         /* kc-line */
+  --line-strong: #cfcabd;  /* kc-line-strong */
+  --gold: #f6be3d;         /* kc-gold, decorative only on light */
+  --gold-ink: #8a6a12;     /* kc-gold-ink */
   --motif: #16304f;
   --motif-opacity: 0.045;
-  --rule: #16304f;
+  --rule: #16304f;         /* kc-navy-700 */
+  --logo-mark: #071425;    /* symbol is single-ink navy on light */
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #0d1726;
-    --surface: #122036;
+    --paper: #071425;
+    --surface: #0f1f35;
     --ink: #eef1f5;
     --ink-soft: #c3ccd8;
     --muted: #8796a8;
     --line: #22324a;
     --line-strong: #31445f;
-    --gold: #e2c057;
-    --gold-ink: #e2c057;
-    --motif: #e2c057;
+    --gold: #f6be3d;
+    --gold-ink: #f6be3d;
+    --motif: #f6be3d;
     --motif-opacity: 0.035;
     --rule: #2b4a72;
+    --logo-mark: #f6be3d;
     color-scheme: dark;
   }
 }
 
 :root[data-theme="dark"] {
-  --paper: #0d1726;
-  --surface: #122036;
+  --paper: #071425;
+  --surface: #0f1f35;
   --ink: #eef1f5;
   --ink-soft: #c3ccd8;
   --muted: #8796a8;
   --line: #22324a;
   --line-strong: #31445f;
-  --gold: #e2c057;
-  --gold-ink: #e2c057;
-  --motif: #e2c057;
+  --gold: #f6be3d;
+  --gold-ink: #f6be3d;
+  --motif: #f6be3d;
   --motif-opacity: 0.035;
   --rule: #2b4a72;
+  --logo-mark: #f6be3d;
   color-scheme: dark;
 }
 
@@ -63,6 +67,10 @@
   --color-line-strong: var(--line-strong);
   --color-gold: var(--gold);
   --color-gold-ink: var(--gold-ink);
+  /* Fixed brand colours for always-navy sections, regardless of theme */
+  --color-navy: #071425;
+  --color-navy-700: #16304f;
+  --color-brand-gold: #f6be3d;
 
   --font-sans: "Plus Jakarta Sans Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
@@ -84,8 +92,8 @@ body {
 }
 
 ::selection {
-  background: var(--gold);
-  color: #16304f;
+  background: #f6be3d;
+  color: #071425;
 }
 
 :focus-visible {
@@ -157,15 +165,22 @@ body {
   opacity: 0.18;
 }
 .tumpal-gold {
-  background-color: #e2c057;
+  background-color: #f6be3d;
   opacity: 0.9;
 }
 
 /* Kawung tile in gold, for dark (navy) sections regardless of theme. */
 .kawung-gold::before {
-  background-color: #e2c057;
+  background-color: #f6be3d;
   opacity: 0.06;
 }
+
+/* ───────────────────────── Brand marks (Kawung Convergence v1.1) ─────────────────────────
+   Inline SVGs from src/brand/ via themeSvg(): symbol = --logo-mark, text = currentColor. */
+.kc-mark-stroke { stroke: var(--logo-mark); }
+.kc-mark-fill { fill: var(--logo-mark); }
+.kc-seal { color: var(--ink); overflow: visible; }
+.kc-seal-bg { fill: var(--paper); }
 
 /* ───────────────────────── Prose (case studies) ───────────────────────── */
 .prose-case {

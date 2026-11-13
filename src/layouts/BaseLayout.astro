@@ -45,10 +45,13 @@ const personSchema = {
     <meta name="description" content={description} />
     <meta name="author" content={site.legalName} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="theme-color" content="#f7f6f2" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0d1726" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#071425" media="(prefers-color-scheme: dark)" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
@@ -58,7 +61,7 @@ const personSchema = {
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Hijrah Assalam, Applied AI Engineer: I build AI products people actually use." />
+    <meta property="og:image:alt" content="Hijrah Assalam, Applied AI Engineer, Surakarta, Indonesia: I build AI products people actually use. hijrahassalam.com" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
