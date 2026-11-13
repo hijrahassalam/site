@@ -21,14 +21,20 @@ const pad = (n: number) => String(n).padStart(2, '0');
   <section class="kawung border-b border-line">
     <div class="mx-auto grid max-w-6xl gap-12 px-4 pt-16 pb-14 sm:px-6 md:grid-cols-[1fr_auto] md:items-center md:gap-16 md:pt-24 md:pb-20">
       <div>
-        <p class="eyebrow rise">Applied AI Engineer · {site.location}</p>
+        <p class="eyebrow rise">
+          <span>
+            {site.identity.split(' · ').map((t, i) => (
+              <>{i > 0 && ' · '}<span class="whitespace-nowrap">{t}</span></>
+            ))}
+          </span>
+        </p>
         <h1 class="rise rise-2 mt-6 max-w-3xl text-[2.6rem] leading-[1.05] font-extrabold tracking-[-0.035em] text-balance sm:text-6xl lg:text-[4.25rem]">
           I build AI products people actually use.
         </h1>
         <p class="rise rise-3 mt-6 max-w-2xl text-lg leading-relaxed text-ink-soft text-pretty">
-          Founder of <a href="https://www.asistendiet.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">AsistenDiet</a>{' '}and{' '}<a href="https://www.bundagizi.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">BundaGizi</a>,
-          and Senior Software Engineer at Universitas Sebelas Maret. I take AI from prompt to production:
-          LLM workflows, guardrails and evaluation, and the backend that keeps them running.
+          For 5+ years I've built production systems end to end: APIs, data, integrations, and the delivery
+          that keeps them running. I bring the same discipline to AI. As founder of{' '}<a href="https://www.asistendiet.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">AsistenDiet</a>{' '}and{' '}<a href="https://www.bundagizi.com/" class="font-semibold text-ink underline decoration-gold decoration-2 underline-offset-4">BundaGizi</a>,
+          I ship LLM workflows with guardrails and evaluation to real users.
         </p>
         <div class="rise rise-4 mt-9 flex flex-wrap items-center gap-3">
           <a href="#work" class="inline-flex items-center gap-2 rounded-md bg-ink px-5 py-3 text-sm font-semibold text-paper shadow-sm transition hover:opacity-90">
@@ -262,7 +268,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
           Have an AI product that needs to work in the real world?
         </h2>
         <p class="mt-5 max-w-xl text-lg leading-relaxed text-[#c3ccd8]">
-          I'm open to Applied AI and senior engineering roles, remote or hybrid, and to selected product collaborations.
+          I'm open to senior software engineering and Applied AI roles, remote or hybrid, and to selected product collaborations.
           Fluent in English (C1), async-friendly, based in GMT+7.
         </p>
       </div>

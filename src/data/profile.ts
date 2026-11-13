@@ -3,9 +3,14 @@
 export const site = {
   name: 'Hijrah Assalam',
   legalName: 'Nur Hijrah As Salam Al Ihsan',
-  role: 'Applied AI Engineer',
+  // Short form for tight spaces (navbar, schema jobTitle). Matches the actual current job title.
+  role: 'Senior Software Engineer',
+  // Full professional identity, used where discoverability matters (hero eyebrow, SEO, meta).
+  identity: 'Senior Software Engineer · Applied AI Engineer',
+  // Compact form for <title>, kept under ~60 characters so search results don't truncate it.
+  titleRole: 'Senior Software & Applied AI Engineer',
   description:
-    'Applied AI Engineer and founder of AsistenDiet and BundaGizi. I build production AI products and the systems behind them, from LLM workflows to the backend that keeps them running.',
+    'Senior Software Engineer and Applied AI Engineer with 5+ years building production systems. Founder of AsistenDiet and BundaGizi.',
   email: 'hijrahassalam@gmail.com',
   location: 'Surakarta, Indonesia',
   timezone: 'GMT+7',
