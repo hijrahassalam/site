@@ -9,7 +9,7 @@ Production-grade engineer building systems that serve thousands of users daily a
 ## Tech Stack
 
 - **Framework:** [Astro](https://astro.build) (static output)
-- **Brand:** Kawung Convergence v1.1. Production SVGs in `src/brand/` are rendered theme-aware by `src/brand/theme-svg.ts` (symbol = `--logo-mark`, text = `currentColor`). Icons, manifest and OG share card in `public/`
+- **Brand:** Kawung Convergence v1.2. Production SVGs in `src/brand/` are rendered theme-aware by `src/brand/theme-svg.ts` (symbol = `--logo-mark`, text = `currentColor`). Icons, manifest and OG share card in `public/`
 - **Styling:** Tailwind CSS v4, design tokens in `src/styles/global.css` (Kawung Convergence palette, kawung motif, tumpal band)
 - **Type:** Plus Jakarta Sans (self-hosted via Fontsource), JetBrains Mono for small metadata
 - **Content:** case studies as Markdown in `src/content/work/`, profile facts in `src/data/profile.ts`

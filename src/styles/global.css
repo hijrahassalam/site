@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ───────────────────────── Design tokens ─────────────────────────
-   Kawung Convergence v1.1 palette (05-foundations/kc-tokens.css).
+   Kawung Convergence v1.2 palette (05-foundations/kc-tokens.css).
    Gold (#F6BE3D) is decorative on light backgrounds (1.6:1): rules, markers, bars.
    Gold text on light uses --gold-ink (4.7:1). On navy, gold is fine for anything. */
 :root {
@@ -175,7 +175,7 @@ body {
   opacity: 0.06;
 }
 
-/* ───────────────────────── Brand marks (Kawung Convergence v1.1) ─────────────────────────
+/* ───────────────────────── Brand marks (Kawung Convergence v1.2) ─────────────────────────
    Inline SVGs from src/brand/ via themeSvg(): symbol = --logo-mark, text = currentColor. */
 .kc-mark-stroke { stroke: var(--logo-mark); }
 .kc-mark-fill { fill: var(--logo-mark); }
